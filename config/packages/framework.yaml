@@ -8,6 +8,13 @@ framework:
 
     #esi: true
     #fragments: true
+    php_errors:
+        log: true
+    
+    http_client:
+        scoped_clients:
+            jph:
+                base_uri: https://db.ygoprodeck.com/api/v7/cardinfo.php
 
 when@test:
     framework:
