@@ -1,0 +1,50 @@
+<div id="listcard">
+    {{ dump(cards) }}
+    {% for card in cards.data %}
+        <div class="user">
+            <div class="top">
+                <div>
+
+                    <h2>{{ card.name }}</h2>
+                    <p>{{ card.type }}</p>
+                </div>
+            </div>
+            <div class="details">
+                <div>
+                    <p>{{ card.desc }}</p>
+                </div>
+                <div class="data">
+                    <form action="{{ path('card_add') }}" method="post">
+                        {% if card.type == "Effect Monster" %}
+                        <input type="hidden" name="attribute" value="{{ card.attribute }}">
+                        <input type="hidden" name="att" value="{{ card.atk }}">
+                        
+                            {% if card.type == "Effect Monster" or card.type == "Fusion Monster" or card.type == "Synchro Monster" or card.type=="Xyz Monster" %}
+                            <input type="hidden" name="level" value="{{ card.level }}">
+                            <input type="hidden" name="def" value="{{ card.def }}">
+                            {% elseif card.type == "pendulum Monster" %}
+                            <input type="hidden" name="level" value="{{ card.level }}">
+                            <input type="hidden" name="def" value="{{ card.def }}">
+                            <input type="hidden" name="scale" value="{{ card.scale }}">
+                            {% elseif card.type == "link Monster" %}
+                            <input type="hidden" name="link" value="{{ card.link }}">
+                            <input type="hidden" name="link_marker" value="{{ card.linkmarker }}">
+                            {% endif %}
+                        {% endif %}
+                        <input type="hidden" name="name" value="{{ card.name }}">
+                        <input type="hidden" name="race" value="{{ card.race }}">
+                        <input type="hidden" name="effect" value="{{ card.desc }}">
+                        {% for element in card.card_images %}
+                            <input type="hidden" name="picture" value="{{ element.image_url }}">
+                        {% endfor %}
+                        <button type="submit">
+                            <i>add</i>
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>  
+    {% endfor %}
+</div>

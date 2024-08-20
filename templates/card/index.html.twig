@@ -6,50 +6,12 @@
 <h1>Cards</h1>
 
 <div class="cards">
-    {% for card in cards.data %}
-    <div class="user">
-        <div class="top">
-            <div>
-
-                <h2>{{ card.name }}</h2>
-                <p>{{ card.type }}</p>
-            </div>
-        </div>
-        <div class="details">
-            <div>
-                <p>{{ card.desc }}</p>
-            </div>
-            <div class="data">
-                <form action="{{ path('card_add') }}" method="post">
-                    {% if card.type == "Monster" %}
-                    <input type="hidden" name="attribute" value="{{ card.attribute }}">
-                    <input type="hidden" name="race" value="{{ card.race }}">
-                    <input type="hidden" name="att" value="{{ card.att }}">
-                    
-                        {% if card.type == "Effect Monster" or card.type == "Fusion Monster" or card.type == "Synchro Monster" or card.type=="Xyz Monster" %}
-                        <input type="hidden" name="level" value="{{ card.level }}">
-                        <input type="hidden" name="def" value="{{ card.def }}">
-                        {% elseif card.type == "pendulum Monster" %}
-                        <input type="hidden" name="level" value="{{ card.level }}">
-                        <input type="hidden" name="def" value="{{ card.def }}">
-                        <input type="hidden" name="scale" value="{{ card.scale }}">
-                        {% elseif card.type == "link Monster" %}
-                        <input type="hidden" name="link" value="{{ card.link }}">
-                        <input type="hidden" name="link_marker" value="{{ card.link_marker }}">
-                        {% endif %}
-                    {% endif %}
-                    <input type="hidden" name="name" value="{{ card.name }}">
-                    <input type="hidden" name="effect" value="{{ card.desc }}">
-                    {#<input type="hidden" name="picture" value="{{ card.card_images }}">#}
-                    <button type="submit">
-                        <i class="ri-folder-add-line plus"></i>
-                    </button>
-
-                </form>
-
-            </div>
-        </div>
-    </div>  
-    {% endfor %}
+    <form action="{{ path('card_fetch') }}" method="post">
+        <input type="textbox" name="name">
+        <button type="submit">
+            <i>recherche</i>
+        </button>
+    </form>
+    {% include "card/_content.html.twig" %}
 </div>
 {% endblock %}

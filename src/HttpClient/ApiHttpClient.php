@@ -15,9 +15,27 @@ class ApiHttpClient extends AbstractController{
     }
 
     public function getCards(){
-        $response = $this->httpClient->request('GET',"?archetype=Blue-Eyes", [
-            'verify_peer' => false,
-        ]);
-        return $response->toArray();
+        
+            $response = $this->httpClient->request('GET','?fname=Dark Magician', [
+                'verify_peer' => false,
+            ]);
+            return $response->toArray();
     }
+
+    public function getCardsName(string $name){
+        if($name){
+            $response = $this->httpClient->request('GET','?fname='.$name, [
+                'verify_peer' => false,
+            ]);
+            return $response->toArray();
+        }
+        else{
+            $response = $this->httpClient->request('GET','?fname=Dark Magician', [
+                'verify_peer' => false,
+            ]);
+            return $response->toArray();
+        }
+    }
+
+    
 }

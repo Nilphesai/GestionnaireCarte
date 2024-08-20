@@ -2,27 +2,53 @@
 
 namespace App\Controller;
 
+use App\Entity\Card;
 use App\HttpClient\ApiHttpClient;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ApiController extends AbstractController
 {
     #[Route('/cards', name: 'cards_list')]
     public function index(ApiHttpClient $apiHttpClient): Response
     {
+        
         $cards = $apiHttpClient->getCards();
         return $this->render('card/index.html.twig', [
             'cards' => $cards,
         ]);
+        
+    }
+
+    #[Route('/cards/refresh', name: 'card_refresh')]
+    public function refresh(){
+        return $this->render('card/index.html.twig');
+    }
+
+    #[Route('/cards/fetch-cards', name: 'card_fetch')]
+    public function listCard(ApiHttpClient $apiHttpClient){
+        $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        
+        if($name){
+            $cards = $apiHttpClient->getCardsName($name);
+            return $this->redirectTo;
+        }
+        else{
+            $cards = $apiHttpClient->getCards();
+            return $this->render('card/_content.html.twig', [
+                'cards' => $cards,
+            ]);
+        }
+        
     }
 
     #[Route('/cards/add-card', name: 'card_add', methods: 'POST')]
-    public function addMembre(EntityInterface $entityManager, Request $request, Card $card = null){
+    public function addCard(EntityManagerInterface $entityManager, Request $request, Card $card = null){
         $card = new Card();
-
+       
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $attribute = filter_input(INPUT_POST, 'attribute', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $level = filter_input(INPUT_POST, 'level', FILTER_SANITIZE_NUMBER_INT);
@@ -36,13 +62,13 @@ class ApiController extends AbstractController
         $picture = filter_input(INPUT_POST, 'picture', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
+       
         if ($name && $race && $effect && $picture){
             $card->setName($name);
             $card->setRace($race);
             $card->setEffect($effect);
             $card->setPicture($picture);
-            if($type == "Monstre" ){
+            if($type == "effect Monstre" ){
                 $card->setRace($race);
                 $card->setAtt($att);
                 if ($type =="Normal" ||$type =="Effect"||$type=="fusion"||$type=="synchro"||$type=="Xyz"){
@@ -60,7 +86,7 @@ class ApiController extends AbstractController
                 }
             }
 
-            $entityManager->persist($membre);
+            $entityManager->persist($card);
             $entityManager->flush();
 
             return $this->redirectToRoute('cards_list');

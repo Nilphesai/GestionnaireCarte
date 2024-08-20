@@ -12,6 +12,7 @@
         {% endblock %}
     </head>
     <body>
+        <a href="{{ path('cards_list') }}">liste de carte</a>
         {% if app.user %}
             <a href="{{ path('app_logout') }}">Se déconnecter</a>
             <a href="">Mon profil</a>
@@ -20,9 +21,7 @@
             <a href="{{ path('app_register') }}">S'enregister</a>
         {% endif %}
         {% if is_granted("ROLE_ADMIN") %}
-        <a href="">Panneau d'administration</a>
-
-            
+            <a href="">Panneau d'administration</a>
         {% endif %}
         <main>
             {% block body %}{% endblock %}
