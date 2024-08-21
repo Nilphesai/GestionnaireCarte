@@ -5,7 +5,7 @@
 {% block body %}
 <div class="js-filter">
     <h1>Cards</h1>
-    <div class="js-filter-content">
+    <div class="js-filter-form">
         <form action="{{ path('card_fetch') }}" method="post">
             <input type="textbox" name="name">
             <button type="submit">
@@ -14,7 +14,7 @@
         </form>
     </div>
     
-    <div class="cards js-filter-form">
+    <div class="cards js-filter-content">
         {% include "card/_content.html.twig" %}
     </div> 
 </div> 

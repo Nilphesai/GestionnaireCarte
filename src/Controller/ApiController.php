@@ -40,12 +40,6 @@ class ApiController extends AbstractController
         
         if($name){
             $cards = $apiHttpClient->getCardsName($name);
-            if ($request->isXmlHttpRequest()){
-                var_dump('ping');
-                return new JsonResponse([
-                    'content' => $this->renderView('card/_content.html.twig', ['cards' => $cards])
-                ]);
-            }
             return $this->render('card/_content.html.twig', [
                 'cards' => $cards,
             ]);
@@ -56,7 +50,6 @@ class ApiController extends AbstractController
                 'cards' => $cards,
             ]);
         }
-        
     }
 
     #[Route('/cards/add-card', name: 'card_add', methods: 'POST')]

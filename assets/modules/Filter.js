@@ -21,13 +21,14 @@ export default class Filter {
     //ajoute les comportement au différents éléments
     bindEvents () {
         
-        this.content.querySelectorAll('button').forEach(button => {
-            button.addEventListener('click', e => {
-                e.preventDefault()
-                this.loadUrl(button.getAttribute('href'))
+        this.content.addEventListener('click', e => {
+                if(e.target.tagName === 'form'){
+                    e.preventDefault()
+                    this.loadUrl(e.target.getAttribute('action'))
+                }
+                
             })
-        })
-        console.log('into bindevents')
+        console.log('into bindEvents')
     }
     async loadUrl (url){
         console.log(url)

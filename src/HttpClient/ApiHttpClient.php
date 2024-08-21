@@ -28,6 +28,7 @@ class ApiHttpClient extends AbstractController{
                 'verify_peer' => false,
             ]);
             return $response->toArray();
+            
         }
         else{
             $response = $this->httpClient->request('GET','?fname=Dark Magician', [
