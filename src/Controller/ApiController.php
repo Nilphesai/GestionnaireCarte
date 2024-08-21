@@ -13,10 +13,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ApiController extends AbstractController
 {
     #[Route('/cards', name: 'cards_list')]
-    public function index(ApiHttpClient $apiHttpClient): Response
+    public function index(ApiHttpClient $apiHttpClient, Request $request): Response
     {
-        
         $cards = $apiHttpClient->getCards();
+        if ($request->isXMLHttpRequest()){
+            var_dump('ping');
+            return new JsonResponse([
+                'content' => $this->renderView('card/_content.html.twig', ['cards' => $cards])
+            ]);
+        }
         return $this->render('card/index.html.twig', [
             'cards' => $cards,
         ]);
@@ -34,7 +39,9 @@ class ApiController extends AbstractController
         
         if($name){
             $cards = $apiHttpClient->getCardsName($name);
-            return $this->redirectTo;
+            return $this->render('card/_content.html.twig', [
+                'cards' => $cards,
+            ]);
         }
         else{
             $cards = $apiHttpClient->getCards();
