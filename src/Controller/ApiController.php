@@ -15,8 +15,9 @@ class ApiController extends AbstractController
     #[Route('/cards', name: 'cards_list')]
     public function index(ApiHttpClient $apiHttpClient, Request $request): Response
     {
+        
         $cards = $apiHttpClient->getCards();
-        if ($request->isXMLHttpRequest()){
+        if ($request->isXmlHttpRequest()){
             var_dump('ping');
             return new JsonResponse([
                 'content' => $this->renderView('card/_content.html.twig', ['cards' => $cards])
@@ -34,11 +35,17 @@ class ApiController extends AbstractController
     }
 
     #[Route('/cards/fetch-cards', name: 'card_fetch')]
-    public function listCard(ApiHttpClient $apiHttpClient){
+    public function listCard(ApiHttpClient $apiHttpClient, Request $request){
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         
         if($name){
             $cards = $apiHttpClient->getCardsName($name);
+            if ($request->isXmlHttpRequest()){
+                var_dump('ping');
+                return new JsonResponse([
+                    'content' => $this->renderView('card/_content.html.twig', ['cards' => $cards])
+                ]);
+            }
             return $this->render('card/_content.html.twig', [
                 'cards' => $cards,
             ]);

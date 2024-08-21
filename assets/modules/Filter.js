@@ -13,21 +13,24 @@ export default class Filter {
             return
         }
 
-        this.content = element.querySelector('js-filter-content')
-        this.form = element.querySelector('js-filter-form')
+        this.content = element.querySelector('.js-filter-content')
+        this.form = element.querySelector('.js-filter-form')
         console.log('je me construit')
         this.bindEvents()
     }
     //ajoute les comportement au différents éléments
     bindEvents () {
-        this.content.querySelectorAll('a').forEach(a => {
-            a.addEventListener('click', e => {
+        
+        this.content.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', e => {
                 e.preventDefault()
-                this.loadUrl(a.getAttribute('href'))
+                this.loadUrl(button.getAttribute('href'))
             })
         })
+        console.log('into bindevents')
     }
     async loadUrl (url){
+        console.log(url)
         const response = await fetch(url, {
             headers : {
                 'X-Requested-With': 'XMLHttpRequest'
@@ -40,6 +43,7 @@ export default class Filter {
 
         }
         else{
+            console.log('erreur')
             console.error(response)
         }
     }
