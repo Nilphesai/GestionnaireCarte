@@ -18,12 +18,7 @@ class ApiController extends AbstractController
     {
         
         $cards = $apiHttpClient->getCards();
-        if ($request->isXmlHttpRequest()){
-            var_dump('ping');
-            return new JsonResponse([
-                'content' => $this->renderView('card/_content.html.twig', ['cards' => $cards])
-            ]);
-        }
+        
         return $this->render('card/index.html.twig', [
             'cards' => $cards,
         ]);
@@ -39,13 +34,13 @@ class ApiController extends AbstractController
     public function listCard(ApiHttpClient $apiHttpClient, Request $request){
         
         $test = $request->toArray();
-
+        
         if($test['cardName']){
             $cards = $apiHttpClient->getCardsName($test['cardName']);
-            return new JsonResponse($cards);
-            //return $this->render('card/_content.html.twig', [
-            //    'cards' => $cards,
-            //]);
+            
+            return new JsonResponse([
+                'content' => $this->renderView('card/_content.html.twig', ['cards' => $cards])
+            ]);
         }
         else{
             

@@ -43,11 +43,14 @@ export default class Filter {
             },
             body: JSON.stringify({ cardName: searchedCard })
         })
+
         if (response.status >= 200 && response.status < 300){
+            
             const data = await response.json()
             console.log(data)
-            this.content.innerHTML = data.content
-            //this.form.innerHTML = data.form
+            const cards = Object.values(data)
+            console.log(cards)
+            this.content.innerHTML = cards
 
         }
         else{
