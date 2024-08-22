@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ApiController extends AbstractController
@@ -36,16 +37,20 @@ class ApiController extends AbstractController
 
     #[Route('/cards/fetch-cards', name: 'card_fetch')]
     public function listCard(ApiHttpClient $apiHttpClient, Request $request){
-        $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         
-        if($name){
-            $cards = $apiHttpClient->getCardsName($name);
-            return $this->render('card/_content.html.twig', [
-                'cards' => $cards,
-            ]);
+        $test = $request->toArray();
+
+        if($test['cardName']){
+            $cards = $apiHttpClient->getCardsName($test['cardName']);
+            return new JsonResponse($cards);
+            //return $this->render('card/_content.html.twig', [
+            //    'cards' => $cards,
+            //]);
         }
         else{
+            
             $cards = $apiHttpClient->getCards();
+            return new JsonResponse($cards);
             return $this->render('card/_content.html.twig', [
                 'cards' => $cards,
             ]);

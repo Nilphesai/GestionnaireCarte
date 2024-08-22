@@ -22,7 +22,7 @@ class ApiHttpClient extends AbstractController{
             return $response->toArray();
     }
 
-    public function getCardsName(string $name){
+    public function getCardsName(string $name): array{
         if($name){
             $response = $this->httpClient->request('GET','?fname='.$name, [
                 'verify_peer' => false,

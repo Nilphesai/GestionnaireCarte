@@ -5,9 +5,9 @@
 {% block body %}
 <div class="js-filter">
     <h1>Cards</h1>
-    <div class="js-filter-form">
+    <div id="card-search-filter">
         <form action="{{ path('card_fetch') }}" method="post">
-            <input type="textbox" name="name">
+            <input type="textbox" name="card_name">
             <button type="submit">
                 <i>recherche</i>
             </button>
