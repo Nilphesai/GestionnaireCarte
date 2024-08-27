@@ -29,7 +29,19 @@ export default class Filter {
                 e.preventDefault()
                 console.log(e.target.search_card_name.value)
                 console.log(e.target.search_card_attribute.value)
-                const searchedCard = [e.target.search_card_name.value,e.target.search_card_attribute.value]
+                console.log(e.target.search_card_level.value)
+                console.log(e.target.search_card_race.value)
+                console.log(e.target.search_card_att.value)
+                console.log(e.target.search_card_def.value)
+                console.log(e.target.search_card_link.value)
+                console.log(e.target.search_card_scale.value)
+                console.log(e.target.search_card_linkMarker.value)
+
+                const searchedCard = [e.target.search_card_name.value,e.target.search_card_attribute.value,
+                    e.target.search_card_level.value,e.target.search_card_race.value,
+                    e.target.search_card_att.value,e.target.search_card_def.value,
+                    e.target.search_card_link.value,e.target.search_card_scale.value,
+                    e.target.search_card_linkMarker.value]
                 this.loadUrl(e.target.getAttribute('action'),searchedCard)
                 
             })

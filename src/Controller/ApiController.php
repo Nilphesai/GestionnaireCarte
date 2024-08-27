@@ -42,7 +42,6 @@ class ApiController extends AbstractController
         
         if($test['cardName']){
             $cards = $apiHttpClient->getCardsName($test['cardName']);
-            //dd($cards);
             return new JsonResponse([
                 'content' => $this->renderView('card/_content.html.twig', ['cards' => $cards])
             ]);

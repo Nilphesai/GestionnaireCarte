@@ -40,12 +40,6 @@ class SearchCardType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('effect', TextType::class,[
-                'required' => false,
-                'attr'=> [
-                    'class' => 'form-control'
-                ]
-            ])
             ->add('att', IntegerType::class, [
                 'required' => false,
                 'attr' => [
