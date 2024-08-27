@@ -48,10 +48,10 @@ class ApiHttpClient extends AbstractController{
             if($searchedCard[3]){
                 $search .= $race."&"; 
             }
-            if($searchedCard[4]){
+            if($searchedCard[4] || $searchedCard[4] == 0){
                 $search .= $att."&"; 
             }
-            if($searchedCard[5]){
+            if($searchedCard[5] || $searchedCard[5] == 0){
                 $search .= $def."&"; 
             }
             if($searchedCard[6]){
