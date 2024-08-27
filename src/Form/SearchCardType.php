@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Card;
-use App\Entity\Deck;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -12,70 +11,70 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
-class CardType extends AbstractType
+class SearchCardType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TextType::class,[
+                'required' => false,
                 'attr'=> [
                     'class' => 'form-control'
                 ]
             ])
             ->add('attribute', TextType::class,[
+                'required' => false,
                 'attr'=> [
                     'class' => 'form-control'
                 ]
             ])
             ->add('level', IntegerType::class, [
+                'required' => false,
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('race', TextType::class,[
+                'required' => false,
                 'attr'=> [
                     'class' => 'form-control'
                 ]
             ])
             ->add('effect', TextType::class,[
+                'required' => false,
                 'attr'=> [
                     'class' => 'form-control'
                 ]
             ])
             ->add('att', IntegerType::class, [
+                'required' => false,
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('def', IntegerType::class, [
+                'required' => false,
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('link', IntegerType::class, [
+                'required' => false,
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('scale', IntegerType::class, [
+                'required' => false,
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('linkMarker', TextType::class,[
+                'required' => false,
                 'attr'=> [
                     'class' => 'form-control'
                 ]
-            ])
-            ->add('picture', TextType::class,[
-                'attr'=> [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('decks', EntityType::class, [
-                'class' => Deck::class,
-                'choice_label' => 'id',
-                'multiple' => true,
             ])
             ->add('Chercher', SubmitType::class, [
                 'attr' => [

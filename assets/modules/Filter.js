@@ -26,16 +26,18 @@ export default class Filter {
         this.form.addEventListener('submit', e => {
                 
                 
-                
                 e.preventDefault()
-                console.log(e.target.card_name.value)
-                this.loadUrl(e.target.getAttribute('action'),e.target.card_name.value)
+                console.log(e.target.search_card_name.value)
+                console.log(e.target.search_card_attribute.value)
+                const searchedCard = [e.target.search_card_name.value,e.target.search_card_attribute.value]
+                this.loadUrl(e.target.getAttribute('action'),searchedCard)
                 
             })
        
     }
     async loadUrl (url,searchedCard){
         console.log(url)
+        console.log(searchedCard)
         const response = await fetch(url, {
             method: "POST",
             headers : {

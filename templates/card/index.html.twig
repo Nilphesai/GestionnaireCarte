@@ -6,7 +6,8 @@
 <div class="js-filter">
     <h1>Cards</h1>
     <div id="card-search-filter">
-        {{ form_start(formSearchCard, {'action': "{{ path('card_fetch') }}"}) }}
+
+        {{ form_start(formSearchCard, {'action': "/cards/fetch-cards", 'method': "post"}) }}
         {{ form_row(formSearchCard.name)}}
         {{ form_row(formSearchCard.attribute)}}
         {{ form_row(formSearchCard.level)}}
@@ -15,12 +16,14 @@
         {{ form_row(formSearchCard.att)}}
         {{ form_row(formSearchCard.def)}}
         {{ form_end(formSearchCard) }}
-        <form action="{{ path('card_fetch') }}" method="post">
+
+       {# <form action="{{ path('card_fetch') }}" method="post">
             <input type="textbox" name="card_name">
             <button type="submit">
                 <i>recherche</i>
             </button>
-        </form>
+        </form> #}
+        
     </div>
     
     <div class="cards js-filter-content">

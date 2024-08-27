@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Card;
-use App\Form\CardType;
+use App\Form\SearchCardType;
 use App\HttpClient\ApiHttpClient;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,8 +17,9 @@ class ApiController extends AbstractController
     #[Route('/cards', name: 'cards_list')]
     public function index(Card $card = null, ApiHttpClient $apiHttpClient, Request $request): Response
     {
+        
         $card = new Card();
-        $form = $this->createForm(CardType::class,$card);
+        $form = $this->createForm(SearchCardType::class,$card);
 
         $cards = $apiHttpClient->getCards();
         
@@ -31,18 +32,17 @@ class ApiController extends AbstractController
 
     #[Route('/cards/fetch-cards', name: 'card_fetch')]
     public function listCard(Card $card = null, ApiHttpClient $apiHttpClient, Request $request){
-        
         if(!$card){
             $card = new Card();
         }
-
-        $form = $this->createForm(CardType::class,$card);
+        
+        $form = $this->createForm(SearchCardType::class,$card);
 
         $test = $request->toArray();
         
         if($test['cardName']){
             $cards = $apiHttpClient->getCardsName($test['cardName']);
-            
+            //dd($cards);
             return new JsonResponse([
                 'content' => $this->renderView('card/_content.html.twig', ['cards' => $cards])
             ]);
