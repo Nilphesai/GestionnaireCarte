@@ -1,6 +1,7 @@
 /**
  * @property {HTMLElement} content
  * @property {HTMLElement} form
+ * 
  */
 export default class Filter {
     /**
@@ -15,8 +16,9 @@ export default class Filter {
 
         this.content = element.querySelector('.js-filter-content')
         this.form = element.querySelector('#card-search-filter')
+        
         console.log(this.form)
-
+        
         this.bindEvents()
     }
     //ajoute les comportement au différents éléments
@@ -35,13 +37,20 @@ export default class Filter {
                 console.log(e.target.search_card_def.value)
                 console.log(e.target.search_card_link.value)
                 console.log(e.target.search_card_scale.value)
-                console.log(e.target.search_card_linkMarker.value)
-
+                const linkMark = e.target.querySelectorAll('.searchLinkMarkers')
+                const listLinkMark = []
+                linkMark.forEach(element => {
+                    if(element.checked){
+                        listLinkMark.push(element.defaultValue)
+                    }
+                });
+                const listLinkMarkString = listLinkMark.join();
+                console.log(listLinkMarkString)
                 const searchedCard = [e.target.search_card_name.value,e.target.search_card_attribute.value,
                     e.target.search_card_level.value,e.target.search_card_race.value,
                     e.target.search_card_att.value,e.target.search_card_def.value,
                     e.target.search_card_link.value,e.target.search_card_scale.value,
-                    e.target.search_card_linkMarker.value]
+                    listLinkMarkString]
                 this.loadUrl(e.target.getAttribute('action'),searchedCard)
                 
             })
