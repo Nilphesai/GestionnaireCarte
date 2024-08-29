@@ -54,6 +54,26 @@ export default class Filter {
                 this.loadUrl(e.target.getAttribute('action'),searchedCard)
                 
             })
+        /*
+        let isDragging = false;
+
+        this.content.addEventListener('mousedown', function(event) {
+            isDragging = false;
+        });
+            
+        this.content.addEventListener('mousemove', function(event) {
+            isDragging = true;
+        });
+            
+        this.content.addEventListener('mouseup', function(event) {
+            if (!isDragging) {
+                // Ouvrir la page ici
+                console.log('vers détail carte !');
+                console.log(this.getAttribute);
+                this.loadUrl(this.target.getAttribute('action'),searchedCard)
+            }
+        });
+        */
        
     }
     async loadUrl (url,searchedCard){

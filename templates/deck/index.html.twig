@@ -3,32 +3,35 @@
 {% block title %}Hello DeckController!{% endblock %}
 
 {% block body %}
-<div id="body-deck">
+<div class="js-filter">
+    <div id="body-deck">
 
-    <div id="bloc-deck">
-        <h2>Deck</h2>
-        <div id="deck">
-            <div id="main-deck">
-                Main Deck
-            </div>
-            <div id="extra-deck">
-                Extra
-            </div>
-            <div id="side-deck">
-                Side
+        <div id="bloc-deck">
+            <h2>Deck</h2>
+            <div id="deck">
+                <div id="main-deck">
+                    Main Deck
+                </div>
+                <div id="extra-deck">
+                    Extra
+                </div>
+                <div id="side-deck">
+                    Side
+                </div>
             </div>
         </div>
-    </div>
-
-    <div id="bloc-recherche">
-        <h3>recherche</h3>
-        <div id="card-search-filter">
-            {% include "card/_form.html.twig" %}
-        </div>   
-         <div class="cards js-filter-content">
-            {% include "card/_content.html.twig" %}
-        </div> 
-    </div> 
     
-</div> 
+        <div id="bloc-recherche">
+            <h3>recherche</h3>
+            <div id="card-search-filter">
+                {% include "card/_form.html.twig" %}
+            </div>   
+             <div class="cards js-filter-content">
+                {% include "card/_content.html.twig" %}
+            </div> 
+        </div> 
+        
+    </div> 
+</div>
+
 {% endblock %}

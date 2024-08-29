@@ -1,17 +1,14 @@
 
-    {{ dump(cards) }}
     {% for card in cards.data %}
         <div id="card">
             <div id="image-carte-min">{#<img src="{{ asset (card.card_images[0].image_url_small) }}">{#}</div>
             <div id="card-info">
-                <div class="top">
-                    <div>
-                        <p>{{ card.name }}</p>
-                        <p>{{ card.type }}</p>
-                    </div>
-                </div>
                 <div class="details">
                     <div class="carac">
+                        <a href="{{ path('show_card', {'id': card.id}) }}">{{ card.name }}</a>
+                        <p>{{ card.type }}</p>
+                
+                    
                         {% if card.frameType == "normal" or card.frameType == "effect" or card.frameType == "ritual" or card.frameType == "fusion" or card.frameType == "synchro" or card.frameType == "xyz" or card.frameType == "pendulum" or card.frameType == "link" %}
                             <P>Attribut : {{ card.attribute }}<br>
                             

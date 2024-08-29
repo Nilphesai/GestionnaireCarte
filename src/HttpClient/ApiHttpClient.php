@@ -22,6 +22,21 @@ class ApiHttpClient extends AbstractController{
             return $response->toArray();
     }
 
+    public function getCardsById(string $id):array{
+        if($id){
+            $response = $this->httpClient->request('GET','?id='.$id, [
+                'verify_peer' => false,
+            ]);
+            return $response->toArray();
+        }
+        else{
+            $response = $this->httpClient->request('GET','?fname=Dark Magician', [
+                'verify_peer' => false,
+            ]);
+            return $response->toArray();
+        }
+    }
+
     public function getCardsByFilter(Array $searchedCard): array{
         if($searchedCard){
             $name = "fname=".$searchedCard[0];

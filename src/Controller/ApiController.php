@@ -107,4 +107,15 @@ class ApiController extends AbstractController
 
         }
     }
+
+    #[Route('/cards/{id}', name: 'show_card')]
+    public function show(string $id, ApiHttpClient $apiHttpClient): Response
+    {
+        
+        $card = $apiHttpClient->getCardsById($id);
+
+        return $this->render('card/show.html.twig', [
+            'card' => $card,
+        ]);
+    }
 }
