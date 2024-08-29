@@ -6,11 +6,31 @@ body {
     display: flex;
     
 }
+#card{
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+}
+.details{
+    border: 1px solid black;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.carac{
+    padding: 0;
+}
 
 #bloc-recherche{
     border: 1px solid black;
 }
-
+#image-carte-min{
+    background-color: yellow;
+    width: 150px;
+    height: 200px;
+    margin: 10px;
+}
 #bloc-deck{
     box-sizing: border-box;
     border: 1px solid black;
