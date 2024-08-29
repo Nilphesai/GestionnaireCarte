@@ -22,7 +22,7 @@ class ApiHttpClient extends AbstractController{
             return $response->toArray();
     }
 
-    public function getCardsName(Array $searchedCard): array{
+    public function getCardsByFilter(Array $searchedCard): array{
         if($searchedCard){
             $name = "fname=".$searchedCard[0];
             $attribute = "attribute=".$searchedCard[1];

@@ -41,7 +41,7 @@ class ApiController extends AbstractController
         $test = $request->toArray();
         
         if($test['cardName']){
-            $cards = $apiHttpClient->getCardsName($test['cardName']);
+            $cards = $apiHttpClient->getCardsByFilter($test['cardName']);
             return new JsonResponse([
                 'content' => $this->renderView('card/_content.html.twig', ['cards' => $cards])
             ]);
