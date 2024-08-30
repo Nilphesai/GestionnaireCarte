@@ -30,6 +30,7 @@
                         {% endif %}
                 {% elseif card.frameType == "spell" or card.frameType == "trap" %}
                     {{ card.race }}
+                    {{ card.desc }}
                 {% endif %}
                 {% for typeline in card.typeline %}
                     {% if typeline == "Pendulum" %}
@@ -44,14 +45,10 @@
                         {% if card.monster_desc is defined %}
                             effet monstre : {{ card.monster_desc }}</br>
                         {% else %}
-                        {{ card.desc }}
+                            {{ card.desc }}
                         {% endif %}
                     {% endif %}
                 {% endfor %}
-                {% if card.monster_desc is defined and card.pend_desc is defined %}
-                {% else %}
-                {{ card.desc }}
-                {% endif %}
             
             </p>
             </div>

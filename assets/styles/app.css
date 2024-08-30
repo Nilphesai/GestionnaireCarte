@@ -34,6 +34,13 @@ body {
     margin: 10px;
 }
 
+#image-carte{
+    background-color: yellow;
+    width: 250px;
+    height: 400px;
+    margin: 10px;
+}
+
 #bloc-deck{
     display: flex;
     flex-direction: column;
