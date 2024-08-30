@@ -23,6 +23,16 @@ export default class Filter {
     }
     //ajoute les comportement au différents éléments
     bindEvents () {
+        document.getElementById("openFormSearch").addEventListener("click", function() {
+            if (document.getElementById("card-search-filter").style.display == "none"){
+                document.getElementById("card-search-filter").style.display = "flex";
+            }
+            else{
+                document.getElementById("card-search-filter").style.display = "none";
+            }
+          });
+
+
         // TODO : améliorer le comportement de l'évènement en chargeant 
         // les cartes en fonction de ce qui est écrit dans le textbox  
         this.form.addEventListener('submit', e => {

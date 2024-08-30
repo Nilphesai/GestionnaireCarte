@@ -24,6 +24,7 @@ class SearchCardType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
+
             ->add('attribute', ChoiceType::class,[
                 'choices' => [
                     'LIGHT' => 'LIGHT',

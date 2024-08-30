@@ -25,7 +25,12 @@ body {
     padding : 5px;
 }
 #bloc-recherche{
+    display: flex;
+    flex-direction: column;
     border: 1px solid black;
+    max-height: 40rem;
+    width: 25rem;
+    margin-right: 5rem;
 }
 #image-carte-min{
     background-color: yellow;
@@ -34,27 +39,18 @@ body {
     margin: 10px;
 }
 
-#image-carte{
-    background-color: yellow;
-    width: 250px;
-    height: 400px;
-    margin: 10px;
-}
-
 #bloc-deck{
     display: flex;
     flex-direction: column;
-
-    box-sizing: border-box;
+    flex :1;
     border: 1px solid black;
 }
 
-#bloc-recherche{
-    display: flex;
-    flex-direction: column;
-}
 #card-search-filter{
     border: 1px solid black;
+}
+.js-filter-content{
+    overflow-y:scroll;
 }
 #main-deck{
     background-color: brown;

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Card;
+use App\Form\CardType;
 use App\Form\SearchCardType;
 use App\HttpClient\ApiHttpClient;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,13 +20,14 @@ class ApiController extends AbstractController
     {
         
         $card = new Card();
-        $form = $this->createForm(SearchCardType::class,$card);
-
+        $formSearchCard = $this->createForm(SearchCardType::class,$card);
+        $formAddCard = $this->createForm(CardType::class,$card);
         $cards = $apiHttpClient->getCards();
         
         return $this->render('card/index.html.twig', [
-            'formSearchCard' => $form,
+            'formSearchCard' => $formSearchCard,
             'cards' => $cards,
+            'formAddCard' => $formAddCard,
         ]);
         
     }
@@ -60,7 +62,7 @@ class ApiController extends AbstractController
     #[Route('/cards/add-card', name: 'card_add', methods: 'POST')]
     public function addCard(EntityManagerInterface $entityManager, Request $request, Card $card = null){
         $card = new Card();
-       
+        
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $attribute = filter_input(INPUT_POST, 'attribute', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $level = filter_input(INPUT_POST, 'level', FILTER_SANITIZE_NUMBER_INT);
@@ -70,40 +72,39 @@ class ApiController extends AbstractController
         $def = filter_input(INPUT_POST, 'def', FILTER_SANITIZE_NUMBER_INT);
         $link = filter_input(INPUT_POST, 'link', FILTER_SANITIZE_NUMBER_INT);
         $scale = filter_input(INPUT_POST, 'scale', FILTER_SANITIZE_NUMBER_INT);
-        $link_marker = filter_input(INPUT_POST, 'link_markrt', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $linkmarker = filter_input(INPUT_POST, 'linkmarker', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $picture = filter_input(INPUT_POST, 'picture', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-       
+        
         if ($name && $race && $effect && $picture){
+            $card->setAttribute($attribute);
             $card->setName($name);
             $card->setRace($race);
             $card->setEffect($effect);
             $card->setPicture($picture);
-            if($type == "effect Monstre" ){
-                $card->setRace($race);
+            if ($att){
                 $card->setAtt($att);
-                if ($type =="Normal" ||$type =="Effect"||$type=="fusion"||$type=="synchro"||$type=="Xyz"){
+                if($scale){
                     $card->setLevel($level);
-                    $card->setDef($def);
-                }
-                elseif($type=="Pendule"){
-                    $card->setLevel($level);
-                    $card->setDef($def);
                     $card->setScale($scale);
+                    $card->setDef($def);
                 }
-                elseif($type=="Link"){
+                elseif($link){
                     $card->setLink($link);
-                    $card->setLink_marker($link_marker);
+                    $card->setLinkMarker($linkmarker);
+                }
+                else{
+                    $card->setLevel($level);
+                    $card->setDef($def);
                 }
             }
-
+            
             $entityManager->persist($card);
             $entityManager->flush();
-
-            return $this->redirectToRoute('cards_list');
+            return $this->redirectToRoute('app_deck');
         } else{
-            return $this->redirectToRoute('cards_list');
+            return $this->redirectToRoute('app_deck');
 
         }
     }
