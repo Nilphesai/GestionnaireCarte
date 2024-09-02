@@ -1,7 +1,7 @@
 
     {% for card in cards.data %}
         <div id="card">
-            <div id="image-carte-min">{#<img src="{{ asset (card.card_images[0].image_url_small) }}">{#}</div>
+            <div id="image-carte-min"><img src="{{ asset ('images/' ~ card.id ~ '.jpg') }}"></div>
             <div id="card-info">
                 <div class="details">
                     <div class="carac">

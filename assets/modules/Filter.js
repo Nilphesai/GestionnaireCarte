@@ -17,8 +17,10 @@ export default class Filter {
         this.content = element.querySelector('.js-filter-content')
         this.form = element.querySelector('#card-search-filter')
         
-        console.log(this.form)
         
+        console.log(this.form)
+        console.log(document.getElementById("openFormSearch"))
+
         this.bindEvents()
     }
     //ajoute les comportement au différents éléments
@@ -64,7 +66,7 @@ export default class Filter {
                 this.loadUrl(e.target.getAttribute('action'),searchedCard)
                 
             })
-        /*
+        /*  appuis n'importe où sur le cardre d'une carte
         let isDragging = false;
 
         this.content.addEventListener('mousedown', function(event) {
@@ -86,6 +88,8 @@ export default class Filter {
         */
        
     }
+
+    
     async loadUrl (url,searchedCard){
         console.log(url)
         console.log(searchedCard)

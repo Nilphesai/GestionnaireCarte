@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Card;
 use App\Form\CardType;
+use App\Entity\Picture;
 use App\Form\SearchCardType;
 use App\HttpClient\ApiHttpClient;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,13 +17,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ApiController extends AbstractController
 {
     #[Route('/cards', name: 'cards_list')]
-    public function index(Card $card = null, ApiHttpClient $apiHttpClient, Request $request): Response
+    public function index(EntityManagerInterface $entityManager, Card $card = null, ApiHttpClient $apiHttpClient, Request $request): Response
     {
         
         $card = new Card();
         $formSearchCard = $this->createForm(SearchCardType::class,$card);
         $formAddCard = $this->createForm(CardType::class,$card);
         $cards = $apiHttpClient->getCards();
+
+        //traitement de l'image
+        foreach ($cards as $card) {
+            foreach ($card as $detail){
+                
+                $this->addImage($detail, $entityManager);
+            }
+            
+        }
         
         return $this->render('card/index.html.twig', [
             'formSearchCard' => $formSearchCard,
@@ -33,7 +43,7 @@ class ApiController extends AbstractController
     }
 
     #[Route('/cards/fetch-cards', name: 'card_fetch')]
-    public function listCard(Card $card = null, ApiHttpClient $apiHttpClient, Request $request){
+    public function listCard(EntityManagerInterface $entityManager,Card $card = null, ApiHttpClient $apiHttpClient, Request $request){
         if(!$card){
             $card = new Card();
         }
@@ -44,6 +54,16 @@ class ApiController extends AbstractController
         
         if($test['cardName']){
             $cards = $apiHttpClient->getCardsByFilter($test['cardName']);
+            
+            //traitement de l'image
+            foreach ($cards as $card) {
+                foreach ($card as $detail){
+                    
+                    $this->addImage($detail, $entityManager);
+                }
+                
+            }
+            
             return new JsonResponse([
                 'content' => $this->renderView('card/_content.html.twig', ['cards' => $cards])
             ]);
@@ -58,6 +78,8 @@ class ApiController extends AbstractController
             ]);
         }
     }
+
+
 
     #[Route('/cards/add-card', name: 'card_add', methods: 'POST')]
     public function addCard(EntityManagerInterface $entityManager, Request $request, Card $card = null){
@@ -106,6 +128,21 @@ class ApiController extends AbstractController
         } else{
             return $this->redirectToRoute('app_deck');
 
+        }
+    }
+
+    private function addImage(array $detail, EntityManagerInterface $entityManager) {
+        $route = $detail['card_images'][0]['image_url_small'];
+        $imageContent = file_get_contents($route);
+        $imagePath = '../public/images/' . $detail['id'] . '.jpg';
+    
+        if (!file_exists($imagePath)) {
+            file_put_contents($imagePath, $imageContent);
+            $picture = new Picture();
+            $picture->setRefCard($detail['id']);
+            $picture->setRoute($imagePath);
+            $entityManager->persist($picture);
+            $entityManager->flush();
         }
     }
 

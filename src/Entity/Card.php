@@ -55,6 +55,9 @@ class Card
     #[ORM\ManyToMany(targetEntity: Deck::class, mappedBy: 'card')]
     private Collection $decks;
 
+    #[ORM\Column]
+    private ?int $refCard = null;
+
     public function __construct()
     {
         $this->decks = new ArrayCollection();
@@ -220,6 +223,18 @@ class Card
         if ($this->decks->removeElement($deck)) {
             $deck->removeCard($this);
         }
+
+        return $this;
+    }
+
+    public function getRefCard(): ?int
+    {
+        return $this->refCard;
+    }
+
+    public function setRefCard(int $refCard): static
+    {
+        $this->refCard = $refCard;
 
         return $this;
     }
