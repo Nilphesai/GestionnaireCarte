@@ -32,7 +32,7 @@ body {
     width: 25rem;
     margin-right: 5rem;
 }
-#image-carte-min{
+#image-carte-min img{
     background-color: yellow;
     width: 150px;
     height: 200px;

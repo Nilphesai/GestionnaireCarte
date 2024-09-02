@@ -8,10 +8,10 @@
             
             {% for card in card.data %}
             {{dump(card)}}
-            <div id="image-carte-min"><img src="{{card.card_images[0].image_url_small}}"></div>
+            <div id="image-carte-min"><img src="{{ asset ('images/' ~ card.id ~ '.jpg') }}"></div>
             <div class="carac">
                 <h2>{{ card.name }}</h2>
-                <p>{{ card.type }}</p>
+                <p>{{ card.type }}
                     
                         {% if card.frameType == "normal" or card.frameType == "effect" or card.frameType == "ritual" or card.frameType == "fusion" or card.frameType == "synchro" or card.frameType == "xyz" %}
                         Niveau/Rang : {{ card.level }}<br>
@@ -21,13 +21,11 @@
                         Lien : {{ card.linkval }}<br>
                         Pointe vers :
                             {% for linkmarker in card.linkmarkers %}
-                            <p>{{ linkmarker }}</p>
+                            {{ linkmarker }}<br>
                             {% endfor %}
                         {% endif %}
-                {% if card.frameType == "spell" or card.frameType == "trap" %}
-                    {{ card.race }}
-                    {{ card.desc }}
-                {% endif %}
+                        Type : {{ card.race }}<br>
+                        effect : {{ card.desc }}</p>
                 {% if card.typeline is defined %}
                     {% for typeline in card.typeline %}
                         {% if typeline == "Pendulum" %}

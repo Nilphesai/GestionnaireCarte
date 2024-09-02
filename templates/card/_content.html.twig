@@ -28,10 +28,9 @@
                                     <p>{{ linkmarker }}</p>
                                     {% endfor %}
                                 {% endif %}
-                        {% elseif card.frameType == "spell" or card.frameType == "trap" %}
-                            {{ card.race }}
                         {% endif %}
-                        {{ card.desc }}</p>
+                        Type : {{ card.race }}<br>
+                        Effect : {{ card.desc }}</p>
                     </div>
                     <div class="data">
                         
