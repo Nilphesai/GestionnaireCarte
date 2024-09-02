@@ -8,29 +8,10 @@
 
         <div id="bloc-deck">
             <h2>Deck</h2>
-            <div id="deck">
-                <div id="main-deck">
-                    Main Deck
-                </div>
-                <div id="extra-deck">
-                    Extra
-                </div>
-                <div id="side-deck">
-                    Side
-                </div>
+            <a href="{{ path('add_deck')}}">crée un nouveau Deck</a>
+
             </div>
         </div>
-    
-        <div id="bloc-recherche">
-            <h3>recherche</h3>
-            <div id="card-search-filter" style="display:none;">
-                {% include "card/_form.html.twig" %}
-            </div>
-            <button type="button" id="openFormSearch">option recherche</button>   
-             <div class="cards js-filter-content">
-                {% include "card/_content.html.twig" %}
-            </div> 
-        </div> 
         
     </div> 
 </div>

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DeckController!{% endblock %}
+
+{% block body %}
+<div class="js-filter">
+    <div id="body-deck">
+
+        <div id="bloc-deck">
+            {% include "deck/_content.html.twig" %}
+        </div>
+    
+        <div id="bloc-recherche">
+            <h3>recherche</h3>
+            <div id="card-search-filter" style="display:none;">
+                {% include "card/_form.html.twig" %}
+            </div>
+            <button type="button" id="openFormSearch">option recherche</button>   
+             <div class="cards js-filter-content">
+                {% include "card/_content.html.twig" %}
+            </div> 
+        </div> 
+        
+    </div> 
+</div>
+
+{% endblock %}

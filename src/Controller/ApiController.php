@@ -58,7 +58,6 @@ class ApiController extends AbstractController
             //traitement de l'image
             foreach ($cards as $card) {
                 foreach ($card as $detail){
-                    
                     $this->addImage($detail, $entityManager);
                 }
                 
