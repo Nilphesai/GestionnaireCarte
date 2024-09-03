@@ -28,9 +28,9 @@ class Deck
     private ?string $picture = null;
 
     /**
-     * @var Collection<int, card>
+     * @var Collection<int, Card>
      */
-    #[ORM\ManyToMany(targetEntity: card::class, inversedBy: 'decks')]
+    #[ORM\ManyToMany(targetEntity: Card::class, inversedBy: 'decks')]
     private Collection $card;
 
     /**
@@ -99,14 +99,14 @@ class Deck
     }
 
     /**
-     * @return Collection<int, card>
+     * @return Collection<int, Card>
      */
     public function getCard(): Collection
     {
         return $this->card;
     }
 
-    public function addCard(card $card): static
+    public function addCard(Card $card): static
     {
         if (!$this->card->contains($card)) {
             $this->card->add($card);
@@ -115,7 +115,7 @@ class Deck
         return $this;
     }
 
-    public function removeCard(card $card): static
+    public function removeCard(Card $card): static
     {
         $this->card->removeElement($card);
 

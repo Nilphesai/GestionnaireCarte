@@ -7,6 +7,14 @@
     <div id="body-deck">
 
         <div id="bloc-deck">
+            {{ form_start(formDeck) }}
+            {{ form_row(formDeck.title) }}
+            {{ form_row(formDeck.createdAt) }}
+            {{ form_row(formDeck.closed) }}
+            {{ form_row(formDeck.card) }}
+            {{ form_row(formDeck.picture) }}
+            {{ form_row(formDeck.valider) }}
+            {{ form_end(formDeck) }}
             {% include "deck/_content.html.twig" %}
         </div>
     

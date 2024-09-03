@@ -40,4 +40,17 @@ class DeckRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    public function findDecks(){
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+
+        $qb = $sub;
+        // sélectionner tous les deck
+        $qb->select('s')
+            ->from('App\Entity\Deck', 's');
+
+        // renvoyer le résultat
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
 }

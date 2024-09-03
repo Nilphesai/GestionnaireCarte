@@ -40,4 +40,41 @@ class CardRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    /*
+    public function findCardByDeck(int $idDeck): ?Card
+    {
+        $cd = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+
+        $qb = $sub;
+        $qb->select('c')
+            ->from('App\Entity\Card', 'c')
+            ->leftJoin('c.refCard', 'cd')
+            ->where('cd.deck_card = :id' );
+
+        $sub = $em->createQueryBuilder();
+
+        $sub->select('c.name')
+            ->from('App\Entity\Deck', 'dk')
+            ->where($sub->expr()->In('dk.id', $qb->getDQL()))
+            ->setParameter('refCard',$refCard);
+
+    }
+    */
+    public function findCardByRefCard(int $refCard)
+    {
+        $cd = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+
+        $qb = $sub;
+        // sélectionner tous les programme d'une session dont l'id est passé en paramètre
+        $qb->select('s')
+            ->from('App\Entity\Card', 's')
+            ->where('s.ref_card <= :refCard ')
+            ->setParamete_c('refCard', $refCard);
+
+        // renvoyer le résultat
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
 }

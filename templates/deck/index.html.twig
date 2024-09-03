@@ -8,9 +8,26 @@
 
         <div id="bloc-deck">
             <h2>Deck</h2>
-            <a href="{{ path('add_deck')}}">crée un nouveau Deck</a>
+            <a href="{{ path('new_deck')}}">crée un nouveau Deck</a>
 
-            </div>
+            
+            
+                <table>
+                <tr class="table-primary">
+                    <th>titre</th>
+                    <th>date création</th>
+                    <th>public</th>
+                </tr>
+                {% for deck in decks %}
+                <tr>
+                    <td><a href="{{ path('add_deck', {'id': deck.id}) }}">{{deck.title}}</a></td>
+                    <td>{{deck.createdAt|date('d-m-Y')}}</td>
+                    <td>{{deck.Closed}}</td>
+                </tr>
+                    
+                {% endfor %}
+            </table>
+            
         </div>
         
     </div> 

@@ -95,6 +95,7 @@ class ApiController extends AbstractController
         $scale = filter_input(INPUT_POST, 'scale', FILTER_SANITIZE_NUMBER_INT);
         $linkmarker = filter_input(INPUT_POST, 'linkmarker', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $picture = filter_input(INPUT_POST, 'picture', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $refCard = filter_input(INPUT_POST, 'refCard', FILTER_SANITIZE_NUMBER_INT);
 
         $type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         
@@ -104,6 +105,7 @@ class ApiController extends AbstractController
             $card->setRace($race);
             $card->setEffect($effect);
             $card->setPicture($picture);
+            $card->setRefCard($refCard);
             if ($att){
                 $card->setAtt($att);
                 if($scale){

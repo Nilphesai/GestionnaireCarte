@@ -86,6 +86,9 @@ export default class Filter {
             }
         });
         */
+
+        this.content.addEventListener('submit', e => {
+        })
        
     }
 
