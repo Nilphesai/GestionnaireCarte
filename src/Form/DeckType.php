@@ -18,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class DeckType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options, Deck $deck = null): void
     {
         $builder
             ->add('title', TextType::class,[
@@ -50,8 +50,10 @@ class DeckType extends AbstractType
                 'choice_label' => 'name',
                 'query_builder' => function (EntityRepository $er): QueryBuilder {
                     return $er->createQueryBuilder('u')
-                    ->orderBy('u.name','ASC');
-                },
+                    //->where('u.decks = :deck')
+                    ->orderBy('u.name','ASC')
+                    //->setParameter('deck', $deck)
+                ;},
                 'multiple' => true,
             ])
             ->add('valider', SubmitType::class, [

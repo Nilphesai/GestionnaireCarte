@@ -33,8 +33,9 @@
                         Effect : {{ card.desc }}</p>
                     </div>
                     <div class="data">
-                        
-                        <form action="{{ path('card_add_to_deck', {'idDeck': formDeck.id}) }}" method="post">
+                        {% if formDeck is defined %}
+                            
+                        <form action="{{ path('card_add_to_deck', {'idDeck': deck.id}) }}" method="post">
                             <input type="hidden" name="name" value="{{ card.name }}">
                             <input type="hidden" name="race" value="{{ card.race }}">
                             <input type="hidden" name="effect" value="{{ card.desc }}">
@@ -70,7 +71,7 @@
                                 </button>
     
                         </form>
-    
+                        {% endif %}
                     </div>
                 </div>
             </div>

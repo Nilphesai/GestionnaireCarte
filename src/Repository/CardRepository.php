@@ -64,14 +64,14 @@ class CardRepository extends ServiceEntityRepository
     public function findCardByRefCard(int $refCard)
     {
         $cd = $this->getEntityManager();
-        $sub = $em->createQueryBuilder();
+        $sub = $cd->createQueryBuilder();
 
         $qb = $sub;
-        // sélectionner tous les programme d'une session dont l'id est passé en paramètre
+        // sélectionner la Carte dont la refCard est passé en paramètre
         $qb->select('s')
             ->from('App\Entity\Card', 's')
-            ->where('s.ref_card <= :refCard ')
-            ->setParamete_c('refCard', $refCard);
+            ->where('s.refCard = :refCard ')
+            ->setParameter('refCard', $refCard);
 
         // renvoyer le résultat
         $query = $qb->getQuery();

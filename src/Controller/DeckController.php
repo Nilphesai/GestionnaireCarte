@@ -7,6 +7,7 @@ use App\Entity\Deck;
 use App\Form\DeckType;
 use App\Form\SearchCardType;
 use App\HttpClient\ApiHttpClient;
+use App\Repository\CardRepository;
 use App\Repository\DeckRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,9 +28,8 @@ class DeckController extends AbstractController
     }
 
     #[Route('/deck/{idDeck}/add-card', name: 'card_add_to_deck', methods: 'POST')]
-    public function addCard(EntityManagerInterface $entityManager, Request $request, Card $card = null){
+    public function addCard(CardRepository $cardRepository, EntityManagerInterface $entityManager, Request $request, Card $card = null){
         
-        $card = new Card();
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $attribute = filter_input(INPUT_POST, 'attribute', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $level = filter_input(INPUT_POST, 'level', FILTER_SANITIZE_NUMBER_INT);
@@ -43,43 +43,56 @@ class DeckController extends AbstractController
         $picture = filter_input(INPUT_POST, 'picture', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $refCard = filter_input(INPUT_POST, 'refCard', FILTER_SANITIZE_NUMBER_INT);
 
-        $type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $card = new Card();
         
-        if ($name && $race && $effect && $picture){
-            $card->setAttribute($attribute);
-            $card->setName($name);
-            $card->setRace($race);
-            $card->setEffect($effect);
-            $card->setPicture($picture);
-            $card->setRefCard($refCard);
-            if ($att){
-                $card->setAtt($att);
-                if($scale){
-                    $card->setLevel($level);
-                    $card->setScale($scale);
-                    $card->setDef($def);
-                }
-                elseif($link){
-                    $card->setLink($link);
-                    $card->setLinkMarker($linkmarker);
-                }
-                else{
-                    $card->setLevel($level);
-                    $card->setDef($def);
-                }
-            }
+        $card = $cardRepository->findCardByRefCard($refCard);
+        if ($card){
+            $deckId = $request->attributes->get('idDeck');
+            $deck = $entityManager->getRepository(Deck::class)->find($deckId);
             
-            $entityManager->persist($card);
+            $card[0]->addDeck($deck);
             $entityManager->flush();
-            
+    
+            return $this->redirectToRoute('add_deck', ['id' => $deckId]);
         }
-        $deckId = $request->attributes->get('idDeck');
-        $deck = $entityManager->getRepository(Deck::class)->find($deckId);
+        else{
         
-        $card = $entityManager->getCardByRefCard($refCard);
-
-        $entityManager->flush();
-        return $this->redirectToRoute('add_deck');
+            if ($name && $race && $effect && $picture){
+                $card->setAttribute($attribute);
+                $card->setName($name);
+                $card->setRace($race);
+                $card->setEffect($effect);
+                $card->setPicture($picture);
+                $card->setRefCard($refCard);
+                if ($att){
+                    $card->setAtt($att);
+                    if($scale){
+                        $card->setLevel($level);
+                        $card->setScale($scale);
+                        $card->setDef($def);
+                    }
+                    elseif($link){
+                        $card->setLink($link);
+                        $card->setLinkMarker($linkmarker);
+                    }
+                    else{
+                        $card->setLevel($level);
+                        $card->setDef($def);
+                    }
+                }
+                
+                $entityManager->persist($card);
+                $entityManager->flush();
+                
+            }
+            $deckId = $request->attributes->get('idDeck');
+            $deck = $entityManager->getRepository(Deck::class)->find($deckId);
+        
+            $card->addDeck($deck);
+            $entityManager->flush();
+    
+            return $this->redirectToRoute('add_deck', ['id' => $deckId]);
+        }
     }
 
     #[Route('/deck/new', name: 'new_deck')]
@@ -110,6 +123,7 @@ class DeckController extends AbstractController
             'formSearchCard' => $form,
             'cards' => $cards,
             'formDeck' => $formDeck,
+            'deck' => $deck,
         ]);
     }
 
