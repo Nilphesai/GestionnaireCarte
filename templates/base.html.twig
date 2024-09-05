@@ -21,9 +21,9 @@
             <a href="{{ path('app_login') }}">Se connecter</a>
             <a href="{{ path('app_register') }}">S'enregister</a>
         {% endif %}
-        {% if is_granted("ROLE_ADMIN") %}
+        {#{% if is_granted("ROLE_ADMIN") %}
             <a href="">Panneau d'administration</a>
-        {% endif %}
+        {% endif %}#}
         <main>
             {% block body %}{% endblock %}
 

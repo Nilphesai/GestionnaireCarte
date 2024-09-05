@@ -20,7 +20,7 @@
                 </tr>
                 {% for deck in decks %}
                 <tr>
-                    <td><a href="{{ path('add_deck', {'id': deck.id}) }}">{{deck.title}}</a></td>
+                    <td><a href="{{ path('update_deck', {'id': deck.id}) }}">{{deck.title}}</a></td>
                     <td>{{deck.createdAt|date('d-m-Y')}}</td>
                     <td>{{deck.Closed}}</td>
                 </tr>

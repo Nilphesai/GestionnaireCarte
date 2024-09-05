@@ -45,15 +45,15 @@ class DeckController extends AbstractController
 
         $card = new Card();
         
-        $card = $cardRepository->findCardByRefCard($refCard);
-        if ($card){
+        $cardcheck = $cardRepository->findCardByRefCard($refCard);
+        if ($cardcheck){
             $deckId = $request->attributes->get('idDeck');
             $deck = $entityManager->getRepository(Deck::class)->find($deckId);
             
-            $card[0]->addDeck($deck);
+            $cardcheck[0]->addDeck($deck);
             $entityManager->flush();
     
-            return $this->redirectToRoute('add_deck', ['id' => $deckId]);
+            return $this->redirectToRoute('update_deck', ['id' => $deckId]);
         }
         else{
         
@@ -91,12 +91,12 @@ class DeckController extends AbstractController
             $card->addDeck($deck);
             $entityManager->flush();
     
-            return $this->redirectToRoute('add_deck', ['id' => $deckId]);
+            return $this->redirectToRoute('update_deck', ['id' => $deckId]);
         }
     }
 
     #[Route('/deck/new', name: 'new_deck')]
-    #[Route('/deck/{id}/edit', name: 'add_deck')]
+    #[Route('/deck/{id}/edit', name: 'update_deck')]
     public function new(EntityManagerInterface $entityManager, Request $request, Card $card = null,Deck $deck = null, ApiHttpClient $apiHttpClient): Response
     {
         if(!$deck){
