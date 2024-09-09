@@ -48,12 +48,12 @@ class DeckType extends AbstractType
                 'required' => false,
                 'class' => Card::class,
                 'choice_label' => 'name',
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('u')
+                //'query_builder' => function (EntityRepository $er): QueryBuilder {
+                //    return $er->createQueryBuilder('u')
                     //->where('u.decks = :deck')
-                    ->orderBy('u.name','ASC')
+                //    ->orderBy('u.name','ASC')
                     //->setParameter('deck', $deck)
-                ;},
+                //;},
                 'multiple' => true,
             ])
             ->add('valider', SubmitType::class, [

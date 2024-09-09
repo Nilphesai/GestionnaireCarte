@@ -9,10 +9,14 @@
         <div id="bloc-deck">
             {{ form_start(formDeck) }}
             {{ form_row(formDeck.title) }}
-            {{ form_row(formDeck.createdAt) }}
-            {{ form_row(formDeck.closed) }}
-            {{ form_row(formDeck.card) }}
+            <div class="hidden">
+                {{ form_row(formDeck.createdAt) }}
+                {{ form_row(formDeck.card) }}
             {{ form_row(formDeck.picture) }}
+            </div>
+            
+            {{ form_row(formDeck.closed) }}
+            
             {{ form_row(formDeck.valider) }}
             {{ form_end(formDeck) }}
             {% include "deck/_content.html.twig" %}

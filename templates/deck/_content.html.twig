@@ -1,12 +1,20 @@
 <h2>Deck</h2>
-            <div id="deck">
-                <div id="main-deck">
-                    Main Deck
-                </div>
-                <div id="extra-deck">
-                    Extra
-                </div>
-                <div id="side-deck">
-                    Side
-                </div>
-            </div>
+{{dump(deck)}}
+
+
+    
+    <div id="deck">
+        <div id="main-deck">
+            {% for card in deck.card %}
+
+            <div class="image-carte-min"><img src="{{ asset ('images/' ~ card.refcard ~ '.jpg') }}"></div>
+            
+            {% endfor %}
+        </div>
+        <div id="extra-deck">
+            Extra
+        </div>
+        <div id="side-deck">
+            Side
+        </div>
+    </div>

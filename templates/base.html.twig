@@ -12,7 +12,8 @@
         {% endblock %}
     </head>
     <body>
-        <a href="{{ path('cards_list') }}">liste de carte</a>
+        <header id="navbar">
+            <a href="{{ path('cards_list') }}">liste de carte</a>
         {% if app.user %}
             <a href="{{ path('app_deck')}}">Deck</a>
             <a href="{{ path('app_logout') }}">Se déconnecter</a>
@@ -24,6 +25,9 @@
         {#{% if is_granted("ROLE_ADMIN") %}
             <a href="">Panneau d'administration</a>
         {% endif %}#}
+        </header>
+        
+        
         <main>
             {% block body %}{% endblock %}
 
