@@ -16,7 +16,7 @@ class ApiHttpClient extends AbstractController{
 
     public function getCards(){
         
-            $response = $this->httpClient->request('GET','?fname=Dark Magician', [
+            $response = $this->httpClient->request('GET','?num=15&offset=0', [
                 'verify_peer' => false,
             ]);
             return $response->toArray();
@@ -30,7 +30,7 @@ class ApiHttpClient extends AbstractController{
             return $response->toArray();
         }
         else{
-            $response = $this->httpClient->request('GET','?fname=Dark Magician', [
+            $response = $this->httpClient->request('GET','?num=15&offset=0', [
                 'verify_peer' => false,
             ]);
             return $response->toArray();
@@ -39,6 +39,7 @@ class ApiHttpClient extends AbstractController{
 
     public function getCardsByFilter(Array $searchedCard): array{
         if($searchedCard){
+            
             $name = "fname=".$searchedCard[0];
             $type = "type=".$searchedCard[1];
             $attribute = "attribute=".$searchedCard[2];
@@ -82,17 +83,28 @@ class ApiHttpClient extends AbstractController{
             if($searchedCard[9]){
                 $search .= $linkmarker."&"; 
             }
-            $response = $this->httpClient->request('GET','?'.$search."sort=name", [
+            
+            $response = $this->httpClient->request('GET','?'.$search."sort=name&num=15&offset=0", [
                 'verify_peer' => false,
             ]);
+            
             return $response->toArray();    
         }
         else{
-            $response = $this->httpClient->request('GET','?fname=Dark Magician', [
+            $response = $this->httpClient->request('GET','?num=15&offset=0', [
                 'verify_peer' => false,
             ]);
             return $response->toArray();
         }
+    }
+
+    public function getCardsByUrl($url): array{
+        $response = $this->httpClient->request('GET',$url, [
+            'verify_peer' => false,
+        ]);
+        
+        return $response->toArray();   
+
     }
 
     

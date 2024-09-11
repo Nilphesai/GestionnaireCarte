@@ -79,3 +79,24 @@
         </div>
           
     {% endfor %}
+    <form id="pagingcard" action="{{ path('next_page') }}" method="post">
+        {% if cards.meta.previous_page is defined %}
+            <button type="submit" 
+            title="Next Page" id="prevPage">
+            
+            </button>
+            <input name="urlPreviousPage" value="{{ cards.meta.previous_page }}">
+                <i>Previous</i>
+        {% endif %}
+        
+        <a href="{{ path('next_page', {'num': cards.meta.total_pages}) }}">
+            {{dump(cards.meta)}}
+            </a>
+            <input name="urlNextPage" value="{{ cards.meta.next_page }}">
+        <button type="submit"
+        title="Next Page" id="nextPage">
+            <i>Next</i>
+        </button>
+    </form>
+
+    

@@ -8,6 +8,7 @@ use App\Entity\Picture;
 use App\Form\SearchCardType;
 use App\HttpClient\ApiHttpClient;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -17,22 +18,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ApiController extends AbstractController
 {
     #[Route('/cards', name: 'cards_list')]
-    public function index(EntityManagerInterface $entityManager, Card $card = null, ApiHttpClient $apiHttpClient, Request $request): Response
+    public function index(EntityManagerInterface $entityManager, Card $card = null, ApiHttpClient $apiHttpClient): Response
     {
         
         $card = new Card();
         $formSearchCard = $this->createForm(SearchCardType::class,$card);
         $formAddCard = $this->createForm(CardType::class,$card);
         $cards = $apiHttpClient->getCards();
-
+        
         //traitement de l'image
-        foreach ($cards as $card) {
-            foreach ($card as $detail){
-                
-                $this->addImage($detail, $entityManager);
-            }
-            
+        
+        foreach ($cards['data'] as $detail){
+            $this->addImage($detail, $entityManager);
         }
+          
         
         return $this->render('card/index.html.twig', [
             'formSearchCard' => $formSearchCard,
@@ -54,13 +53,10 @@ class ApiController extends AbstractController
         
         if($test['cardName']){
             $cards = $apiHttpClient->getCardsByFilter($test['cardName']);
-            
+            //dd($cards);
             //traitement de l'image
-            foreach ($cards as $card) {
-                foreach ($card as $detail){
-                    $this->addImage($detail, $entityManager);
-                }
-                
+            foreach ($cards['data'] as $detail){
+                $this->addImage($detail, $entityManager);
             }
             
             return new JsonResponse([
@@ -78,6 +74,39 @@ class ApiController extends AbstractController
         }
     }
 
+    #[Route('/cards/next_page', name: 'next_page')]
+    public function nextPage(EntityManagerInterface $entityManager,Card $card = null, ApiHttpClient $apiHttpClient, Request $request){
+
+        $test = $request->toArray();
+        
+        if($test['cardName']){
+            $cards = $apiHttpClient->getCardsByUrl($test['cardName']);
+            //dd($cards);
+            //traitement de l'image
+            foreach ($cards['data'] as $detail){
+                $this->addImage($detail, $entityManager);
+            }
+            
+            return new JsonResponse([
+                'content' => $this->renderView('card/_content.html.twig', ['cards' => $cards])
+            ]);
+        }
+        else{
+            if(!$card){
+                $card = new Card();
+            }
+            
+            $form = $this->createForm(SearchCardType::class,$card);
+    
+            $cards = $apiHttpClient->getCards();
+            return new JsonResponse($cards);
+            return $this->render('card/_content.html.twig', [
+                'formSearchCard' => $form,
+                'cards' => $cards,
+            ]);
+        }
+    
+    }
 
 
     #[Route('/cards/add-card', name: 'card_add', methods: 'POST')]
@@ -137,7 +166,6 @@ class ApiController extends AbstractController
         $route = $detail['card_images'][0]['image_url_small'];
         $imageContent = file_get_contents($route);
         $imagePath = '../public/images/' . $detail['id'] . '.jpg';
-    
         if (!file_exists($imagePath)) {
             file_put_contents($imagePath, $imageContent);
             $picture = new Picture();

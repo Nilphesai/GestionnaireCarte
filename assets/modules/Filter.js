@@ -111,12 +111,18 @@ export default class Filter {
             }
         });
         */
+        
+        
 
-        this.content.addEventListener('submit', e => {
+        document.getElementById("pagingcard").addEventListener('submit', e => {
+            e.preventDefault()
+            const url = e.target.urlNextPage.value;
+            console.log(url);
+            
+            this.loadUrl(e.target.getAttribute('action'),url)
         })
-       
+        
     }
-
     
     async loadUrl (url,searchedCard){
         console.log(url)
