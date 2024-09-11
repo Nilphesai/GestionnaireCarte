@@ -97,10 +97,11 @@ class ApiController extends AbstractController
         $picture = filter_input(INPUT_POST, 'picture', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $refCard = filter_input(INPUT_POST, 'refCard', FILTER_SANITIZE_NUMBER_INT);
 
-        $type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $typecard = filter_input(INPUT_POST, 'typecard', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         
         if ($name && $race && $effect && $picture){
             $card->setAttribute($attribute);
+            $card->setTypecard($typecard);
             $card->setName($name);
             $card->setRace($race);
             $card->setEffect($effect);

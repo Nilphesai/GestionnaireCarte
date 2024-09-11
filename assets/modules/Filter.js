@@ -25,6 +25,7 @@ export default class Filter {
     }
     //ajoute les comportement au différents éléments
     bindEvents () {
+        //déroulé le form SearchCard
         document.getElementById("openFormSearch").addEventListener("click", function() {
             if (document.getElementById("card-search-filter").style.display == "none"){
                 document.getElementById("card-search-filter").style.display = "flex";
@@ -37,11 +38,35 @@ export default class Filter {
 
         // TODO : améliorer le comportement de l'évènement en chargeant 
         // les cartes en fonction de ce qui est écrit dans le textbox  
-        this.form.addEventListener('submit', e => {
-                
-                
+
+        document.getElementById("search_card_typecard").addEventListener('change', e => {
+            console.log(e.target.value)
+            if(e.target.value === "Spell Card" || e.target.value === "Trap Card"){
+                document.getElementById("typeMonster").style.display = "none";
+                document.getElementById("search_card_attribute").value = null;
+                document.getElementById("search_card_level").value = null;
+                document.getElementById("search_card_race").value = null;
+                document.getElementById("search_card_att").value = null;
+                document.getElementById("search_card_def").value = null;
+                document.getElementById("search_card_link").value = null;
+                document.getElementById("search_card_scale").value = null;
+
+                const linkMark = document.querySelectorAll('.searchLinkMarkers')
+                linkMark.forEach(element => {
+                    if(element.checked){
+                        element.checked = false;
+                    }
+                })
+            }else{
+                document.getElementById("typeMonster").style.display = "inline";
+            }
+        })
+
+        this.form.addEventListener('submit', e => {    
+
                 e.preventDefault()
                 console.log(e.target.search_card_name.value)
+                console.log(e.target.search_card_typecard.value)
                 console.log(e.target.search_card_attribute.value)
                 console.log(e.target.search_card_level.value)
                 console.log(e.target.search_card_race.value)
@@ -58,7 +83,7 @@ export default class Filter {
                 });
                 const listLinkMarkString = listLinkMark.join();
                 console.log(listLinkMarkString)
-                const searchedCard = [e.target.search_card_name.value,e.target.search_card_attribute.value,
+                const searchedCard = [e.target.search_card_name.value,e.target.search_card_typecard.value,e.target.search_card_attribute.value,
                     e.target.search_card_level.value,e.target.search_card_race.value,
                     e.target.search_card_att.value,e.target.search_card_def.value,
                     e.target.search_card_link.value,e.target.search_card_scale.value,

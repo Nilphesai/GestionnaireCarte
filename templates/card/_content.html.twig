@@ -39,6 +39,7 @@
                             <input type="hidden" name="name" value="{{ card.name }}">
                             <input type="hidden" name="race" value="{{ card.race }}">
                             <input type="hidden" name="effect" value="{{ card.desc }}">
+                            <input type="hidden" name="typecard" value="{{ card.type }}">
 
                             {% if card.frameType == "normal" or card.frameType == "effect" or card.frameType == "ritual" or card.frameType == "fusion" or card.frameType == "synchro" or card.frameType == "xyz"%}
                                 <input type="hidden" name="attribute" value="{{ card.attribute }}">

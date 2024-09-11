@@ -1,20 +1,16 @@
 
         {{ form_start(formSearchCard, {'action': "/cards/fetch-cards", 'method': "post"}) }}
         {{ form_row(formSearchCard.name) }}
-        {{ form_row(formSearchCard.attribute)}}
-        {{ form_row(formSearchCard.level)}}
+        {{ form_row(formSearchCard.typecard)}}
         {{ form_row(formSearchCard.race)}}
-        {{ form_row(formSearchCard.att)}}
-        {{ form_row(formSearchCard.def)}}
-        {{ form_row(formSearchCard.scale)}}
+        <div id="typeMonster">
+            {{ form_row(formSearchCard.attribute)}}
+            {{ form_row(formSearchCard.level)}}
+            {{ form_row(formSearchCard.att)}}
+            {{ form_row(formSearchCard.def)}}
+            {{ form_row(formSearchCard.scale)}}
+            {{ form_row(formSearchCard.link)}}
+            {{ form_row(formSearchCard.linkMarker)}}
+        </div>
+
         {{ form_end(formSearchCard) }}
-
-       
-
-       {# <form action="{{ path('card_fetch') }}" method="post">
-            <input type="textbox" name="card_name">
-            <button type="submit">
-                <i>recherche</i>
-            </button>
-        </form> #}
-        

@@ -40,14 +40,15 @@ class ApiHttpClient extends AbstractController{
     public function getCardsByFilter(Array $searchedCard): array{
         if($searchedCard){
             $name = "fname=".$searchedCard[0];
-            $attribute = "attribute=".$searchedCard[1];
-            $level = "level=".$searchedCard[2];
-            $race = "race=".$searchedCard[3];
-            $att = "atk=".$searchedCard[4];
-            $def = "def=".$searchedCard[5];
-            $link = "link=".$searchedCard[6];
-            $scale = "scale=".$searchedCard[7];
-            $linkmarker = "linkmarker=".$searchedCard[8];
+            $type = "type=".$searchedCard[1];
+            $attribute = "attribute=".$searchedCard[2];
+            $level = "level=".$searchedCard[3];
+            $race = "race=".$searchedCard[4];
+            $att = "atk=".$searchedCard[5];
+            $def = "def=".$searchedCard[6];
+            $link = "link=".$searchedCard[7];
+            $scale = "scale=".$searchedCard[8];
+            $linkmarker = "linkmarker=".$searchedCard[9];
 
             $search ="";
 
@@ -55,27 +56,30 @@ class ApiHttpClient extends AbstractController{
                 $search .= $name."&"; 
             }
             if ($searchedCard[1]){
+                $search .= $type."&"; 
+            }
+            if ($searchedCard[2]){
                 $search .= $attribute."&"; 
             }
-            if($searchedCard[2]){
+            if($searchedCard[3]){
                 $search .= $level."&"; 
             }
-            if($searchedCard[3]){
+            if($searchedCard[4]){
                 $search .= $race."&"; 
             }
-            if($searchedCard[4] || $searchedCard[4] == 0){
+            if($searchedCard[5] || $searchedCard[5] == 0){
                 $search .= $att."&"; 
             }
-            if($searchedCard[5] || $searchedCard[5] == 0){
+            if($searchedCard[6] || $searchedCard[6] == 0){
                 $search .= $def."&"; 
             }
-            if($searchedCard[6]){
+            if($searchedCard[7]){
                 $search .= $link."&"; 
             }
-            if($searchedCard[7]){
+            if($searchedCard[8]){
                 $search .= $scale."&"; 
             }
-            if($searchedCard[8]){
+            if($searchedCard[9]){
                 $search .= $linkmarker."&"; 
             }
             $response = $this->httpClient->request('GET','?'.$search."sort=name", [

@@ -72,6 +72,11 @@ class CardType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
+            ->add('typecard', TextType::class, [
+                'attr'=> [
+                    'class' => 'form-control'
+                ]
+            ])
             ->add('decks', EntityType::class, [
                 'class' => Deck::class,
                 'choice_label' => 'id',

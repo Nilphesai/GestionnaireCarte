@@ -24,7 +24,17 @@ class SearchCardType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-
+            ->add('typecard', ChoiceType::class,[
+                'choices' => [
+                    'MONSTER' => 'MONSTER',
+                    'SPELL' => 'Spell Card',
+                    'TRAP' => 'Trap Card',
+                ],
+                'required' => false,
+                'attr'=> [
+                    'class' => 'form-control'
+                ]
+            ])
             ->add('attribute', ChoiceType::class,[
                 'choices' => [
                     'LIGHT' => 'LIGHT',

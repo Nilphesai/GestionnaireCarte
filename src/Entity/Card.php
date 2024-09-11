@@ -58,6 +58,9 @@ class Card
     #[ORM\Column]
     private ?int $refCard = null;
 
+    #[ORM\Column(length: 50)]
+    private ?string $typecard = null;
+
     public function __construct()
     {
         $this->decks = new ArrayCollection();
@@ -235,6 +238,18 @@ class Card
     public function setRefCard(int $refCard): static
     {
         $this->refCard = $refCard;
+
+        return $this;
+    }
+
+    public function getTypecard(): ?string
+    {
+        return $this->typecard;
+    }
+
+    public function setTypecard(string $typecard): static
+    {
+        $this->typecard = $typecard;
 
         return $this;
     }
