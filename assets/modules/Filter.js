@@ -90,6 +90,25 @@ export default class Filter {
                 this.loadUrl(e.target.getAttribute('action'),searchedCard)
                 
             })
+
+        const dialogs = document.querySelectorAll(".dialog");
+        console.log(dialogs)
+        const showButtons = document.querySelectorAll(".img");
+        const closeButton = document.querySelector("dialog button");
+        console.log(showButtons)
+
+        showButtons.forEach(function (showButton, index) {
+            console.log(showButton[index])
+            showButton[index].addEventListener("click", () => {
+                dialogs[index].showModal();
+              });
+        })
+        
+
+        closeButton.addEventListener("click", () => {
+            dialog.close();
+          });
+
         /*  appuis n'importe où sur le cardre d'une carte
         let isDragging = false;
 

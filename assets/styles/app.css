@@ -1,15 +1,16 @@
 body {
-    background-color: skyblue;
+    background-color: #E3CD9B;
+    
 }
 #navbar {
-    background-color: #333;
+    background-color: #A64826;
     overflow: hidden;
 }
   
   /* Style the links inside the navigation bar */
 #navbar a {
     float: left;
-    color: #f2f2f2;
+    color: #E3E3E3;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -58,7 +59,7 @@ body {
     margin-right: 5rem;
 }
 .image-carte-min img{
-    background-color: yellow;
+    background-color: #a64826;
     width: 150px;
     height: 200px;
     margin: 10px;
@@ -73,9 +74,20 @@ body {
 
 #card-search-filter{
     border: 1px solid black;
+    background-color: #D4D4D4;
+    max-width : 500px;
+
+}
+.js-filter{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .js-filter-content{
-    overflow-y:scroll;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1600px;
+
 }
 #main-deck{
     background-color: brown;
@@ -100,3 +112,8 @@ body {
 .hidden {
     display: none;
 }
+
+::backdrop {
+    background-color: grey;
+    opacity: 0.75;
+  }

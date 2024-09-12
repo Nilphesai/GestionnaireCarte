@@ -1,8 +1,41 @@
 
     {% for card in cards.data %}
         <div id="{{card.id}}"  >
-            <div class="image-carte-min"><img src="{{ asset ('images/' ~ card.id ~ '.jpg') }}"></div>
-            <div id="card-info{{card.id}}">
+            <div class="image-carte-min">
+                <dialog class="dialog">
+                    <button autofocus>Fermer</button>
+                    <p>{{ card.name }}</p>
+                    <p>{{ card.type }}</p>
+                
+                    
+                        {% if card.frameType == "normal" or card.frameType == "effect" or card.frameType == "ritual" or card.frameType == "fusion" or card.frameType == "synchro" or card.frameType == "xyz" or card.frameType == "pendulum" or card.frameType == "link" %}
+                            <P>Attribut : {{ card.attribute }}<br>
+                            
+                                {% if card.frameType == "normal" or card.frameType == "effect" or card.frameType == "ritual" or card.frameType == "fusion" or card.frameType == "synchro" %}
+                                Niveau/Rang : {{ card.level }}<br>
+                                attaque : {{ card.atk }}<br>
+                                Défense : {{ card.def }}<br>
+                                {% elseif card.frameType == "pendulum" %}
+                                Niveau/Rang : {{ card.level }}<br>
+                                attaque : {{ card.atk }}<br>
+                                Défense : {{ card.def }}<br>
+                                Echelle : {{ card.scale }}<br>
+                                {% elseif card.frameType == "link" %}
+                                Lien : {{ card.linkval }}<br>
+                                Pointe vers :
+                                    {% for linkmarker in card.linkmarkers %}
+                                    <p>{{ linkmarker }}</p>
+                                    {% endfor %}
+                                {% endif %}
+                        {% endif %}
+                        Type : {{ card.race }}<br>
+                        Effect : {{ card.desc }}</p>
+                </dialog>
+                <img class="img" src="{{ asset ('images/' ~ card.id ~ '.jpg') }}">
+            </div>
+        
+         
+           {# <div id="card-info{{card.id}}">
                 <div class="details">
                     <div class="carac">
                         <a href="{{ path('show_card', {'id': card.id}) }}">{{ card.name }}</a>
@@ -32,6 +65,8 @@
                         Type : {{ card.race }}<br>
                         Effect : {{ card.desc }}</p>
                     </div>
+        
+
                     <div class="data">
                         {% if formDeck is defined %}
                             
@@ -76,6 +111,7 @@
                     </div>
                 </div>
             </div>
+            #}
         </div>
           
     {% endfor %}
