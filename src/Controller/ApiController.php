@@ -57,16 +57,16 @@ class ApiController extends AbstractController
             //dd($test['cardName'][1]);
             if(str_contains($test['cardName'][1],"Effect Monster")){
                 
-                foreach($cards['data'] as $card){
+                foreach($cards['data'] as $key => $card){
                     //dd($card);
                     if($card['type'] === 'Spell Card' || $card['type'] === 'Trap Card'){
                         
-                        unset($cards[array_search($card, $cards)]);
-                        dd($card);
+                        unset($cards['data'][$key]);
+                        //dd($card);
                     }
                 }
             }
-            dd($cards);
+            //dd($cards);
             //traitement de l'image
             foreach ($cards['data'] as $detail){
                 $this->addImage($detail, $entityManager);
