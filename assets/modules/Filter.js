@@ -16,10 +16,9 @@ export default class Filter {
 
         this.content = element.querySelector('.js-filter-content')
         this.form = element.querySelector('#card-search-filter')
-        
-        
-        console.log(this.form)
-        console.log(document.getElementById("openFormSearch"))
+
+        //console.log(this.form)
+        //console.log(document.getElementById("openFormSearch"))
 
         this.bindEvents()
     }
@@ -40,7 +39,7 @@ export default class Filter {
         // les cartes en fonction de ce qui est écrit dans le textbox  
 
         document.getElementById("search_card_typecard").addEventListener('change', e => {
-            console.log(e.target.value)
+            //console.log(e.target.value)
             if(e.target.value === "Spell Card" || e.target.value === "Trap Card"){
                 document.getElementById("typeMonster").style.display = "none";
                 document.getElementById("search_card_attribute").value = null;
@@ -113,14 +112,14 @@ export default class Filter {
         */
         
         
-
+        /*
         document.getElementById("pagingcard").addEventListener('submit', e => {
             e.preventDefault()
             const url = e.target.urlNextPage.value;
             console.log(url);
             
             this.loadUrl(e.target.getAttribute('action'),url)
-        })
+        })*/
         
     }
     

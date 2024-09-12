@@ -83,11 +83,11 @@ class ApiHttpClient extends AbstractController{
             if($searchedCard[9]){
                 $search .= $linkmarker."&"; 
             }
-            
+            //dd($search);
             $response = $this->httpClient->request('GET','?'.$search."sort=name&num=15&offset=0", [
                 'verify_peer' => false,
             ]);
-            
+            //dd($response);
             return $response->toArray();    
         }
         else{

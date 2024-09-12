@@ -26,9 +26,16 @@ class SearchCardType extends AbstractType
             ])
             ->add('typecard', ChoiceType::class,[
                 'choices' => [
-                    'MONSTER' => 'MONSTER',
-                    'SPELL' => 'Spell Card',
-                    'TRAP' => 'Trap Card',
+                    'Normal' => 'Normal Monster,Normal Tuner Monster',
+                    'Effect' => 'Effect Monster,Flip Effect Monster,Flip Tuner Effect Monster,Gemini Monster,Spirit Monster,Toon Monster,Union Effect Monster',
+                    'Ritual' => 'Ritual Effect Monster,Ritual Monster',
+                    'Fusion' => 'Fusion Monster',
+                    'Synchro' => 'Synchro Monster,Synchro Tuner Monster',
+                    'Xyz' => 'Xyz Monster',
+                    'Link' => 'Link Monster',
+                    'Pendulum' => 'Pendulum Normal Monster,Pendulum Effect Monster,Pendulum Effect Ritual Monster,Pendulum Effect Fusion Monster,Synchro Pendulum Effect Monster,Xyz Pendulum Effect Monster',
+                    'Spell' => 'Spell Card',
+                    'Trap' => 'Trap Card',
                 ],
                 'required' => false,
                 'attr'=> [

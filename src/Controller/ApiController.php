@@ -52,8 +52,21 @@ class ApiController extends AbstractController
         $test = $request->toArray();
         
         if($test['cardName']){
+            //dd($test['cardName']);
             $cards = $apiHttpClient->getCardsByFilter($test['cardName']);
-            //dd($cards);
+            //dd($test['cardName'][1]);
+            if(str_contains($test['cardName'][1],"Effect Monster")){
+                
+                foreach($cards['data'] as $card){
+                    //dd($card);
+                    if($card['type'] === 'Spell Card' || $card['type'] === 'Trap Card'){
+                        
+                        unset($cards[array_search($card, $cards)]);
+                        dd($card);
+                    }
+                }
+            }
+            dd($cards);
             //traitement de l'image
             foreach ($cards['data'] as $detail){
                 $this->addImage($detail, $entityManager);
