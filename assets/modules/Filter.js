@@ -19,11 +19,19 @@ export default class Filter {
 
         //console.log(this.form)
         //console.log(document.getElementById("openFormSearch"))
-
+        
         this.bindEvents()
+
+        document.getElementsByClassName('js-filter-content').addEventListener('load', (event) => {
+            console.log('Page fully loaded')
+            this.bindEvents()
+        });
     }
+
+    
     //ajoute les comportement au différents éléments
     bindEvents () {
+        console.log('bindEvents chargé !');
         //déroulé le form SearchCard
         document.getElementById("openFormSearch").addEventListener("click", function() {
             if (document.getElementById("card-search-filter").style.display == "none"){
@@ -95,6 +103,7 @@ export default class Filter {
         const showButtons = document.querySelectorAll(".img");
         const closeButtons = document.querySelectorAll(".closeDetailCard");
 
+        //affichage détail carte
         showButtons.forEach(function (showButton, index) {
             showButton.addEventListener("click", () => {
                 dialogs[index].showModal();
@@ -162,5 +171,6 @@ export default class Filter {
             console.log('erreur')
             console.error(response)
         }
+        this.bindEvents();
     }
 }

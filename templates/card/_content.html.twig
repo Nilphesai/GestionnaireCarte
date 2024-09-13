@@ -4,32 +4,44 @@
             <div class="image-carte-min">
                 <dialog class="dialog">
                     <button autofocus class="closeDetailCard">Fermer</button>
-                    <p>{{ card.name }}</p>
-                    <p>{{ card.type }}</p>
-                
-                    
-                        {% if card.frameType == "normal" or card.frameType == "effect" or card.frameType == "ritual" or card.frameType == "fusion" or card.frameType == "synchro" or card.frameType == "xyz" or card.frameType == "pendulum" or card.frameType == "link" %}
-                            <P>Attribut : {{ card.attribute }}<br>
+                    <div class="detailCard">
+                        <img class="imagedetail" src="{{ asset ('images/' ~ card.id ~ '.jpg') }}">
+                        <div class="tableauDetailCard">
+                            <div class="namecard"><h6>Nom de carte</h6><b>{{ card.name }}</b></div>
+                            <div class="typecard"><b>Type de carte : </b>{{ card.type }}</div>
+                        
                             
-                                {% if card.frameType == "normal" or card.frameType == "effect" or card.frameType == "ritual" or card.frameType == "fusion" or card.frameType == "synchro" %}
-                                Niveau/Rang : {{ card.level }}<br>
-                                attaque : {{ card.atk }}<br>
-                                Défense : {{ card.def }}<br>
-                                {% elseif card.frameType == "pendulum" %}
-                                Niveau/Rang : {{ card.level }}<br>
-                                attaque : {{ card.atk }}<br>
-                                Défense : {{ card.def }}<br>
-                                Echelle : {{ card.scale }}<br>
-                                {% elseif card.frameType == "link" %}
-                                Lien : {{ card.linkval }}<br>
-                                Pointe vers :
-                                    {% for linkmarker in card.linkmarkers %}
-                                    <p>{{ linkmarker }}</p>
-                                    {% endfor %}
+                                {% if card.frameType == "normal" or card.frameType == "effect" or card.frameType == "ritual" or card.frameType == "fusion" or card.frameType == "synchro" or card.frameType == "xyz" or card.frameType == "pendulum" or card.frameType == "link" %}
+                                    <div><b>Attribut : </b>{{ card.attribute }}</div>
+                                    
+                                        {% if card.frameType == "normal" or card.frameType == "effect" or card.frameType == "ritual" or card.frameType == "fusion" or card.frameType == "synchro" %}
+                                        <div><b>Niveau/Rang : </b>{{ card.level }}</div>
+                                        <div><b>attaque : </b>{{ card.atk }}</div>
+                                        <div><b>Défense : </b>{{ card.def }}</div>
+                                        {% elseif card.frameType == "pendulum" %}
+                                        <div><b>Niveau/Rang : </b>{{ card.level }}</div>
+                                        <div><b>attaque : </b>{{ card.atk }}</div>
+                                        <div><b>Défense : </b>{{ card.def }}</div>
+                                        <div><b>Echelle : </b>{{ card.scale }}</div>
+                                        {% elseif card.frameType == "link" %}
+                                        <div><b>Lien : </b>{{ card.linkval }}</div>
+                                        <div>
+                                            <b>Pointe vers :</b>
+                                            {% for linkmarker in card.linkmarkers %}
+                                            {{ linkmarker }}
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
                                 {% endif %}
-                        {% endif %}
-                        Type : {{ card.race }}<br>
-                        Effect : {{ card.desc }}</p>
+                                <div class="caracard">
+                                    <b>Type : </b>{{ card.race }}<br>
+                                    <b>Effect : </b>{{ card.desc }}
+                                </div>
+                            
+                        </div>
+                        
+                            
+                    </div>
                 </dialog>
                 <img class="img" src="{{ asset ('images/' ~ card.id ~ '.jpg') }}">
             </div>

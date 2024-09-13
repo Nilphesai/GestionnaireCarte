@@ -16,7 +16,7 @@ class ApiHttpClient extends AbstractController{
 
     public function getCards(){
         
-            $response = $this->httpClient->request('GET','?num=50&offset=0', [
+            $response = $this->httpClient->request('GET','?num=20&offset=0', [
                 'verify_peer' => false,
             ]);
             return $response->toArray();
@@ -30,7 +30,7 @@ class ApiHttpClient extends AbstractController{
             return $response->toArray();
         }
         else{
-            $response = $this->httpClient->request('GET','?num=30&offset=0', [
+            $response = $this->httpClient->request('GET','?num=20&offset=0', [
                 'verify_peer' => false,
             ]);
             return $response->toArray();
@@ -84,14 +84,14 @@ class ApiHttpClient extends AbstractController{
                 $search .= $linkmarker."&"; 
             }
             //dd($search);
-            $response = $this->httpClient->request('GET','?'.$search."sort=name&num=30&offset=0", [
+            $response = $this->httpClient->request('GET','?'.$search."sort=name&num=20&offset=0", [
                 'verify_peer' => false,
             ]);
             //dd($response);
             return $response->toArray();    
         }
         else{
-            $response = $this->httpClient->request('GET','?num=30&offset=0', [
+            $response = $this->httpClient->request('GET','?num=20&offset=0', [
                 'verify_peer' => false,
             ]);
             return $response->toArray();
