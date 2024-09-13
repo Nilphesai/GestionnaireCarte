@@ -13,6 +13,7 @@
     </head>
     <body>
         <header id="navbar">
+            <a href="{{ path('app_home') }}">Acceuil</a>
             <a href="{{ path('cards_list') }}">liste de carte</a>
         {% if app.user %}
             <a href="{{ path('app_deck')}}">Deck</a>

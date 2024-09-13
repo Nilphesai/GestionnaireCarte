@@ -92,22 +92,18 @@ export default class Filter {
             })
 
         const dialogs = document.querySelectorAll(".dialog");
-        console.log(dialogs)
         const showButtons = document.querySelectorAll(".img");
-        const closeButton = document.querySelector("dialog button");
-        console.log(showButtons)
+        const closeButtons = document.querySelectorAll(".closeDetailCard");
 
         showButtons.forEach(function (showButton, index) {
-            console.log(showButton[index])
-            showButton[index].addEventListener("click", () => {
+            showButton.addEventListener("click", () => {
                 dialogs[index].showModal();
+              });
+              closeButtons[index].addEventListener("click", () => {
+                dialogs[index].close();
               });
         })
         
-
-        closeButton.addEventListener("click", () => {
-            dialog.close();
-          });
 
         /*  appuis n'importe où sur le cardre d'une carte
         let isDragging = false;

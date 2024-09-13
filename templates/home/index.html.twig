@@ -3,5 +3,10 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
+    {% if app.user.username is defined %}
     <h1>Hello {{ app.user.username }}</h1>
+    {% else %}
+    <h1>Hello</h1>
+    {% endif %}
+    
 {% endblock %}
