@@ -31,11 +31,11 @@ export default class Filter {
     //ajoute les comportement au différents éléments
     bindEvents () {
 
-        document.getElementById('loadedlistcard').addEventListener('click', function () {
+        /*document.getElementById('loadedlistcard').addEventListener('click', function () {
  
             console.log('loaded');
             window.location.reload();
-            })
+            })*/
 
         console.log('bindEvents chargé !');
         //déroulé le form SearchCard
