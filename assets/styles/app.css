@@ -1,6 +1,5 @@
 body {
     background-color: #E3CD9B;
-    
 }
 #navbar {
     background-color: #A64826;
@@ -32,6 +31,12 @@ body {
     display: flex;
 }
 #card {
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+    padding : 5px;
+}
+.card {
     display: flex;
     align-items: center;
     border: 1px solid black;
@@ -89,11 +94,16 @@ body {
     max-width: 1600px;
 
 }
+.js-filter-content-deck{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1600px;
+    overflow-y: scroll;
+}
 #main-deck{
     background-color: brown;
     display: flex;
     flex-wrap: wrap;
-
 }
 
 #main-deck .image-carte-min img{
@@ -103,10 +113,14 @@ body {
 }
 #extra-deck{
     background-color: violet;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 #side-deck{
     background-color: rgb(134, 78, 78);
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .hidden {
@@ -138,13 +152,14 @@ body {
     background-color: #DBAD91;
 }
 
-.tableauDetailCard{
-    
-}
 
 .imgdetail{
     background-color: #a64826;
     width: none;
     height: none;
     margin: 10px;
+}
+
+.imagebanniere{
+    opacity: 30%;
 }

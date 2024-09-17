@@ -16,10 +16,29 @@
             </div>
             
             {{ form_row(formDeck.closed) }}
-            
+            {{ form_row(formDeck.user) }}
             {{ form_row(formDeck.valider) }}
             {{ form_end(formDeck) }}
-            {% include "deck/_content.html.twig" %}
+            
+            <h2>Deck</h2>
+            {{dump(deck)}}
+
+                
+                <div id="deck">
+                    <div id="main-deck">
+                        {% for card in deck.card %}
+
+                        <div class="image-carte-min"><img src="{{ asset ('images/' ~ card.refcard ~ '.jpg') }}"></div>
+                        
+                        {% endfor %}
+                    </div>
+                    <div id="extra-deck">
+                        Extra
+                    </div>
+                    <div id="side-deck">
+                        Side
+                    </div>
+                </div>
         </div>
     
         <div id="bloc-recherche">
@@ -28,9 +47,10 @@
                 {% include "card/_form.html.twig" %}
             </div>
             <button type="button" id="openFormSearch">option recherche</button>   
-             <div class="cards js-filter-content">
-                {% include "card/_content.html.twig" %}
+             <div class="js-filter-content-deck">
+                {% include "deck/_content.html.twig" %}
             </div> 
+            
         </div> 
         
     </div> 

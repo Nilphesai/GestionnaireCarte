@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Card;
 use App\Entity\Deck;
+use App\Entity\User;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
@@ -53,6 +54,18 @@ class DeckType extends AbstractType
                     //->where('u.decks = :deck')
                 //    ->orderBy('u.name','ASC')
                     //->setParameter('deck', $deck)
+                //;},
+                'multiple' => true,
+            ])
+            ->add('user', EntityType::class, [
+                'required' => false,
+                'class' => User::class,
+                'choice_label' => 'username',
+                //'query_builder' => function (EntityRepository $er): QueryBuilder {
+                //    return $er->createQueryBuilder('u')
+                //    ->where('u.user = :user')
+                //    ->orderBy('u.username','ASC')
+                //    ->setParameter('user', $user)
                 //;},
                 'multiple' => true,
             ])

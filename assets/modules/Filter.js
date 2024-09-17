@@ -31,13 +31,6 @@ export default class Filter {
     //ajoute les comportement au différents éléments
     bindEvents () {
 
-        /*document.getElementById('loadedlistcard').addEventListener('click', function () {
- 
-            console.log('loaded');
-            window.location.reload();
-            })*/
-
-        console.log('bindEvents chargé !');
         //déroulé le form SearchCard
         document.getElementById("openFormSearch").addEventListener("click", function() {
             if (document.getElementById("card-search-filter").style.display == "none"){

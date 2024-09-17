@@ -16,12 +16,14 @@
                 <tr class="table-primary">
                     <th>titre</th>
                     <th>date création</th>
+                    <th>format</th>
                     <th>public</th>
                 </tr>
                 {% for deck in decks %}
                 <tr>
                     <td><a href="{{ path('update_deck', {'id': deck.id}) }}">{{deck.title}}</a></td>
                     <td>{{deck.createdAt|date('d-m-Y')}}</td>
+                    <th>{{deck.Format}}</th>
                     <td>{{deck.Closed}}</td>
                 </tr>
                     

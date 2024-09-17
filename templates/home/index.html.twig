@@ -8,21 +8,17 @@
     {% else %}
     <h1>Hello</h1>
     {% endif %}
-    <img class="imagebanniere" src="{{ asset ('images/' ~ card.id ~ '.jpg') }}" alt="{{ card.name }}" >
-    <table>
-        <tr class="table-primary">
-            <th>titre</th>
-            <th>date création</th>
-            <th>public</th>
-        </tr>
-        {% for deck in decks %}
-        <tr>
-            <td><a href="{{ path('update_deck', {'id': deck.id}) }}">{{deck.title}}</a></td>
-            <td>{{deck.createdAt|date('d-m-Y')}}</td>
-            <td>{{deck.Closed}}</td>
-        </tr>
+    <img class="imagebanniere" src="{{ asset ('images/banniereAccueil.jpg') }}" alt="bannière emprunter fait par markjasonsedanza5, sur le site artstation" >
+
             
+        
+        {% for deck in decks %}
+        
+            <p><a href="{{ path('update_deck', {'id': deck.id}) }}">{{deck.title}}</a></p>
+            
+            <p>crée par User à {{deck.createdAt|date('d-m-Y')}}</p>
+        
         {% endfor %}
-    </table>
+
     
 {% endblock %}

@@ -39,6 +39,13 @@ class Deck
     #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'deck', orphanRemoval: true)]
     private Collection $posts;
 
+    #[ORM\ManyToOne(inversedBy: 'decks')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $format = null;
+
     public function __construct()
     {
         $this->card = new ArrayCollection();
@@ -148,6 +155,30 @@ class Deck
                 $post->setDeck(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getFormat(): ?string
+    {
+        return $this->format;
+    }
+
+    public function setFormat(?string $format): static
+    {
+        $this->format = $format;
 
         return $this;
     }
