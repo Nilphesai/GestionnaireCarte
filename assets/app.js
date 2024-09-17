@@ -1,3 +1,4 @@
+
 import './bootstrap.js';
 /*
  * Welcome to your app's main JavaScript file!
@@ -8,4 +9,8 @@ import './bootstrap.js';
 import './styles/app.css';
 import Filter from './modules/Filter.js'
 
-new Filter(document.querySelector('.js-filter'))
+document.addEventListener('DOMContentLoaded', function () {
+ 
+    new Filter(document.querySelector('.js-filter'))
+
+    })

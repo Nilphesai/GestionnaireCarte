@@ -5,7 +5,7 @@
                 <dialog class="dialog">
                     <button autofocus class="closeDetailCard">Fermer</button>
                     <div class="detailCard">
-                        <img class="imagedetail" src="{{ asset ('images/' ~ card.id ~ '.jpg') }}">
+                        <img class="imagedetail" src="{{ asset ('images/' ~ card.id ~ '.jpg') }}" alt="{{ card.name }}" >
                         <div class="tableauDetailCard">
                             <div class="namecard"><h6>Nom de carte</h6><b>{{ card.name }}</b></div>
                             <div class="typecard"><b>Type de carte : </b>{{ card.type }}</div>
@@ -43,7 +43,7 @@
                             
                     </div>
                 </dialog>
-                <img class="img" src="{{ asset ('images/' ~ card.id ~ '.jpg') }}">
+                <img class="img" src="{{ asset ('images/' ~ card.id ~ '.jpg') }} " alt="{{ card.name }}">
             </div>
         
          

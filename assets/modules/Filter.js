@@ -3,6 +3,7 @@
  * @property {HTMLElement} form
  * 
  */
+
 export default class Filter {
     /**
      * 
@@ -13,24 +14,29 @@ export default class Filter {
         if (element === null) {
             return
         }
-
+        
         this.content = element.querySelector('.js-filter-content')
         this.form = element.querySelector('#card-search-filter')
+        
 
         //console.log(this.form)
         //console.log(document.getElementById("openFormSearch"))
         
         this.bindEvents()
 
-        document.getElementsByClassName('js-filter-content').addEventListener('load', (event) => {
-            console.log('Page fully loaded')
-            this.bindEvents()
-        });
+
     }
 
     
     //ajoute les comportement au différents éléments
     bindEvents () {
+
+        document.getElementById('loadedlistcard').addEventListener('click', function () {
+ 
+            console.log('loaded');
+            window.location.reload();
+            })
+
         console.log('bindEvents chargé !');
         //déroulé le form SearchCard
         document.getElementById("openFormSearch").addEventListener("click", function() {
@@ -174,3 +180,4 @@ export default class Filter {
         this.bindEvents();
     }
 }
+
