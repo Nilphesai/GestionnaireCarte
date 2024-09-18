@@ -98,6 +98,7 @@ export default class Filter {
                 
             })
 
+
         const dialogs = document.querySelectorAll(".dialog");
         const showButtons = document.querySelectorAll(".img");
         const closeButtons = document.querySelectorAll(".closeDetailCard");
@@ -135,14 +136,22 @@ export default class Filter {
         */
         
         
-        /*
+        
         document.getElementById("pagingcard").addEventListener('submit', e => {
             e.preventDefault()
-            const url = e.target.urlNextPage.value;
+            console.log(e);
+            let url = "";
+            if(e.submitter.id === "nextPage"){
+                url = e.target.urlNextPage.value;
+            }
+            else{
+                url = e.target.urlPreviousPage.value;
+            }
+            
             console.log(url);
             
             this.loadUrl(e.target.getAttribute('action'),url)
-        })*/
+        })
         
     }
     

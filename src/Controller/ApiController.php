@@ -8,7 +8,6 @@ use App\Entity\Picture;
 use App\Form\SearchCardType;
 use App\HttpClient\ApiHttpClient;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -48,7 +47,7 @@ class ApiController extends AbstractController
         }
         
         $form = $this->createForm(SearchCardType::class,$card);
-
+        
         $test = $request->toArray();
         
         if($test['cardName']){
@@ -77,7 +76,7 @@ class ApiController extends AbstractController
             ]);
         }
         else{
-            
+            dd('ping');
             $cards = $apiHttpClient->getCards();
             return new JsonResponse($cards);
             return $this->render('card/_content.html.twig', [
@@ -89,9 +88,9 @@ class ApiController extends AbstractController
 
     #[Route('/cards/next_page', name: 'next_page')]
     public function nextPage(EntityManagerInterface $entityManager,Card $card = null, ApiHttpClient $apiHttpClient, Request $request){
-
-        $test = $request->toArray();
         
+        $test = $request->toArray();
+        //dd($test);
         if($test['cardName']){
             $cards = $apiHttpClient->getCardsByUrl($test['cardName']);
             //dd($cards);

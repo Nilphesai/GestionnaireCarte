@@ -129,7 +129,7 @@ class SearchCardType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('Chercher', SubmitType::class, [
+            ->add('chercher', SubmitType::class, [
                 'attr' => [
                         'class' => 'btn btn-success'
                 ]
