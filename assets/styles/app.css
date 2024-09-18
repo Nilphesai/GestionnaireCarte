@@ -36,18 +36,28 @@ body {
     border: 1px solid black;
     padding : 5px;
 }
-.card {
+#block-recherche-listCard{
     display: flex;
+    flex-direction: column;
     align-items: center;
-    border: 1px solid black;
-    padding : 5px;
+}
+
+#block-recherche-listCard .js-filter-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .details{
     border: 1px solid black;
     margin: 10px;
     padding : 5px;
 }
+#listCards{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1600px;
 
+}
 .carac{
     padding: 0;
 }
@@ -55,7 +65,7 @@ body {
     border : 1px solid black;
     padding : 5px;
 }
-#bloc-recherche{
+#block-recherche-deck{
     display: flex;
     flex-direction: column;
     border: 1px solid black;
@@ -63,14 +73,21 @@ body {
     width: 25rem;
     margin-right: 5rem;
 }
-.image-carte-min .img{
+
+#block-recherche-deck .js-filter-content{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1600px;
+    overflow-y: scroll;
+}
+.image-carte-min img{
     background-color: #a64826;
     width: 150px;
     height: 200px;
     margin: 10px;
 }
 
-#bloc-deck{
+#block-deck{
     display: flex;
     flex-direction: column;
     flex :1;
@@ -88,18 +105,7 @@ body {
     flex-direction: column;
     align-items: center;
 }
-.js-filter-content{
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 1600px;
 
-}
-.js-filter-content-deck{
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 1600px;
-    overflow-y: scroll;
-}
 #main-deck{
     background-color: brown;
     display: flex;
