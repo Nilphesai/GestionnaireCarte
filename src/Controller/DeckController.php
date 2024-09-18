@@ -10,6 +10,7 @@ use App\HttpClient\ApiHttpClient;
 use App\Repository\CardRepository;
 use App\Repository\DeckRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Parameter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -99,12 +100,19 @@ class DeckController extends AbstractController
     #[Route('/deck/{id}/edit', name: 'update_deck')]
     public function new(EntityManagerInterface $entityManager, Request $request, Card $card = null,Deck $deck = null, ApiHttpClient $apiHttpClient): Response
     {
-        if(!$deck){
+        
+        if($deck == null){
             $deck = new deck();
         }
-        $formDeck = $this->createForm(DeckType::class,$deck);
 
+
+    
+        
+        $formDeck = $this->createForm(DeckType::class,$deck);
+        
         $formDeck->handleRequest($request);
+        
+
         if($formDeck->isSubmitted() && $formDeck->isValid()){
 
             $deck = $formDeck->getData();
@@ -113,11 +121,12 @@ class DeckController extends AbstractController
 
             return $this->redirectToRoute('app_deck');
         }
-
         $card = new Card();
         $form = $this->createForm(SearchCardType::class,$card);
 
         $cards = $apiHttpClient->getCards();
+        $formDeck = $this->createForm(DeckType::class,$deck);
+            $formDeck->handleRequest($request);
 
         return $this->render('deck/new.html.twig', [
             'formSearchCard' => $form,

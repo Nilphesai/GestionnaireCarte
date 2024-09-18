@@ -9,12 +9,9 @@
         <div id="bloc-deck">
             {{ form_start(formDeck) }}
             {{ form_row(formDeck.title) }}
-            <div class="hidden">
-                {{ form_row(formDeck.createdAt) }}
-                {{ form_row(formDeck.card) }}
+            {{ form_row(formDeck.createdAt) }}
+            {{ form_row(formDeck.card) }}
             {{ form_row(formDeck.picture) }}
-            </div>
-            
             {{ form_row(formDeck.closed) }}
             {{ form_row(formDeck.user) }}
             {{ form_row(formDeck.valider) }}
@@ -40,18 +37,19 @@
                     </div>
                 </div>
         </div>
-    
-        <div id="bloc-recherche">
-            <h3>recherche</h3>
-            <div id="card-search-filter" style="display:none;">
-                {% include "card/_form.html.twig" %}
-            </div>
-            <button type="button" id="openFormSearch">option recherche</button>   
-             <div class="js-filter-content-deck">
-                {% include "deck/_content.html.twig" %}
+        {% if deck.title is not null %}
+            <div id="bloc-recherche">
+                <h3>recherche</h3>
+                <div id="card-search-filter" style="display:none;">
+                    {% include "card/_form.html.twig" %}
+                </div>
+                <button type="button" id="openFormSearch">option recherche</button>   
+                <div class="js-filter-content-deck">
+                    {% include "deck/_content.html.twig" %}
+                </div> 
+                
             </div> 
-            
-        </div> 
+        {% endif %}
         
     </div> 
 </div>

@@ -37,8 +37,8 @@
             </div>
 
             <div class="data">
-                {% if formDeck is defined %}
-                 {#   
+                
+                   
                 <form action="{{ path('card_add_to_deck', {'idDeck': deck.id}) }}" method="post">
                     <input type="hidden" name="name" value="{{ card.name }}">
                     <input type="hidden" name="race" value="{{ card.race }}">
@@ -75,8 +75,8 @@
                             <i>add</i>
                         </button>
 
-                </form>#}
-                {% endif %}
+                </form>
+                
             </div>
         </div>
     </div>

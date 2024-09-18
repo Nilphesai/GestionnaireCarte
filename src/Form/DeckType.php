@@ -58,16 +58,9 @@ class DeckType extends AbstractType
                 'multiple' => true,
             ])
             ->add('user', EntityType::class, [
-                'required' => false,
                 'class' => User::class,
                 'choice_label' => 'username',
-                //'query_builder' => function (EntityRepository $er): QueryBuilder {
-                //    return $er->createQueryBuilder('u')
-                //    ->where('u.user = :user')
-                //    ->orderBy('u.username','ASC')
-                //    ->setParameter('user', $user)
-                //;},
-                'multiple' => true,
+                'attr' => array ('readonly' => true)
             ])
             ->add('valider', SubmitType::class, [
                 'attr' => [
