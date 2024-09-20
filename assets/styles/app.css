@@ -30,6 +30,21 @@ body {
 #body-deck{
     display: flex;
 }
+#homeListDeck{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid black;
+}
+.homeDeck{
+    border: 1px solid black;
+    text-align: center;
+}
+.titredeck h5{
+    display: inline-block;
+    border: 1px solid black;
+    vertical-align: middle;
+}
 #card {
     display: flex;
     align-items: center;
@@ -69,7 +84,7 @@ body {
     display: flex;
     flex-direction: column;
     border: 1px solid black;
-    max-height: 40rem;
+    max-height: 60rem;
     width: 25rem;
     margin-right: 5rem;
 }

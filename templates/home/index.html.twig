@@ -10,15 +10,32 @@
     {% endif %}
     <img class="imagebanniere" src="{{ asset ('images/banniereAccueil.jpg') }}" alt="bannière emprunter fait par markjasonsedanza5, sur le site artstation" >
 
+    <article>
+    <h4>List deck populaire</h4>
+        <div id="homeListDeck">
+            
+            {% for deck in decks %}
+            <div class="homeDeck">
+                
+                <div class="titredeck">
+                    <h5>   
+                        <a href="{{ path('update_deck', {'id': deck.id}) }}">{{deck.title}}</a>
+                    </h5>
+                </div>
+                <div class="imagedeck"><img src""> </div>
+                <div class="corpdeck">
+                    <p>
+                        crée par {{deck.user}}<br>
+                        à {{deck.createdAt|date('d-m-Y')}}
+                    </p>
+                </div>
+            </div>
             
         
-        {% for deck in decks %}
+            {% endfor %}
+        </div>
+    </article>
         
-            <p><a href="{{ path('update_deck', {'id': deck.id}) }}">{{deck.title}}</a></p>
-            
-            <p>crée par User à {{deck.createdAt|date('d-m-Y')}}</p>
-        
-        {% endfor %}
 
     
 {% endblock %}

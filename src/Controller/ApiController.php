@@ -120,10 +120,24 @@ class ApiController extends AbstractController
     }
 
     #[Route('/cards/next_page', name: 'next_page')]
-    public function nextPage(EntityManagerInterface $entityManager,Card $card = null, ApiHttpClient $apiHttpClient, Request $request){
+    public function nextPage(DeckRepository $deckRepository, EntityManagerInterface $entityManager,Card $card = null, ApiHttpClient $apiHttpClient, Request $request){
         
         $test = $request->toArray();
-        //dd($test);
+        $parent = $request->headers->get('referer');
+        if ($parent && strpos($parent,'deck') !== false){
+            $isDeck = true;
+            $pattern = '/deck\/(.*?)\/edit/';
+            $matches = [];
+            if ($parent && preg_match($pattern, $parent, $matches)) {
+                // Si une correspondance est trouvée, $matches[1] contiendra la partie capturée
+                $idDeck = $matches[1];
+                
+            }
+        }
+        else{
+            $isDeck = false;
+        }
+        
         if($test['cardName']){
             $cards = $apiHttpClient->getCardsByUrl($test['cardName']);
             //dd($cards);
@@ -131,9 +145,22 @@ class ApiController extends AbstractController
             foreach ($cards['data'] as $detail){
                 $this->addImage($detail, $entityManager);
             }
-            
+            if($isDeck){
+                
+                $decks = $deckRepository->findDecksById($idDeck);
+                //dd($decks);
+                return new JsonResponse([
+                    'content' => $this->renderView('card/_content.html.twig', [
+                        'cards' => $cards,
+                        'deck' => $decks[0],
+                        'isDeck' => $isDeck,])
+                ]);
+            }
             return new JsonResponse([
-                'content' => $this->renderView('card/_content.html.twig', ['cards' => $cards])
+                'content' => $this->renderView('card/_content.html.twig', [
+                    'cards' => $cards,
+                    'isDeck' => $isDeck,
+                    ])
             ]);
         }
         else{
@@ -148,63 +175,10 @@ class ApiController extends AbstractController
             return $this->render('card/_content.html.twig', [
                 'formSearchCard' => $form,
                 'cards' => $cards,
+                'isDeck' => $isDeck,
             ]);
         }
     
-    }
-
-
-    #[Route('/cards/add-card', name: 'card_add', methods: 'POST')]
-    public function addCard(EntityManagerInterface $entityManager, Request $request, Card $card = null){
-        $card = new Card();
-        
-        $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $attribute = filter_input(INPUT_POST, 'attribute', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $level = filter_input(INPUT_POST, 'level', FILTER_SANITIZE_NUMBER_INT);
-        $race = filter_input(INPUT_POST, 'race', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $effect = filter_input(INPUT_POST, 'effect', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $att = filter_input(INPUT_POST, 'att', FILTER_SANITIZE_NUMBER_INT);
-        $def = filter_input(INPUT_POST, 'def', FILTER_SANITIZE_NUMBER_INT);
-        $link = filter_input(INPUT_POST, 'link', FILTER_SANITIZE_NUMBER_INT);
-        $scale = filter_input(INPUT_POST, 'scale', FILTER_SANITIZE_NUMBER_INT);
-        $linkmarker = filter_input(INPUT_POST, 'linkmarker', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $picture = filter_input(INPUT_POST, 'picture', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $refCard = filter_input(INPUT_POST, 'refCard', FILTER_SANITIZE_NUMBER_INT);
-
-        $typecard = filter_input(INPUT_POST, 'typecard', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        
-        if ($name && $race && $effect && $picture){
-            $card->setAttribute($attribute);
-            $card->setTypecard($typecard);
-            $card->setName($name);
-            $card->setRace($race);
-            $card->setEffect($effect);
-            $card->setPicture($picture);
-            $card->setRefCard($refCard);
-            if ($att){
-                $card->setAtt($att);
-                if($scale){
-                    $card->setLevel($level);
-                    $card->setScale($scale);
-                    $card->setDef($def);
-                }
-                elseif($link){
-                    $card->setLink($link);
-                    $card->setLinkMarker($linkmarker);
-                }
-                else{
-                    $card->setLevel($level);
-                    $card->setDef($def);
-                }
-            }
-            
-            $entityManager->persist($card);
-            $entityManager->flush();
-            return $this->redirectToRoute('app_deck');
-        } else{
-            return $this->redirectToRoute('app_deck');
-
-        }
     }
 
     private function addImage(array $detail, EntityManagerInterface $entityManager) {
