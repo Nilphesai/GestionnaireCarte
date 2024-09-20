@@ -1,0 +1,73 @@
+
+            
+        
+            <div id="card-info{{card.id}}">
+                <div class="details">
+                    <div class="carac">
+                        <a href="{{ path('show_card', {'id': card.id}) }}">{{ card.name }}</a>
+                        <p>{{ card.type }}</p>
+            
+                        {% if card.frameType == "normal" or card.frameType == "effect" or card.frameType == "ritual" or card.frameType == "fusion" or card.frameType == "synchro" or card.frameType == "xyz" or card.frameType == "pendulum" or card.frameType == "link" %}
+                            <P>Attribut : {{ card.attribute }}<br>
+                            {% if card.frameType == "normal" or card.frameType == "effect" or card.frameType == "ritual" or card.frameType == "fusion" or card.frameType == "synchro" %}
+                                Niveau/Rang : {{ card.level }}<br>
+                                attaque : {{ card.atk }}<br>
+                                Défense : {{ card.def }}<br>
+                            {% elseif card.frameType == "pendulum" %}
+                                Niveau/Rang : {{ card.level }}<br>
+                                attaque : {{ card.atk }}<br>
+                                Défense : {{ card.def }}<br>
+                                Echelle : {{ card.scale }}<br>
+                            {% elseif card.frameType == "link" %}
+                                Lien : {{ card.linkval }}<br>
+                                Pointe vers :
+                                {% for linkmarker in card.linkmarkers %}
+                                    <p>{{ linkmarker }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                        Type : {{ card.race }}<br>
+                        Effect : {{ card.desc }}</p>
+                    </div>
+
+                    <div class="data">   
+                        
+                        <form action="{{ path('card_add_to_deck', {'idDeck': deck.id}) }}" method="post">
+                            <input type="hidden" name="name" value="{{ card.name }}">
+                            <input type="hidden" name="race" value="{{ card.race }}">
+                            <input type="hidden" name="effect" value="{{ card.desc }}">
+                            <input type="hidden" name="typecard" value="{{ card.type }}">
+
+                            {% if card.frameType == "normal" or card.frameType == "effect" or card.frameType == "ritual" or card.frameType == "fusion" or card.frameType == "synchro" or card.frameType == "xyz"%}
+                                <input type="hidden" name="attribute" value="{{ card.attribute }}">
+                                <input type="hidden" name="level" value="{{ card.level }}">
+                                <input type="hidden" name="att" value="{{ card.atk }}">
+                                <input type="hidden" name="def" value="{{ card.def }}">
+                            {% elseif card.frameType == "link" %}
+                                <input type="hidden" name="name" value="{{ card.name }}">
+                                <input type="hidden" name="attribute" value="{{ card.attribute }}">
+                                <input type="hidden" name="att" value="{{ card.atk }}">
+                                <input type="hidden" name="link" value="{{ card.linkval }}">
+                                <input type="hidden" name="linkmarker" value="{{ card.linkmarkers|join(',') }}">
+                            {% endif %}
+
+                            {% if card.typeline is defined %}
+                                {% for typeline in card.typeline %}
+                                    {% if typeline == "Pendulum" %}
+                                        <input type="hidden" name="attribute" value="{{ card.attribute }}">
+                                        <input type="hidden" name="level" value="{{ card.level }}">
+                                        <input type="hidden" name="att" value="{{ card.atk }}">
+                                        <input type="hidden" name="def" value="{{ card.def }}">
+                                        <input type="hidden" name="scale" value="{{ card.scale }}">
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <input type="hidden" name="refCard" value="{{ card.id }}">
+                            <input type="hidden" name="picture" value="{{ asset ('images/' ~ card.id ~ '.jpg') }}">
+                            <button type="submit">
+                                <i>add</i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>

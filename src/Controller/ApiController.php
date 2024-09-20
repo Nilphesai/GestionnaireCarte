@@ -7,11 +7,13 @@ use App\Form\CardType;
 use App\Entity\Picture;
 use App\Form\SearchCardType;
 use App\HttpClient\ApiHttpClient;
+use App\Repository\DeckRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ApiController extends AbstractController
@@ -41,16 +43,31 @@ class ApiController extends AbstractController
     }
 
     #[Route('/cards/fetch-cards', name: 'card_fetch')]
-    public function listCard(EntityManagerInterface $entityManager,Card $card = null, ApiHttpClient $apiHttpClient, Request $request){
+    public function listCard(DeckRepository $deckRepository, EntityManagerInterface $entityManager,Card $card = null, ApiHttpClient $apiHttpClient, Request $request, SessionInterface $session){
         if(!$card){
             $card = new Card();
         }
-        
+        $session->set('isDeck', true);
         $form = $this->createForm(SearchCardType::class,$card);
         
         $test = $request->toArray();
-        
+        $parent = $request->headers->get('referer');
+        if ($parent && strpos($parent,'deck') !== false){
+            $isDeck = true;
+            $pattern = '/deck\/(.*?)\/edit/';
+            $matches = [];
+            if ($parent && preg_match($pattern, $parent, $matches)) {
+                // Si une correspondance est trouvée, $matches[1] contiendra la partie capturée
+                $idDeck = $matches[1];
+                
+            }
+        }
+        else{
+            $isDeck = false;
+        }
+        //dd($isDeck);
         if($test['cardName']){
+            
             //dd($test['cardName']);
             $cards = $apiHttpClient->getCardsByFilter($test['cardName']);
             //dd($test['cardName'][1]);
@@ -70,18 +87,34 @@ class ApiController extends AbstractController
             foreach ($cards['data'] as $detail){
                 $this->addImage($detail, $entityManager);
             }
-            
+
+            //si on est dans editDeck
+            if($isDeck){
+                
+                $decks = $deckRepository->findDecksById($idDeck);
+                //dd($decks);
+                return new JsonResponse([
+                    'content' => $this->renderView('card/_content.html.twig', [
+                        'cards' => $cards,
+                        'deck' => $decks[0],
+                        'isDeck' => $isDeck,])
+                ]);
+            }
+
             return new JsonResponse([
-                'content' => $this->renderView('card/_content.html.twig', ['cards' => $cards])
+                'content' => $this->renderView('card/_content.html.twig', [
+                    'cards' => $cards,
+                    'isDeck' => $isDeck,])
             ]);
         }
         else{
-            dd('ping');
+            
             $cards = $apiHttpClient->getCards();
             return new JsonResponse($cards);
             return $this->render('card/_content.html.twig', [
                 'formSearchCard' => $form,
                 'cards' => $cards,
+                'isDeck' => $isDeck,
             ]);
         }
     }

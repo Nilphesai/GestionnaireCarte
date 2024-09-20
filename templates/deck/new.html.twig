@@ -45,7 +45,7 @@
                 </div>
                 <button type="button" id="openFormSearch">option recherche</button>   
                 <div class="js-filter-content">
-                    {% include "card/_content.html.twig" with {'main_page': 'deck'} %}
+                    {% include "card/_content.html.twig" with {'isDeck': true} %}
                 </div> 
                 
             </div> 
@@ -54,4 +54,4 @@
     </div> 
 </div>
 
-{% endblock %}
+{% endblock body %}

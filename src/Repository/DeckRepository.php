@@ -53,4 +53,20 @@ class DeckRepository extends ServiceEntityRepository
         $query = $qb->getQuery();
         return $query->getResult();
     }
+
+    public function findDecksById(int $id){
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+
+        $qb = $sub;
+        // sélectionner tous les deck avec id
+        $qb->select('s')
+            ->from('App\Entity\Deck', 's')
+            ->where('s.id = :id ')
+            ->setParameter('id', $id);
+
+        // renvoyer le résultat
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
 }
