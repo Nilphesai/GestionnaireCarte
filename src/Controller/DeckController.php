@@ -102,22 +102,26 @@ class DeckController extends AbstractController
     #[Route('/deck/{id}/edit', name: 'update_deck')]
     public function new(EntityManagerInterface $entityManager, Request $request, Card $card = null,Deck $deck = null, ApiHttpClient $apiHttpClient): Response
     {
-        
+        //dd($deck);
         if($deck == null){
             $deck = new deck();
         }
-
-
-    
+        
         
         $formDeck = $this->createForm(DeckType::class,$deck);
-        
+        //dd($formDeck);
+        //dd($_POST);
+        //dd($request);
+        $dec = $request->request->all() ;
+        $picture = $dec['deck']['picture'];
         $formDeck->handleRequest($request);
-        
-
+        dd($formDeck);
+        $formDeck['modelData']['picture'];
+        dd($formDeck);
         if($formDeck->isSubmitted() && $formDeck->isValid()){
-
+            
             $deck = $formDeck->getData();
+            $deck->getPicture($picture);
             $entityManager->persist($deck);
             $entityManager->flush();
 
@@ -128,7 +132,7 @@ class DeckController extends AbstractController
 
         $cards = $apiHttpClient->getCards();
         $formDeck = $this->createForm(DeckType::class,$deck);
-            $formDeck->handleRequest($request);
+        $formDeck->handleRequest($request);
 
         return $this->render('deck/new.html.twig', [
             'formSearchCard' => $form,

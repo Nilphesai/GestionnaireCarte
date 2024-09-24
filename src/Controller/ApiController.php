@@ -51,11 +51,13 @@ class ApiController extends AbstractController
         $form = $this->createForm(SearchCardType::class,$card);
         
         $test = $request->toArray();
+        
         $parent = $request->headers->get('referer');
         if ($parent && strpos($parent,'deck') !== false){
             $isDeck = true;
             $pattern = '/deck\/(.*?)\/edit/';
             $matches = [];
+            
             if ($parent && preg_match($pattern, $parent, $matches)) {
                 // Si une correspondance est trouvée, $matches[1] contiendra la partie capturée
                 $idDeck = $matches[1];
