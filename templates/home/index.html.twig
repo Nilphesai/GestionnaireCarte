@@ -22,7 +22,7 @@
                         <a href="{{ path('update_deck', {'id': deck.id}) }}">{{deck.title}}</a>
                     </h5>
                 </div>
-                <div class="imagedeck"><img src""> </div>
+                <div class="imagedeck"><img src="{{ asset ('imagesDeck/' ~ deck.picture ~ '.jpg') }}"></div>
                 <div class="corpdeck">
                     <p>
                         crée par {{deck.user}}<br>

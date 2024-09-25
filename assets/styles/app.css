@@ -37,13 +37,26 @@ body {
     border: 1px solid black;
 }
 .homeDeck{
-    border: 1px solid black;
+    width: 59mm;
+    height: 86mm;
+    border: 2px solid black;
     text-align: center;
+    margin: 10px;
+}
+.imagedeck img{
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    margin: 0;
+}
+.corpdeck{
+    border: 1px solid black;
+    margin: 10px;
 }
 .titredeck h5{
-    display: inline-block;
-    border: 1px solid black;
+    border: 2px solid black;
     vertical-align: middle;
+    margin: 5px;
 }
 #card {
     display: flex;

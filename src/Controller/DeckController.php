@@ -5,12 +5,13 @@ namespace App\Controller;
 use App\Entity\Card;
 use App\Entity\Deck;
 use App\Form\DeckType;
+use App\Entity\Picture;
 use App\Form\SearchCardType;
 use App\HttpClient\ApiHttpClient;
+use Doctrine\ORM\Query\Parameter;
 use App\Repository\CardRepository;
 use App\Repository\DeckRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\Parameter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -107,30 +108,42 @@ class DeckController extends AbstractController
             $deck = new deck();
         }
         
-        
         $formDeck = $this->createForm(DeckType::class,$deck);
-        //dd($formDeck);
-        //dd($_POST);
-        //dd($request);
-        $dec = $request->request->all() ;
-        $picture = $dec['deck']['picture'];
-        $formDeck->handleRequest($request);
-        dd($formDeck);
-        $formDeck['modelData']['picture'];
-        dd($formDeck);
+
+        $card = new Card();
+        $form = $this->createForm(SearchCardType::class,$card);
+
+        $cards = $apiHttpClient->getCards();
+
+
+        if($request->request->all()){
+
+            $dec = $request->request->all() ;
+            //récupération de la valeur dans picture
+            $picture = $dec['deck']['picture'];
+            //handleRequest prend ce qu'il y a dans l'imput formulaire
+            $formDeck->handleRequest($request);
+            $infocard = $apiHttpClient->getCardsById($picture);
+            //dd($infocard);
+            foreach ($infocard['data'] as $detail){
+                $this->addImage($detail, $entityManager);
+            }
+            
+        }
+        
+        
         if($formDeck->isSubmitted() && $formDeck->isValid()){
             
             $deck = $formDeck->getData();
-            $deck->getPicture($picture);
+            if ($picture){
+                $deck->setPicture($picture);
+            }
             $entityManager->persist($deck);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_deck');
         }
-        $card = new Card();
-        $form = $this->createForm(SearchCardType::class,$card);
-
-        $cards = $apiHttpClient->getCards();
+        
         $formDeck = $this->createForm(DeckType::class,$deck);
         $formDeck->handleRequest($request);
 
@@ -140,6 +153,20 @@ class DeckController extends AbstractController
             'formDeck' => $formDeck,
             'deck' => $deck,
         ]);
+    }
+
+    private function addImage(array $detail, EntityManagerInterface $entityManager) {
+        $route = $detail['card_images'][0]['image_url_cropped'];
+        $imageContent = file_get_contents($route);
+        $imagePath = '../public/imagesDeck/' . $detail['id'] . '.jpg';
+        if (!file_exists($imagePath)) {
+            file_put_contents($imagePath, $imageContent);
+            $picture = new Picture();
+            $picture->setRefCard($detail['id']);
+            $picture->setRoute($imagePath);
+            $entityManager->persist($picture);
+            $entityManager->flush();
+        }
     }
 
     
