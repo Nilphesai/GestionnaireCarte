@@ -52,8 +52,9 @@ class DeckController extends AbstractController
         if ($cardcheck){
             $deckId = $request->attributes->get('idDeck');
             $deck = $entityManager->getRepository(Deck::class)->find($deckId);
-            
+            //dd($cardcheck);
             $cardcheck[0]->addDeck($deck);
+            $deck->addCard($cardcheck[0]);
             $entityManager->flush();
     
             return $this->redirectToRoute('update_deck', ['id' => $deckId]);
@@ -91,8 +92,9 @@ class DeckController extends AbstractController
             }
             $deckId = $request->attributes->get('idDeck');
             $deck = $entityManager->getRepository(Deck::class)->find($deckId);
-        
+            //dd($card);
             $card->addDeck($deck);
+            $deck->addCard($card);
             $entityManager->flush();
     
             return $this->redirectToRoute('update_deck', ['id' => $deckId]);

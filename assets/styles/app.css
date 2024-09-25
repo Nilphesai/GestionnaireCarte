@@ -136,7 +136,14 @@ body {
     flex-direction: column;
     align-items: center;
 }
-
+#info-deck{
+    display: flex;
+    flex-direction: row;
+}
+#deck{
+    display: flex;
+    flex-direction: column;
+}
 #main-deck{
     background-color: brown;
     display: flex;

@@ -5,8 +5,9 @@
 {% block body %}
 <div class="js-filter">
     <div id="body-deck">
-
+        
         <div id="bloc-deck">
+            <div id="info-deck">
             {{ form_start(formDeck) }}
             {{ form_row(formDeck.title) }}
             {{ form_row(formDeck.createdAt) }}
@@ -16,10 +17,11 @@
             {{ form_row(formDeck.user) }}
             {{ form_row(formDeck.valider) }}
             {{ form_end(formDeck) }}
+            <div class="image-carte-cropped"><img src="{{ asset ('imagesDeck/' ~ deck.picture ~ '.jpg') }}"></div>
+            
+            </div>
             
             <h2>Deck</h2>
-            {{dump(deck)}}
-
                 
                 <div id="deck">
                     <div id="main-deck">
@@ -38,7 +40,6 @@
                 </div>
         </div>
         {% if deck.title is not null %}
-        <div class="image-carte-cropped"><img src="{{ asset ('imagesDeck/' ~ deck.picture ~ '.jpg') }}"></div>
             <div id="block-recherche-deck">
                 <h3>recherche</h3>
                 <div id="card-search-filter" style="display:none;">

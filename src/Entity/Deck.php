@@ -117,6 +117,10 @@ class Deck
     {
         if (!$this->card->contains($card)) {
             $this->card->add($card);
+        }else{
+            
+            $this->card->add($card);
+            //dd($this->card);
         }
 
         return $this;

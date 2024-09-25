@@ -65,7 +65,34 @@ class SearchCardType extends AbstractType
                     'min' => 0,
                 ]
             ])
-            ->add('race', TextType::class,[
+            ->add('race', ChoiceType::class,[
+                'choices' => [
+                    'Aqua' => 'Aqua',
+                    'Beast' => 'Beast',
+                    'Beast-Warrior' => 'Beast-Warrior',
+                    'Creator-God' => 'Creator-God',
+                    'Cyberse' => 'Cyberse',
+                    'Dinosaur' => 'Dinosaur',
+                    'Divine-Beast' => 'Divine-Beast',
+                    'Dragon' => 'Dragon',
+                    'Fairy' => 'Fairy',
+                    'Fiend' => 'Fiend',
+                    'Fish' => 'Fish',
+                    'Insect' => 'Insect',
+                    'Machine' => 'Machine',
+                    'Plant' => 'Plant',
+                    'Psychic' => 'Psychic',
+                    'Pyro' => 'Pyro',
+                    'Reptile' => 'Reptile',
+                    'Rock' => 'Rock',
+                    'Sea Serpent' => 'Sea Serpent',
+                    'Spellcaster' => 'Spellcaster',
+                    'Thunder' => 'Thunder',
+                    'Warrior' => 'Warrior',
+                    'Winged Beast' => 'Winged Beast',
+                    'Wyrm' => 'Wyrm',
+                    'Zombie' => 'Zombie',
+                ],
                 'required' => false,
                 'attr'=> [
                     'class' => 'form-control'
