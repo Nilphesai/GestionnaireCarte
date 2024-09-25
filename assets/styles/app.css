@@ -114,7 +114,10 @@ body {
     height: 200px;
     margin: 10px;
 }
-
+.image-carte-cropped img{
+    width: 150px;
+    height: 150px;
+}
 #block-deck{
     display: flex;
     flex-direction: column;

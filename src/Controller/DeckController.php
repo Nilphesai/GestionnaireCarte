@@ -115,25 +115,24 @@ class DeckController extends AbstractController
 
         $cards = $apiHttpClient->getCards();
 
-
-        if($request->request->all()){
-
-            $dec = $request->request->all() ;
-            //récupération de la valeur dans picture
-            $picture = $dec['deck']['picture'];
-            //handleRequest prend ce qu'il y a dans l'imput formulaire
-            $formDeck->handleRequest($request);
-            $infocard = $apiHttpClient->getCardsById($picture);
-            //dd($infocard);
-            foreach ($infocard['data'] as $detail){
-                $this->addImage($detail, $entityManager);
-            }
-            
-        }
-        
+        $formDeck->handleRequest($request);
         
         if($formDeck->isSubmitted() && $formDeck->isValid()){
             
+            if($request->request->all()){
+
+                $dec = $request->request->all() ;
+                //récupération de la valeur dans picture
+                $picture = $dec['deck']['picture'];
+                //handleRequest prend ce qu'il y a dans l'imput formulaire
+                
+                $infocard = $apiHttpClient->getCardsById($picture);
+                //dd($infocard);
+                foreach ($infocard['data'] as $detail){
+                    $this->addImage($detail, $entityManager);
+                }
+            }
+
             $deck = $formDeck->getData();
             if ($picture){
                 $deck->setPicture($picture);
@@ -142,11 +141,16 @@ class DeckController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('app_deck');
+        }elseif ($formDeck->isSubmitted()){
+            $deck = $formDeck->getData();
+            $deck->setPicture('null');
+            $entityManager->persist($deck);
+            $entityManager->flush();
         }
         
-        $formDeck = $this->createForm(DeckType::class,$deck);
-        $formDeck->handleRequest($request);
-
+        if($request->getPathInfo() == "/deck/new"){
+        }
+        
         return $this->render('deck/new.html.twig', [
             'formSearchCard' => $form,
             'cards' => $cards,
