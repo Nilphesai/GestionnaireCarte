@@ -26,9 +26,10 @@
                 <div id="deck">
                     <div id="main-deck">
                         {% for card in deck.card %}
-
-                        <div class="image-carte-min"><img src="{{ asset ('images/' ~ card.refcard ~ '.jpg') }}"></div>
                         
+                        <a href="{{ path('card_delete_to_deck', {'id': card.id, 'idDeck': deck.id}) }}"> 
+                        <div class="image-carte-min"><img src="{{ asset ('images/' ~ card.refcard ~ '.jpg') }}" alt="{{card.name}}"></div>
+                        </a> 
                         {% endfor %}
                     </div>
                     <div id="extra-deck">

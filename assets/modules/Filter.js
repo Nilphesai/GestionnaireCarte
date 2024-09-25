@@ -112,6 +112,14 @@ export default class Filter {
                 dialogs[index].close();
               });
         })
+
+        const cardsDeck = document.querySelectorAll(".image-carte-min");
+
+        cardsDeck.forEach(function (cardDeck, index) {
+            cardDeck.addEventListener("click", () => {
+                
+            })
+        })
         
 
         /*  appuis n'importe où sur le cardre d'une carte

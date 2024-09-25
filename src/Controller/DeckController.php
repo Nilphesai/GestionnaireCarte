@@ -47,14 +47,17 @@ class DeckController extends AbstractController
         $typecard = filter_input(INPUT_POST, 'typecard', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $card = new Card();
-        
+        //est ce que la carte est déjà en base de donnée
         $cardcheck = $cardRepository->findCardByRefCard($refCard);
+        //si oui
         if ($cardcheck){
+
             $deckId = $request->attributes->get('idDeck');
             $deck = $entityManager->getRepository(Deck::class)->find($deckId);
             //dd($cardcheck);
             $cardcheck[0]->addDeck($deck);
             $deck->addCard($cardcheck[0]);
+            $entityManager->persist($deck);
             $entityManager->flush();
     
             return $this->redirectToRoute('update_deck', ['id' => $deckId]);
@@ -95,10 +98,27 @@ class DeckController extends AbstractController
             //dd($card);
             $card->addDeck($deck);
             $deck->addCard($card);
+            $entityManager->persist($deck);
             $entityManager->flush();
     
             return $this->redirectToRoute('update_deck', ['id' => $deckId]);
         }
+    }
+
+    #[Route('/deck/{id}/{idDeck}/delete-card', name: 'card_delete_to_deck')]
+    public function deleteCard(EntityManagerInterface $entityManager, Request $request){
+
+            $idCard = $request->attributes->get('id');
+            $deckId = $request->attributes->get('idDeck');
+            $deck = $entityManager->getRepository(Deck::class)->find($deckId);
+            $card = $entityManager->getRepository(Card::class)->find($idCard);
+            //dd($cardcheck);
+            $card->removeDeck($deck);
+            $entityManager->persist($card);
+            $entityManager->flush();
+    
+            return $this->redirectToRoute('update_deck', ['id' => $deckId]);
+        
     }
 
     #[Route('/deck/new', name: 'new_deck')]
