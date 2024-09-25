@@ -17,15 +17,21 @@
                     <th>titre</th>
                     <th>date création</th>
                     <th>format</th>
-                    <th>public</th>
                 </tr>
                 {% for deck in decks %}
-                <tr>
-                    <td><a href="{{ path('update_deck', {'id': deck.id}) }}">{{deck.title}}</a></td>
-                    <td>{{deck.createdAt|date('d-m-Y')}}</td>
-                    <th>{{deck.Format}}</th>
-                    <td>{{deck.Closed}}</td>
-                </tr>
+                    {% if deck.Closed and not is_granted("ROLE_ADMIN")%}
+                        <tr>
+                            <td>{{deck.title}}</td>
+                            <td>{{deck.createdAt|date('d-m-Y')}}</td>
+                            <th>{{deck.Format}}</th>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td><a href="{{ path('update_deck', {'id': deck.id}) }}">{{deck.title}}</a></td>
+                            <td>{{deck.createdAt|date('d-m-Y')}}</td>
+                            <th>{{deck.Format}}</th>
+                        </tr>
+                    {% endif %}
                     
                 {% endfor %}
             </table>

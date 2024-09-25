@@ -170,9 +170,6 @@ class DeckController extends AbstractController
             $entityManager->flush();
         }
         
-        if($request->getPathInfo() == "/deck/new"){
-        }
-        
         return $this->render('deck/new.html.twig', [
             'formSearchCard' => $form,
             'cards' => $cards,
