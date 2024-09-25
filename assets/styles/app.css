@@ -195,7 +195,10 @@ body {
     border: 1px solid black;
     background-color: #DBAD91;
 }
-
+#panneau-deck{
+    display: flex;
+    border: 1px solid black;
+}
 
 .imgdetail{
     background-color: #a64826;

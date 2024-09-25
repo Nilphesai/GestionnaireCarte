@@ -178,6 +178,17 @@ class DeckController extends AbstractController
         ]);
     }
 
+    #[Route('/deck/{id}/read', name: 'show_deck')]
+    public function read(EntityManagerInterface $entityManager, Request $request,Deck $deck = null): Response
+    {
+        $deckId = $request->attributes->get('id');
+        $deck = $entityManager->getRepository(Deck::class)->find($deckId);
+
+        return $this->render('deck/show.html.twig', [
+            'deck' => $deck,
+        ]);
+    }
+
     private function addImage(array $detail, EntityManagerInterface $entityManager) {
         $route = $detail['card_images'][0]['image_url_cropped'];
         $imageContent = file_get_contents($route);

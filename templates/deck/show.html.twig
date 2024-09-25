@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DeckController!{% endblock %}
+
+{% block body %}
+<div class="js-filter">
+        <div id="bloc-deck">
+            <div id="panneau-deck">
+                <div class="image-carte-cropped"><img src="{{ asset ('imagesDeck/' ~ deck.picture ~ '.jpg') }}"></div>
+                <div class="date-deck">Crée le : {{deck.createdAt|date('d-m-Y')}}</div>
+                <div class="prive-deck">
+                    {% if deck.closed %}
+                        privée
+                    {% else %}
+                        public
+                    {% endif %}
+                </div>
+                <div class="user-deck"> Par {{deck.user}}</div>
+            </div>
+            
+            
+            <h2>{{deck.title}}</h2>
+            
+                
+                <div id="deck">
+                    <div id="main-deck">
+                        {% for card in deck.card %}
+                        
+                        <a href="{{ path('card_delete_to_deck', {'id': card.id, 'idDeck': deck.id}) }}"> 
+                        <div class="image-carte-min"><img src="{{ asset ('images/' ~ card.refcard ~ '.jpg') }}" alt="{{card.name}}"></div>
+                        </a> 
+                        {% endfor %}
+                    </div>
+                    <div id="extra-deck">
+                        Extra
+                    </div>
+                    <div id="side-deck">
+                        Side
+                    </div>
+                </div>
+        </div>
+</div>
+
+{% endblock body %}
