@@ -54,6 +54,7 @@ class DeckType extends AbstractType
             ->add('picture', ChoiceType::class,[
                 'required' => false,
                 'choices' => $cards,
+                'empty_data' => "null",
                 //$choice une instance de cards pour chaque ittération,
                 //$key clé de l'élément actuelle de cards
                 //$value valeurs de l'élément actuelle de cards

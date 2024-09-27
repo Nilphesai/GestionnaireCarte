@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DeckController!{% endblock %}
+{% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
 <div class="js-filter">
@@ -8,6 +8,9 @@
 
         <div id="bloc-deck">
             <h2>Deck</h2>
+            <a href="{{ path('new_deck')}}">crée un nouveau Deck</a>
+
+            
             
                 <table>
                 <tr class="table-primary">
@@ -16,13 +19,13 @@
                     <th>format</th>
                 </tr>
                 {% for deck in decks %}
-                    {% if not deck.Closed or is_granted("ROLE_ADMIN") %}
+                    {% if is_granted("ROLE_ADMIN") or app.user == deck.user %}
                     <tr>
-                        <td><a href="{{ path('show_deck', {'id': deck.id}) }}">{{deck.title}}</a></td>
+                        <td><a href="{{ path('update_deck', {'id': deck.id}) }}">{{deck.title}}</a></td>
                         <td>{{deck.createdAt|date('d-m-Y')}}</td>
                         <th>{{deck.Format}}</th>
                     </tr>
-                    
+
                     {% endif %}
                     
                 {% endfor %}

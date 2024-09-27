@@ -162,7 +162,7 @@ class DeckController extends AbstractController
             $entityManager->persist($deck);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_deck');
+            return $this->redirectToRoute('app_deckUser');
         }elseif ($formDeck->isSubmitted()){
             $deck = $formDeck->getData();
             $deck->setPicture('null');
@@ -179,7 +179,7 @@ class DeckController extends AbstractController
     }
 
     #[Route('/deck/{id}/read', name: 'show_deck')]
-    public function read(EntityManagerInterface $entityManager, Request $request,Deck $deck = null): Response
+    public function readDeck(EntityManagerInterface $entityManager, Request $request,Deck $deck = null): Response
     {
         $deckId = $request->attributes->get('id');
         $deck = $entityManager->getRepository(Deck::class)->find($deckId);
@@ -187,6 +187,24 @@ class DeckController extends AbstractController
         return $this->render('deck/show.html.twig', [
             'deck' => $deck,
         ]);
+    }
+
+    #[Route('/deck/{idDeck}/delete', name: 'delete_Deck')]
+    public function deleteDeck(EntityManagerInterface $entityManager, Request $request,Deck $deck = null): Response
+    {
+        $deckId = $request->attributes->get('idDeck');
+        $deck = $entityManager->getRepository(Deck::class)->find($deckId);
+        $cards = $deck->getCard();
+        foreach($cards as $card){
+            $card->removeDeck($deck);
+            //dd($card->getDecks());
+            if ($card->getDecks()->isEmpty()){
+                $entityManager->remove($card);
+            }
+        }
+        $entityManager->remove($deck);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_deckUser');
     }
 
     private function addImage(array $detail, EntityManagerInterface $entityManager) {

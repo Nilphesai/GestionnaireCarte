@@ -70,6 +70,22 @@ class DeckRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function findDecksByUser(int $user_id){
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+
+        $qb = $sub;
+        // sélectionner tous les deck avec id
+        $qb->select('s')
+            ->from('App\Entity\Deck', 's')
+            ->where('s.user = :user ')
+            ->setParameter('user', $user_id);
+
+        // renvoyer le résultat
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
     public function findRefCard() {
         $em = $this->getEntityManager();
         $sub = $em->createQueryBuilder();
