@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Card;
 use App\Entity\Deck;
+use App\Entity\Post;
 use App\Form\DeckType;
+use App\Form\PostType;
 use App\Entity\Picture;
 use App\Form\SearchCardType;
 use App\HttpClient\ApiHttpClient;
@@ -15,6 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DeckController extends AbstractController
@@ -61,6 +64,12 @@ class DeckController extends AbstractController
             $entityManager->flush();
     
             return $this->redirectToRoute('update_deck', ['id' => $deckId]);
+            
+            /*
+            return $this->renderView('deck/_tempDeck.html.twig', [
+                    'deck' => $deck
+                ]);
+            */
         }
         else{
         
@@ -179,13 +188,17 @@ class DeckController extends AbstractController
     }
 
     #[Route('/deck/{id}/read', name: 'show_deck')]
-    public function readDeck(EntityManagerInterface $entityManager, Request $request,Deck $deck = null): Response
+    public function readDeck(EntityManagerInterface $entityManager, Request $request,Deck $deck = null,Post $post = null): Response
     {
         $deckId = $request->attributes->get('id');
         $deck = $entityManager->getRepository(Deck::class)->find($deckId);
 
+        $post = new Post();
+        $formPost = $this->createForm(PostType::class,$post);
+
         return $this->render('deck/show.html.twig', [
             'deck' => $deck,
+            'formPost' => $formPost,
         ]);
     }
 

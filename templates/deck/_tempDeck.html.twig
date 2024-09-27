@@ -1,0 +1,26 @@
+<h2>{{deck.title}}</h2>
+                
+                <div id="deck">
+                    <div id="main-deck">
+                        {% for card in deck.card %}
+                        
+                        {% if card.typecard != "Fusion Monster" and card.typecard != "Link Monster" and card.typecard != "Pendulum Effect Fusion Monster" and card.typecard != "Synchro Monster" and card.typecard != "Synchro Pendulum Effect Monster" and card.typecard != "Synchro Tuner Monster" and card.typecard != "XYZ Monster" and card.typecard != "XYZ Pendulum Effect Monster"%}
+                        <a href="{{ path('card_delete_to_deck', {'id': card.id, 'idDeck': deck.id}) }}"> 
+                            <div class="image-carte-min"><img src="{{ asset ('images/' ~ card.refcard ~ '.jpg') }}" alt="{{card.name}}"></div>
+                            </a> 
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div id="extra-deck">
+                        {% for card in deck.card %}
+                        {% if card.typecard == "Fusion Monster" or card.typecard == "Link Monster" or card.typecard == "Pendulum Effect Fusion Monster" or card.typecard == "Synchro Monster" or card.typecard == "Synchro Pendulum Effect Monster" or card.typecard == "Synchro Tuner Monster" or card.typecard == "XYZ Monster" or card.typecard == "XYZ Pendulum Effect Monster"%}
+                        <a href="{{ path('card_delete_to_deck', {'id': card.id, 'idDeck': deck.id}) }}"> 
+                            <div class="image-carte-min"><img src="{{ asset ('images/' ~ card.refcard ~ '.jpg') }}" alt="{{card.name}}"></div>
+                            </a> 
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div id="side-deck">
+                        Side
+                    </div>
+                </div>

@@ -24,6 +24,9 @@ class Post
     #[ORM\JoinColumn(nullable: false)]
     private ?deck $deck = null;
 
+    #[ORM\ManyToOne(inversedBy: 'posts')]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +64,18 @@ class Post
     public function setDeck(?deck $deck): static
     {
         $this->deck = $deck;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

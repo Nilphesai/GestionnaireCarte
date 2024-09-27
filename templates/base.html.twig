@@ -22,7 +22,7 @@
             {% if app.user %}
             <a href="{{ path('app_deckUser', {'id': app.user.id}) }}"> Mes Deck</a>
             <a href="{{ path('app_logout') }}">Se déconnecter</a>
-            <a href="">Mon profil</a>
+            <a href="{{ path('app_user') }}">Mon profil</a>
             {% else %}
             <a href="{{ path('app_login') }}">Se connecter</a>
             <a href="{{ path('app_register') }}">S'enregister</a>

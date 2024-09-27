@@ -160,6 +160,11 @@ body {
     display: flex;
     flex-wrap: wrap;
 }
+#extra-deck .image-carte-min img{
+    width: 100px;
+    height: 150px;
+    margin: 0;
+}
 
 #side-deck{
     background-color: rgb(134, 78, 78);

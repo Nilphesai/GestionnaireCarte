@@ -17,7 +17,7 @@ export default class Filter {
         
         this.content = element.querySelector('.js-filter-content')
         this.form = element.querySelector('#card-search-filter')
-        
+        //this.deckContent = element.querySelector('#deck-content')
 
         //console.log(this.form)
         //console.log(document.getElementById("openFormSearch"))
