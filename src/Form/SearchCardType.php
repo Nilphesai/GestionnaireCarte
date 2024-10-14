@@ -109,6 +109,12 @@ class SearchCardType extends AbstractType
                     ]
                     
                 ],
+                'choice_label' => function($choice, $key, $value) {
+                    return $key;
+                },
+                'choice_value' => function($choice) {
+                    return $choice;
+                },
                 'required' => false,
                 'attr'=> [
                     'class' => 'form-control'
