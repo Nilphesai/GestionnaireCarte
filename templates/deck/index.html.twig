@@ -14,6 +14,7 @@
                     <th>titre</th>
                     <th>date création</th>
                     <th>format</th>
+                    <th>Créé par</th>
                 </tr>
                 {% for deck in decks %}
                     {% if not deck.Closed or is_granted("ROLE_ADMIN") %}
@@ -21,6 +22,7 @@
                         <td><a href="{{ path('show_deck', {'id': deck.id}) }}">{{deck.title}}</a></td>
                         <td>{{deck.createdAt|date('d-m-Y')}}</td>
                         <th>{{deck.Format}}</th>
+                        <th>{{deck.User}}</th>
                     </tr>
                     
                     {% endif %}

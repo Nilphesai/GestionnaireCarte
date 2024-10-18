@@ -25,11 +25,20 @@
             <div class="Postdeck">
                 {% if deck.posts is defined %}
                     {% for post in deck.posts %}
-                        {{post.text}}
-                        {{post.createdAt|date("d-m-Y")}}
+                        <div class="message">
+                            <div class="head_message">
+                                écrit le {{post.createdAt|date("d-m-Y")}}</br>
+                                par {{post.user}}
+                            </div>
+                            <p>{{post.text|nl2br}}</p>
+                        </div>
                     {% endfor %}
                 {% endif %}
                 {{ form_start(formPost, {'action': path('new_post', {'idDeck': deck.id}) }) }}
+                {{ form_row(formPost.text)}}
+                {{ form_row(formPost.createdAt)}}
+                {{ form_row(formPost.deck, {'class' : deck.id} )}}
+                {{ form_row(formPost.user)}}
                 {{ form_end(formPost) }}
             </div>
         </div>

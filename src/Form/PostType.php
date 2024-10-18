@@ -12,16 +12,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class PostType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('text',TextType::class,[
-                'attr'=> [
-                    'class' => 'form-control'
-                ]
+            ->add('text',TextareaType::class,[
+                'attr' => [
+                    'rows' => 10, // Nombre de lignes visibles
+                    'cols' => 50, // Nombre de colonnes visibles
+                    'placeholder' => 'Entrez votre commentaire ici...', // Texte indicatif
+                ],
             ])
             ->add('createdAt', DateType::class, [
                 'widget' => 'single_text',
@@ -31,10 +34,12 @@ class PostType extends AbstractType
             ->add('deck', EntityType::class, [
                 'class' => deck::class,
                 'choice_label' => 'id',
+                'attr' => array ('readonly' => true)
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'id',
+                'attr' => array ('readonly' => true)
             ])
             ->add('valider', SubmitType::class, [
                 'attr' => [
