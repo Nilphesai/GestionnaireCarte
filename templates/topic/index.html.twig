@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TopicController!{% endblock %}
+
+{% block body %}
+<div class="js-filter">
+    <h2>Topic</h2>
+              
+        {% for topic in topics %}
+            <div class="topic">
+                <a href="{{ path('app_post', {'idPost': topic.id}) }}">{{topic.title}}</a>
+            </div>
+        {% endfor %}  
+</div>
+
+{% endblock %}

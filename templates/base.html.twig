@@ -19,8 +19,10 @@
             <a href="{{ path('app_home') }}">Acceuil</a>
             <a id="loadedlistcard" href="{{ path('cards_list') }}">liste de carte</a>
             <a href="{{ path('app_deck')}}">Deck</a>
+            <a href="{{ path('app_category') }}">Forum</a>
             {% if app.user %}
             <a href="{{ path('app_deckUser', {'id': app.user.id}) }}"> Mes Deck</a>
+            
             <a href="{{ path('app_logout') }}">Se déconnecter</a>
             <a href="{{ path('app_user') }}">Mon profil</a>
             {% else %}
