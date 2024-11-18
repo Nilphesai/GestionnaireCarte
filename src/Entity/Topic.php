@@ -26,7 +26,7 @@ class Topic
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'topics')]
-    private ?Category $Category = null;
+    private ?Category $Category = null;  
 
     public function getId(): ?int
     {

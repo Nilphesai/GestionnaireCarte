@@ -20,12 +20,15 @@ class Post
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'posts')]
+    #[ORM\ManyToOne(targetEntity: "App\Entity\Deck",inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
     private ?deck $deck = null;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
     private ?User $user = null;
+
+    #[ORM\ManyToOne(cascade: ['persist', 'remove'])]
+    private ?Topic $Topic = null;
 
     public function getId(): ?int
     {
@@ -56,12 +59,12 @@ class Post
         return $this;
     }
 
-    public function getDeck(): ?deck
+    public function getDeck(): ?Deck
     {
         return $this->deck;
     }
 
-    public function setDeck(?deck $deck): static
+    public function setDeck(?Deck $deck): static
     {
         $this->deck = $deck;
 
@@ -76,6 +79,18 @@ class Post
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getTopic(): ?Topic
+    {
+        return $this->Topic;
+    }
+
+    public function setTopic(?Topic $Topic): static
+    {
+        $this->Topic = $Topic;
 
         return $this;
     }

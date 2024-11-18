@@ -4,9 +4,9 @@
 
 {% block body %}
 <div class="js-filter">
-    <h2>Topic</h2>
+    <h2>{{ category.name }}</h2>
               
-        {% for topic in topics %}
+        {% for topic in category.topics %}
             <div class="topic">
                 <a href="{{ path('app_post', {'topicId': topic.id}) }}">{{topic.title}}</a>
             </div>

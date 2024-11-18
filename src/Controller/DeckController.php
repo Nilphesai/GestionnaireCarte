@@ -202,7 +202,7 @@ class DeckController extends AbstractController
         ]);
     }
 
-    #[Route('/deck/{idDeck}/delete', name: 'delete_Deck')]
+    #[Route('/deck/{idDeck}/delete', name: 'delete_deck')]
     public function deleteDeck(EntityManagerInterface $entityManager, Request $request,Deck $deck = null): Response
     {
         $deckId = $request->attributes->get('idDeck');

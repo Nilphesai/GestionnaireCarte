@@ -21,7 +21,7 @@
             {{ form_end(formDeck) }}
             <div class="image-carte-cropped"><img src="{{ asset ('imagesDeck/' ~ deck.picture ~ '.jpg') }}"></div>
             {% if app.user == deck.user %}
-            <a href="{{ path('delete_Deck', {'idDeck': deck.id}) }}">supprimer Deck</a>
+            <a href="{{ path('delete_deck', {'idDeck': deck.id}) }}">supprimer Deck</a>
             {% endif %}
             </div>
             <div id="deck-content">

@@ -40,4 +40,20 @@ class PostRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findPostsByTopic(int $id){
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+        $qb = $sub;
+        // sélectionner tous les Posts
+        $qb->select('s')
+            ->from('App\Entity\Post', 's')
+            ->where('s.Topic = :id ')
+            ->setParameter('id', $id)
+            ->orderBy('s.createdAt', 'ASC');
+
+        // renvoyer le résultat
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
 }

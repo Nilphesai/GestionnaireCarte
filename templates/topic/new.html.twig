@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TopicController!{% endblock %}
+
+{% block body %}
+
+    <h1> Ajouter un Topic</h1>
+    
+
+    {{ form_start(formTopic) }}
+    <div class="row">
+        <div class="col-sm">
+            {{ form_row(formTopic.title)}}
+        </div>
+    </div>
+        {{ form_row(formTopic.valider)}}
+    {{ form_end(formTopic) }}
+{% endblock %}
