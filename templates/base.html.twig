@@ -23,8 +23,8 @@
             {% if app.user %}
             <a href="{{ path('app_deckUser', {'id': app.user.id}) }}"> Mes Deck</a>
             
-            <a href="{{ path('app_logout') }}">Se déconnecter</a>
             <a href="{{ path('app_user') }}">Mon profil</a>
+            <a href="{{ path('app_logout') }}">Se déconnecter</a>
             {% else %}
             <a href="{{ path('app_login') }}">Se connecter</a>
             <a href="{{ path('app_register') }}">S'enregister</a>
@@ -32,6 +32,7 @@
         {% if is_granted("ROLE_ADMIN") %}
             <a href="{{ path('app_AdminPanel') }}">Panneau d'administration</a>
         {% endif %}
+        
         </header>
         
         

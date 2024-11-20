@@ -46,7 +46,7 @@ class TopicRepository extends ServiceEntityRepository
         $sub = $em->createQueryBuilder();
 
         $qb = $sub;
-        // sélectionner tous les Categories
+        // sélectionner tous les topics
         $qb->select('s')
             ->from('App\Entity\Topic', 's')
             ->where('s.Category = :id ')
@@ -62,7 +62,7 @@ class TopicRepository extends ServiceEntityRepository
         $sub = $em->createQueryBuilder();
 
         $qb = $sub;
-        // sélectionner tous les Categories
+        // sélectionner le topic par ID
         $qb->select('s')
             ->from('App\Entity\Topic', 's')
             ->where('s.id = :id ')
@@ -72,4 +72,5 @@ class TopicRepository extends ServiceEntityRepository
         $query = $qb->getQuery();
         return $query->getResult();
     }
+    
 }

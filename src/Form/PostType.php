@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\deck;
 use App\Entity\Post;
 use App\Entity\User;
+use App\Entity\Topic;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -31,8 +32,8 @@ class PostType extends AbstractType
                 'data' => new \DateTime(),
                 'attr' => array ('readonly' => true)
             ])
-            ->add('deck', EntityType::class, [
-                'class' => deck::class,
+            ->add('Topic', EntityType::class, [
+                'class' => Topic::class,
                 'choice_label' => 'id',
                 'attr' => array ('readonly' => true)
             ])

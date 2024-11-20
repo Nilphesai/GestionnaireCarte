@@ -41,6 +41,19 @@ class PostRepository extends ServiceEntityRepository
     //        ;
     //    }
 
+    public function findPosts(){
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+        $qb = $sub;
+        // sélectionner tous les Posts
+        $qb->select('s')
+            ->from('App\Entity\Post', 's');
+
+        // renvoyer le résultat
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+/*
     public function findPostsByTopic(int $id){
         $em = $this->getEntityManager();
         $sub = $em->createQueryBuilder();
@@ -56,4 +69,17 @@ class PostRepository extends ServiceEntityRepository
         $query = $qb->getQuery();
         return $query->getResult();
     }
+*/
+    public function findByExampleField(int $value): array
+        {
+            return $this->createQueryBuilder('u')
+                ->andWhere('u.Topic = :val')
+                ->setParameter('val', $value)
+                ->orderBy('u.id', 'ASC')
+                ->setMaxResults(10)
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+
 }

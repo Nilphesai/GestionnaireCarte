@@ -8,7 +8,7 @@
               
         {% for category in categories %}
             <div class="category">
-                <a href="{{ path('app_topic', {'categoryId': category.id}) }}">{{category.name}}</a>
+                <a href="{{ path('show_category', {'id': category.id}) }}">{{category.name}}</a>
             </div>
         {% endfor %}  
 </div>

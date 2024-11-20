@@ -8,9 +8,10 @@
               
         {% for topic in category.topics %}
             <div class="topic">
-                <a href="{{ path('app_post', {'topicId': topic.id}) }}">{{topic.title}}</a>
+                <a href="{{ path('show_topic', {'topicId': topic.id}) }}">{{topic.title}}</a>
             </div>
         {% endfor %}  
+    <a href="{{ path('new_topic') }}">nouveaux topic</a>
 </div>
 
 {% endblock %}

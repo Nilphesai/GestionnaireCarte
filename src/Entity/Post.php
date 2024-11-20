@@ -27,7 +27,7 @@ class Post
     #[ORM\ManyToOne(inversedBy: 'posts')]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: "App\Entity\Topic",cascade: ['persist', 'remove'])]
     private ?Topic $Topic = null;
 
     public function getId(): ?int
@@ -91,7 +91,6 @@ class Post
     public function setTopic(?Topic $Topic): static
     {
         $this->Topic = $Topic;
-
         return $this;
     }
 }

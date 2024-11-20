@@ -54,4 +54,20 @@ class CategoryRepository extends ServiceEntityRepository
         $query = $qb->getQuery();
         return $query->getResult();
     }
+
+    public function findCategoryById(int $id){
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+
+        $qb = $sub;
+        // sélectionner la catégory en fonction de l'ID
+        $qb->select('s')
+            ->from('App\Entity\Category', 's')
+            ->where('s.id = :id ')
+            ->setParameter('id', $id);
+
+        // renvoyer le résultat
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
 }

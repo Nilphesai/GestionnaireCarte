@@ -13,12 +13,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PostController extends AbstractController
 {
-    #[Route('/post/{topicId}', name: 'app_post')]
+    #[Route('/post/app/{topicId}', name: 'app_post')]
     public function index(PostRepository $postRepository, Request $request): Response
     {
+        //dd("in app_post");
         $topicId = $request->attributes->get('topicId');
-
-        $posts = $postRepository->findPostsByTopic($topicId);
+        //dd($topicId);
+        $posts = $postRepository->findByExampleField($topicId);
         return $this->render('post/index.html.twig', [
             'posts' => $posts,
         ]);
@@ -26,47 +27,51 @@ class PostController extends AbstractController
 
     }
 
-    #[Route('/post/{postId}', name: 'show_post')]
+    #[Route('/post/show/{postId}', name: 'show_post')]
     public function show(PostRepository $postRepository, Request $request): Response
     {
+        //dd($request);
         $postId = $request->attributes->get('postId');
 
-        $post = $postRepository->findPosts($postId);
+        $post = $postRepository->findByExampleField($postId);
+
+       
         return $this->render('post/show.html.twig', [
             'post' => $post,
         ]);
         
 
     }
+
+    
+    //#[Route('/post/{id}/edit', name: 'update_post')]
     #[Route('/post/new', name: 'new_post')]
-    #[Route('/post/new/{id}', name: 'deck_post')]
-    #[Route('/post/{id}/edit', name: 'update_post')]
     public function new(EntityManagerInterface $entityManager, Request $request, Post $post = null): Response
     {
+        
         if($post == null){
             $post = new post();
         }
         
         $formPost = $this->createForm(PostType::class,$post);
         $formPost->handleRequest($request);
+        //dd($formPost);
         if($formPost->isSubmitted() && $formPost->isValid()){
             $post = $formPost->getData();
+            $entityManager->persist($post);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_category');
         }
-        $entityManager->persist($post);
-        $entityManager->flush();
-        $deckId = $request->attributes->get('id');
+
+
         //dd($deckId);
-        return $this->redirectToRoute('show_deck', [
-            'id' => $deckId,
-        ]);
         return $this->render('post/new.html.twig', [
             'formPost' => $formPost,
-            'edit' => $formPost->getId(),
         ]); 
         
     }
 
-    #[Route('/topic/{postId}/delete', name: 'delete_post')]
+    #[Route('/topic/delete/{postId}', name: 'delete_post')]
     public function deletePost(EntityManagerInterface $entityManager, Request $request,Post $post = null): Response
     {
         $postId = $request->attributes->get('postId');
