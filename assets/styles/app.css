@@ -5,7 +5,7 @@ body {
     background-color: #A64826;
     overflow: hidden;
 }
-  
+
   /* Style the links inside the navigation bar */
 #navbar a {
     float: left;
@@ -26,6 +26,45 @@ body {
     background-color: #04AA6D;
     color: white;
 }
+.parallax {
+    opacity: 30%;
+    background-image: url('/images/banniereAccueil.jpg');
+    height: 500px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    h1{
+        color: black;
+        text-align: center;
+        opacity: 100%;
+    }
+}
+
+.content {
+    height: 500px;
+    background-color: #E3CD9B;
+    text-align: center;
+    padding: 50px;
+}
+.topic-section {
+
+    gap: 20px;
+}
+.homeListTopic{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid black;
+}
+.topic-post {
+    width: 300px;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    position: relative;
+}
+
+
 
 #body-deck{
     display: flex;
@@ -212,6 +251,47 @@ body {
     margin: 10px;
 }
 
-.imagebanniere{
-    opacity: 30%;
+.category {
+    list-style: none;
+    padding: 10px;
+    margin: 20px 0;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+.topic {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.post {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.post:last-child {
+    border-bottom: none;
+}
+
+.post-header {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.post-body {
+    margin: 10px 0;
+}
+
+footer {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    font-size: 12px;
 }

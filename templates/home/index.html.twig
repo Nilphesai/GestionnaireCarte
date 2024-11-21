@@ -3,38 +3,64 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-    {% if app.user.username is defined %}
-    <h1>Hello {{ app.user.username }}</h1>
-    {% else %}
-    <h1>Hello</h1>
-    {% endif %}
-    <img class="imagebanniere" src="{{ asset ('images/banniereAccueil.jpg') }}" alt="bannière emprunter fait par markjasonsedanza5, sur le site artstation" >
-
-    <article>
-    <h4>List deck populaire</h4>
-        <div id="homeListDeck">
-            
-            {% for deck in decks %}
-            <div class="homeDeck">
+    
+    <div class="parallax">
+        <h1>YugiDeck</h1>
+    </div>
+    {#<img class="imagebanniere" src="{{ asset ('images/banniereAccueil.jpg') }}" alt="bannière emprunter fait par markjasonsedanza5, sur le site artstation" >
+#}
+<section class="deck-section">
+    <article class="content">
+        <h4>List deck populaire</h4>
+            <div id="homeListDeck">
                 
-                <div class="titredeck">
-                    <h5>   
-                        <a href="{{ path('update_deck', {'id': deck.id}) }}">{{deck.title}}</a>
-                    </h5>
+                {% for deck in decks %}
+                <div class="homeDeck">
+                    
+                    <div class="titredeck">
+                        <h5>   
+                            <a href="{{ path('update_deck', {'id': deck.id}) }}">{{deck.title}}</a>
+                        </h5>
+                    </div>
+                    <div class="imagedeck"><img src="{{ asset ('imagesDeck/' ~ deck.picture ~ '.jpg') }}"></div>
+                    <div class="corpdeck">
+                        <p>
+                            crée par {{deck.user}}<br>
+                            à {{deck.createdAt|date('d-m-Y')}}
+                        </p>
+                    </div>
                 </div>
-                <div class="imagedeck"><img src="{{ asset ('imagesDeck/' ~ deck.picture ~ '.jpg') }}"></div>
-                <div class="corpdeck">
-                    <p>
-                        crée par {{deck.user}}<br>
-                        à {{deck.createdAt|date('d-m-Y')}}
-                    </p>
+                
+            
+                {% endfor %}
+            </div>
+        </article>
+</section>
+<div class="parallax">
+    ping
+</div>
+ <section class="topic-section">
+    <article class="content">
+        <h4>List Topic populaire</h4>
+        <article class="homeListTopic">
+            {% for topic in topics %}
+            <div class="topic-post">
+                <div class="overlay">
+                    <h2>{{topic.title}}</h2>
+                    <p>{{topic.createdAt|date("d-m-Y")}}
+                    {{topic.user}}
+                    Résumé du topic...</p>
                 </div>
             </div>
             
         
             {% endfor %}
-        </div>
+        </article>
     </article>
+ </section>
+    
+
+    
         
 
     

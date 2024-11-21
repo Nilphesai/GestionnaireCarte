@@ -15,12 +15,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     #[Route('/home', name: 'app_home')]
-    public function index(DeckRepository $deckRepository,Request $request): Response
+    public function index(DeckRepository $deckRepository,TopicRepository $topicRepository,Request $request): Response
     {
         $decks = $deckRepository->findDecks();
-
+        $topic = $topicRepository->findTopics();
         return $this->render('home/index.html.twig', [
             'decks' => $decks,
+            'topics' => $topic,
         ]);
     }
 
