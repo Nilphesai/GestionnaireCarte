@@ -41,16 +41,14 @@ class TopicRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    public function findTopics(int $id){
+    public function findTopics(){
         $em = $this->getEntityManager();
         $sub = $em->createQueryBuilder();
 
         $qb = $sub;
         // sélectionner tous les topics
         $qb->select('s')
-            ->from('App\Entity\Topic', 's')
-            ->where('s.Category = :id ')
-            ->setParameter('id', $id);
+            ->from('App\Entity\Topic', 's');
 
         // renvoyer le résultat
         $query = $qb->getQuery();
@@ -70,7 +68,8 @@ class TopicRepository extends ServiceEntityRepository
 
         // renvoyer le résultat
         $query = $qb->getQuery();
-        return $query->getResult();
+        // renvois l'objet Topic
+        return $query->getOneOrNullResult();
     }
     
 }

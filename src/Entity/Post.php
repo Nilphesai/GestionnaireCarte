@@ -27,7 +27,9 @@ class Post
     #[ORM\ManyToOne(inversedBy: 'posts')]
     private ?User $user = null;
 
+
     #[ORM\ManyToOne(targetEntity: "App\Entity\Topic",cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: "topic_id", referencedColumnName: "id")]
     private ?Topic $Topic = null;
 
     public function getId(): ?int

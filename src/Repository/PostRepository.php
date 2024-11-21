@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Post;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Topic;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Post>
@@ -70,7 +71,7 @@ class PostRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 */
-    public function findByExampleField(int $value): array
+    public function findByExampleField(Topic $value): array
         {
             return $this->createQueryBuilder('u')
                 ->andWhere('u.Topic = :val')

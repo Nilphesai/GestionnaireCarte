@@ -4,20 +4,17 @@
 
 {% block body %}
 <div class="js-filter">
-    <h2>{{ topic.title }}</h2>
-    {{ dump(topic) }}
-    {{ dump(topic.posts) }}
-         {#     
-        {% for post in topic.posts %}
-        <div class="message">
-            <div class="head_message">
-                écrit le {{post.createdAt|date("d-m-Y")}}</br>
-                par {{post.user}}
-            </div>
-            <p>{{post.text|nl2br}}</p>
+    {% for post in posts %}
+    <div class="message">
+        <div class="head_message">
+            écrit le {{post.createdAt|date("d-m-Y")}}</br>
+            par {{post.user}}
         </div>
-        {% endfor %}  #}
-        <div class="Post">
+        <p>{{post.text|nl2br}}</p>
+    </div>
+    {% endfor %}
+         
+        <div class="formPost">
             {{ form_start(formPost, {'action': path('new_post')} ) }}
             {{ form_row(formPost.text)}}
             {{ form_row(formPost.createdAt)}}

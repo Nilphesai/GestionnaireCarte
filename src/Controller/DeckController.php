@@ -32,7 +32,7 @@ class DeckController extends AbstractController
         ]);
     }
 
-    #[Route('/deck/{idDeck}/add-card', name: 'card_add_to_deck', methods: 'POST')]
+    #[Route('/deck/add-card/{idDeck}', name: 'card_add_to_deck', methods: 'POST')]
     public function addCard(CardRepository $cardRepository, EntityManagerInterface $entityManager, Request $request, Card $card = null){
         
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -114,7 +114,7 @@ class DeckController extends AbstractController
         }
     }
 
-    #[Route('/deck/{id}/{idDeck}/delete-card', name: 'card_delete_to_deck')]
+    #[Route('/deck/delete-card/{id}/{idDeck}', name: 'card_delete_to_deck')]
     public function deleteCard(EntityManagerInterface $entityManager, Request $request){
 
             $idCard = $request->attributes->get('id');
@@ -131,7 +131,7 @@ class DeckController extends AbstractController
     }
 
     #[Route('/deck/new', name: 'new_deck')]
-    #[Route('/deck/{id}/edit', name: 'update_deck')]
+    #[Route('/deck/edit/{id}', name: 'update_deck')]
     public function new(EntityManagerInterface $entityManager, Request $request, Card $card = null,Deck $deck = null, ApiHttpClient $apiHttpClient): Response
     {
         //dd($deck);
@@ -187,7 +187,7 @@ class DeckController extends AbstractController
         ]);
     }
 
-    #[Route('/deck/{id}/read', name: 'show_deck')]
+    #[Route('/deck/read/{id}', name: 'show_deck')]
     public function readDeck(EntityManagerInterface $entityManager, Request $request,Deck $deck = null,Post $post = null): Response
     {
         $deckId = $request->attributes->get('id');
@@ -202,7 +202,7 @@ class DeckController extends AbstractController
         ]);
     }
 
-    #[Route('/deck/{idDeck}/delete', name: 'delete_deck')]
+    #[Route('/deck/delete/{idDeck}', name: 'delete_deck')]
     public function deleteDeck(EntityManagerInterface $entityManager, Request $request,Deck $deck = null): Response
     {
         $deckId = $request->attributes->get('idDeck');

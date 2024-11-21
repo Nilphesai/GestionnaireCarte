@@ -34,12 +34,14 @@
                         </div>
                     {% endfor %}
                 {% endif %}
-                {{ form_start(formPost, {'action': path('deck_post', {'id': deck.id}) }) }}
+                {#
+                {{ form_start(formPost, {'action': path('new_post') }) }}
                 {{ form_row(formPost.text)}}
                 {{ form_row(formPost.createdAt)}}
                 {{ form_row(formPost.deck, {'class' : deck.id} )}}
                 {{ form_row(formPost.user)}}
                 {{ form_end(formPost) }}
+                 #}
             </div>
         </div>
 </div>

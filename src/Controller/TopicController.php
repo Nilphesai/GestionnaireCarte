@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Entity\Topic;
-use App\Form\TopicType;
 use App\Form\PostType;
+use App\Form\TopicType;
+use App\Repository\PostRepository;
 use App\Repository\TopicRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,25 +17,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class TopicController extends AbstractController
 {
     #[Route('/topic', name: 'app_topic')]
-    public function index(): Response
+    public function index(TopicRepository $topicRepository): Response
     {
+        $topics = $topicRepository->findtopics();
+
         return $this->render('topic/index.html.twig', [
-            'controller_name' => 'topicController',
+            'topics' => $topics,
         ]);
     }
 
     #[Route('/topic/show/{topicId}', name: 'show_topic')]
-    public function show(TopicRepository $topicRepository, Request $request): Response
+    public function show(TopicRepository $topicRepository,PostRepository $postRepository, Request $request): Response
     {
         $post = new post();
         $topicId = $request->attributes->get('topicId');
         //dd($topicId);
         $topic = $topicRepository->findTopicById($topicId);
         //dd($topic);
+        $posts = $postRepository->findByExampleField($topic);
+        //dd($posts);
 
         $formPost = $this->createForm(PostType::class,$post);
         return $this->render('topic/show.html.twig', [
-            'topic' => $topic[0],
+            'posts' => $posts,
             'formPost' => $formPost,
         ]);
     }
