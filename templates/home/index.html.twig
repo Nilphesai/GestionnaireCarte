@@ -3,12 +3,10 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-    
+<div class="js">
     <div class="parallax">
         <h1>YugiDeck</h1>
     </div>
-    {#<img class="imagebanniere" src="{{ asset ('images/banniereAccueil.jpg') }}" alt="bannière emprunter fait par markjasonsedanza5, sur le site artstation" >
-#}
 <section class="deck-section">
     <article class="content">
         <h4>List deck populaire</h4>
@@ -58,10 +56,15 @@
         </article>
     </article>
  </section>
-    
+ <div class="parallax">
+    ping
+</div>
+
+
+ <button type="button" id="scrollToTopBtn" class="hidden">Haut de page</button>  
 
     
         
 
-    
+</div>
 {% endblock %}

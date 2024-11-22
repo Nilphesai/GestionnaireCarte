@@ -24,7 +24,6 @@ export default class Filter {
         
         this.bindEvents()
 
-
     }
 
     
@@ -160,8 +159,8 @@ export default class Filter {
             
             this.loadUrl(e.target.getAttribute('action'),url)
         })
-        
-    }
+
+    };
     
     async loadUrl (url,searchedCard){
         console.log(url)

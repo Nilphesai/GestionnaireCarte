@@ -12,5 +12,4 @@ import Filter from './modules/Filter.js'
 document.addEventListener('DOMContentLoaded', function () {
  
     new Filter(document.querySelector('.js-filter'))
-
     })

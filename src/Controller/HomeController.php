@@ -18,10 +18,10 @@ class HomeController extends AbstractController
     public function index(DeckRepository $deckRepository,TopicRepository $topicRepository,Request $request): Response
     {
         $decks = $deckRepository->findDecks();
-        $topic = $topicRepository->findTopics();
+        $topics = $topicRepository->findTopics();
         return $this->render('home/index.html.twig', [
             'decks' => $decks,
-            'topics' => $topic,
+            'topics' => $topics,
         ]);
     }
 
