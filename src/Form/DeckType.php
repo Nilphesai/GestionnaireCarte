@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Card;
 use App\Entity\Deck;
+use App\Entity\DeckCard;
 use App\Entity\User;
 use App\Repository\DeckRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -31,8 +32,8 @@ class DeckType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $deck = $options['data'];
-        $cards = $deck->getCard();
-        //dd($cards);
+        //$DeckCards = $deck->getDeckCards();
+        //dd($DeckCards);
         $builder
             ->add('title', TextType::class,[
                 'attr'=> [
@@ -51,30 +52,30 @@ class DeckType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('picture', ChoiceType::class,[
+            /*->add('picture', ChoiceType::class,[
                 'required' => false,
-                'choices' => $cards,
+                'choices' => $DeckCards,
                 'empty_data' => "null",
-                //$choice une instance de cards pour chaque ittération,
-                //$key clé de l'élément actuelle de cards
-                //$value valeurs de l'élément actuelle de cards
+                //$choice une instance de DeckCards pour chaque ittération,
+                //$key clé de l'élément actuelle de DeckCards
+                //$value valeurs de l'élément actuelle de DeckCards
                 'choice_label' => function($choice, $key, $value) {
                     
-                    return is_object($choice) ? $choice->getName() : 'choice'; // ou toute autre logique pour afficher les éléments
+                    return is_object($choice) ? $choice->getCard()->getName() : 'choice'; // ou toute autre logique pour afficher les éléments
                 },
                 'choice_value' => function($choice) {
                     
-                    return is_object($choice) ? strval($choice->getRefCard()) : '';
+                    return is_object($choice) ? strval($choice->getCard()->getRefCard()) : '';
                 },
                 'attr'=> [
                     'class' => 'form-control'
                 ],
                 
-            ])
-            ->add('card', EntityType::class, [
+            ])*/
+            ->add('deckCards', EntityType::class, [
                 'required' => false,
-                'class' => Card::class,
-                'choice_label' => 'name',
+                'class' => DeckCard::class,
+                'choice_label' => 'id',
                 //'query_builder' => function (EntityRepository $er): QueryBuilder {
                 //    return $er->createQueryBuilder('u')
                     //->where('u.decks = :deck')
@@ -94,6 +95,7 @@ class DeckType extends AbstractType
                 ]
             ])
         ;
+        //dd("ping");
     }
 
     public function configureOptions(OptionsResolver $resolver): void

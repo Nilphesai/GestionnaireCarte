@@ -28,12 +28,6 @@ class Deck
     private ?string $picture = null;
 
     /**
-     * @var Collection<int, Card>
-     */
-    #[ORM\ManyToMany(targetEntity: Card::class, inversedBy: 'decks')]
-    private Collection $card;
-
-    /**
      * @var Collection<int, Post>
      */
     #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'deck', orphanRemoval: true)]
@@ -46,9 +40,15 @@ class Deck
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $format = null;
 
+    /**
+     * @var Collection<int, DeckCard>
+     */
+    #[ORM\OneToMany(targetEntity: DeckCard::class, mappedBy: 'deck', orphanRemoval: true)]
+    private Collection $deckCards;
+
     public function __construct()
     {
-        $this->card = new ArrayCollection();
+        $this->deckCards = new ArrayCollection();
         $this->posts = new ArrayCollection();
     }
 
@@ -106,34 +106,6 @@ class Deck
     }
 
     /**
-     * @return Collection<int, Card>
-     */
-    public function getCard(): Collection
-    {
-        return $this->card;
-    }
-
-    public function addCard(Card $card): static
-    {
-        if (!$this->card->contains($card)) {
-            $this->card->add($card);
-        }else{
-            
-            $this->card->add($card);
-            //dd($this->card);
-        }
-
-        return $this;
-    }
-
-    public function removeCard(Card $card): static
-    {
-        $this->card->removeElement($card);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Post>
      */
     public function getPosts(): Collection
@@ -172,7 +144,7 @@ class Deck
     {
         $this->user = $user;
 
-        return $this;
+                return $this; 
     }
 
     public function getFormat(): ?string
@@ -190,5 +162,35 @@ class Deck
     public function __toString(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @return Collection<int, DeckCard>
+     */
+    public function getDeckCards(): Collection
+    {
+        return $this->deckCards;
+    }
+
+    public function addDeckCard(DeckCard $deckCard): static
+    {
+        if (!$this->deckCards->contains($deckCard)) {
+            $this->deckCards->add($deckCard);
+            $deckCard->setDeck($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDeckCard(DeckCard $deckCard): static
+    {
+        if ($this->deckCards->removeElement($deckCard)) {
+            // set the owning side to null (unless already changed)
+            if ($deckCard->getDeck() === $this) {
+                $deckCard->setDeck(null);
+            }
+        }
+
+        return $this;
     }
 }

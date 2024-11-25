@@ -2,22 +2,24 @@
 
 namespace App\Repository;
 
+use App\Entity\DeckCard;
 use App\Entity\Deck;
+use App\Entity\Card;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Deck>
+ * @extends ServiceEntityRepository<DeckCard>
  */
-class DeckRepository extends ServiceEntityRepository
+class DeckCardRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Deck::class);
+        parent::__construct($registry, DeckCard::class);
     }
 
     //    /**
-    //     * @return Deck[] Returns an array of Deck objects
+    //     * @return DeckCard[] Returns an array of DeckCard objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +33,7 @@ class DeckRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Deck
+    //    public function findOneBySomeField($value): ?DeckCard
     //    {
     //        return $this->createQueryBuilder('d')
     //            ->andWhere('d.exampleField = :val')
@@ -40,66 +42,70 @@ class DeckRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
-    public function findDecks(){
+
+    public function findDeckCards(){
         $em = $this->getEntityManager();
         $sub = $em->createQueryBuilder();
 
         $qb = $sub;
-        // sélectionner tous les deck
+        // sélectionner tous les deckCard (toutes les cartes liée à un deck)
         $qb->select('s')
-            ->from('App\Entity\Deck', 's');
+            ->from('App\Entity\DeckCard', 's');
 
         // renvoyer le résultat
         $query = $qb->getQuery();
         return $query->getResult();
     }
 
-    public function findDecksById(int $id){
+    public function findDeckCardsByDeck(Deck $deck){
         $em = $this->getEntityManager();
         $sub = $em->createQueryBuilder();
 
         $qb = $sub;
-        // sélectionner tous les deck avec id
-        $qb->select('s')
-            ->from('App\Entity\Deck', 's')
-            ->where('s.id = :id ')
-            ->setParameter('id', $id);
-
-        // renvoyer le résultat
-        $query = $qb->getQuery();
-        return $query->getResult();
-    }
-
-    public function findDecksByUser(int $user_id){
-        $em = $this->getEntityManager();
-        $sub = $em->createQueryBuilder();
-
-        $qb = $sub;
-        // sélectionner tous les deck de l'utilisateur
-        $qb->select('s')
-            ->from('App\Entity\Deck', 's')
-            ->where('s.user = :user ')
-            ->setParameter('user', $user_id);
-
-        // renvoyer le résultat
-        $query = $qb->getQuery();
-        return $query->getResult();
-    }
-
-    public function findRefCard(int $id) {
-        $em = $this->getEntityManager();
-        $sub = $em->createQueryBuilder();
-
-        $qb = $sub;
-        // sélectionner tous les cartes du deck
+        // sélectionner tous les deckCards avec deck_id entrée en paramètre
         $qb->select('s')
             ->from('App\Entity\DeckCard', 's')
-            ->where('s.id = :id ')
-            ->setParameter('id', $id);
+            ->where('s.deck = :deck ')
+            ->setParameter('deck', $deck);
 
         // renvoyer le résultat
         $query = $qb->getQuery();
         return $query->getResult();
-
     }
+
+    public function findDeckCardsByCard(Card $card){
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+
+        $qb = $sub;
+        // sélectionner tous les deckCards avec card_id entrée en paramètre
+        $qb->select('s')
+            ->from('App\Entity\DeckCard', 's')
+            ->where('s.card = :card ')
+            ->setParameter('card', $card);
+
+        // renvoyer le résultat
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+    public function findDeckCardsByCardAndDeck(Card $card, Deck $deck){
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+
+        $qb = $sub;
+        // sélectionner tous les deckCards avec card_id entrée en paramètre
+        $qb->select('s')
+            ->from('App\Entity\DeckCard', 's')
+            ->where('s.card = :card ')
+            ->andwhere('s.deck = :deck')
+            ->setParameter('card', $card)
+            ->setParameter('deck', $deck);
+
+        // renvoyer le résultat
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+
 }
