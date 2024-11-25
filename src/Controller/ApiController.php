@@ -130,7 +130,8 @@ class ApiController extends AbstractController
         $parent = $request->headers->get('referer');
         if ($parent && strpos($parent,'deck') !== false){
             $isDeck = true;
-            $pattern = '/deck\/(.*?)\/edit/';
+            //$pattern = '/deck\/(.*?)\/edit/';
+            $pattern = '/deck\/edit\/(\d+)/';
             $matches = [];
             if ($parent && preg_match($pattern, $parent, $matches)) {
                 // Si une correspondance est trouvée, $matches[1] contiendra la partie capturée
