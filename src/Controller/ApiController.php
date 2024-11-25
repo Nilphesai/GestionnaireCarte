@@ -42,9 +42,9 @@ class ApiController extends AbstractController
         
     }
 
-    #[Route('/cards/fetch-cards', name: 'card_fetch')]
+    #[Route('/cards/fetch-cards', name: 'card_fetch', methods: ['POST'])]
     public function listCard(DeckRepository $deckRepository, EntityManagerInterface $entityManager,Card $card = null, ApiHttpClient $apiHttpClient, Request $request, SessionInterface $session){
-        dd('ping');
+        
         if(!$card){
             $card = new Card();
         }

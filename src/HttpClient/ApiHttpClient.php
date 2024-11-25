@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\Constraints\Length;
 
 class ApiHttpClient extends AbstractController{
-    private $httpclient;
+    private $httpClient;
 
     public function __construct(HttpClientInterface $jph){
         $this->httpClient = $jph;
