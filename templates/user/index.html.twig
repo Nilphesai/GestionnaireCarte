@@ -4,9 +4,31 @@
 
 {% block body %}
     {{dump(app.user)}}
+
+    <a href=""> Changer d'avatar</a>
+    {#<form action="{{ path('update_picture', {'id': app.user.id}) }}" method="post">
+    <input type="hidden" name="picture" value="{{ asset ('images/' ~ card.id ~ '.jpg') }}">
+                <button type="submit">
+                    <i>add</i>
+                </button>
+    </form>#}
     <h1>{{app.user.username}}</h1>
+
+    <form action="{{ path('update_username') }}" method="post">
+        <input name="username" value="{{ app.user.username }}">
+                    <button type="submit">
+                        <i>modify</i>
+                    </button>
+    </form>
+
     <h6>{{app.user.email}}</h6>
-    
+    <form action="{{ path('update_email') }}" method="post">
+        <input name="email" value="{{ app.user.email }}">
+                    <button type="submit">
+                        <i>modify</i>
+                    </button>
+    </form>
+
     <a href="{{ path('app_deckUser', {'id': app.user.id}) }}"> Mes Deck</a>
     
 {% endblock %}
