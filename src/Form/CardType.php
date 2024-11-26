@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Card;
 use App\Entity\Deck;
+use App\Entity\DeckCard;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -77,8 +78,8 @@ class CardType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('decks', EntityType::class, [
-                'class' => Deck::class,
+            ->add('deckCards', EntityType::class, [
+                'class' => DeckCard::class,
                 'choice_label' => 'id',
                 'multiple' => true,
             ])

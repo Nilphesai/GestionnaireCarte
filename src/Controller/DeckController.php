@@ -36,7 +36,7 @@ class DeckController extends AbstractController
 
     #[Route('/deck/add-card/{idDeck}', name: 'card_add_to_deck', methods: 'POST')]
     public function addCard(CardRepository $cardRepository, DeckCardRepository $deckCardRepository, EntityManagerInterface $entityManager, Request $request, DeckCard $deckCard = null, Card $card = null){
-        
+        //dd($_POST);
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $attribute = filter_input(INPUT_POST, 'attribute', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $level = filter_input(INPUT_POST, 'level', FILTER_SANITIZE_NUMBER_INT);
@@ -50,6 +50,7 @@ class DeckController extends AbstractController
         $picture = filter_input(INPUT_POST, 'picture', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $refCard = filter_input(INPUT_POST, 'refCard', FILTER_SANITIZE_NUMBER_INT);
         $typecard = filter_input(INPUT_POST, 'typecard', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $zone = filter_input(INPUT_POST, 'zone', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         
         $deckCard = new DeckCard();
         $card = new Card();
@@ -63,14 +64,39 @@ class DeckController extends AbstractController
             $deck = $entityManager->getRepository(Deck::class)->find($deckId);
             $deckCard = $deckCardRepository->findDeckCardsByCardAndDeck($cardcheck[0],$deck);
             if ($deckCard){
-                $qtt = $deckCard[0]->getQtt();
-                if($qtt<=3){
-                    $deckCard->setQtt($qtt++);
+                $qtt = $deckCard[0]->getQtt() + $deckCard[0]->getQttSide();
+                if($qtt<3){
+                    if($zone === "side"){
+                        $qtt = $deckCard[0]->getQttSide() + 1;
+                    $deckCard[0]->setQttSide($qtt);
+                    }else{
+                        $qtt = $deckCard[0]->getQtt() + 1;
+                    $deckCard[0]->setQtt($qtt);
+                    }
                 }
+
+                $entityManager->persist($deckCard[0]);
+                $entityManager->flush();
         
                 return $this->redirectToRoute('update_deck', ['id' => $deckId]);
             }
+            else{
+                
+            $deckCard = new DeckCard();
+            $deckCard->setDeck($deck);
+            
+            $deckCard->setCard($cardcheck[0]);
+            if($zone === "side"){
+                $deckCard->setQttSide(1);
+            }else{
+                $deckCard->setQtt(1);
+            }
+            //dd($card);
+            $entityManager->persist($deckCard);
+            $entityManager->flush();
+    
             return $this->redirectToRoute('update_deck', ['id' => $deckId]);
+            }
             
             /*
             return $this->renderView('deck/_tempDeck.html.twig', [
@@ -79,7 +105,7 @@ class DeckController extends AbstractController
             */
         }
         else{
-        
+            
             if ($name && $race && $effect && $picture){
                 $card->setAttribute($attribute);
                 $card->setName($name);
@@ -113,11 +139,13 @@ class DeckController extends AbstractController
             $deckId = $request->attributes->get('idDeck');
             $deck = $entityManager->getRepository(Deck::class)->find($deckId);
             
-            $deckCard = new DeckCard();
             $deckCard->setDeck($deck);
             $deckCard->setCard($card);
-            $deckCard->setQtt(1);
-            $deckCard->setZone("main");
+            if($zone === "side"){
+                $deckCard->setQttSide(1);
+            }else{
+                $deckCard->setQtt(1);
+            }
 
             //dd($card);
             $entityManager->persist($deckCard);
@@ -128,18 +156,40 @@ class DeckController extends AbstractController
     }
 
     #[Route('/deck/delete-card/{id}/{idDeck}', name: 'card_delete_to_deck')]
-    public function deleteCard(EntityManagerInterface $entityManager, Request $request){
-
+    #[Route('/deck/delete-card/{id}/{idDeck}/{qttSide}', name: 'card_delete_to_side')]
+    public function deleteCard(EntityManagerInterface $entityManager,DeckCardRepository $deckCardRepository, Request $request){
+            dd($request->attributes->get('_route'));
             $idCard = $request->attributes->get('id');
             $deckId = $request->attributes->get('idDeck');
+
             $deck = $entityManager->getRepository(Deck::class)->find($deckId);
             $card = $entityManager->getRepository(Card::class)->find($idCard);
             //dd($cardcheck);
-            $card->removeDeckCard($deck);
-            $entityManager->persist($card);
-            $entityManager->flush();
+            $deckCard = $deckCardRepository->findDeckCardsByCardAndDeck($card,$deck);
+            if($request->attributes->get('_route') === 'card_delete_to_deck'){
+                $qtt = $deckCard[0]->getQtt();
+                $deckCard[0]->setQtt($qtt - 1);
+            }else{
+                $qtt = $deckCard[0]->getQttSide();
+                $deckCard[0]->setQttSide($qtt - 1);
+            }
+
+                if ($deckCard[0]->getQttSide() === 0 && $deckCard[0]->getQtt() === 0){
+                    $card->removeDeckCard($deckCard[0]);
+                    $deck->removeDeckCard($deckCard[0]);
     
-            return $this->redirectToRoute('update_deck', ['id' => $deckId]);
+                    $entityManager->persist($card);
+                    $entityManager->persist($deck);
+                }
+           
+
+                
+                    
+                $entityManager->persist($deckCard[0]);
+                $entityManager->flush();
+                return $this->redirectToRoute('update_deck', ['id' => $deckId]);
+            }
+            
         
     }
 

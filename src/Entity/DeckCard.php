@@ -21,11 +21,11 @@ class DeckCard
     #[ORM\JoinColumn(nullable: false)]
     private ?Card $card = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $qtt = null;
 
-    #[ORM\Column(length: 10)]
-    private ?string $zone = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $qttSide = null;
 
     public function getId(): ?int
     {
@@ -68,14 +68,14 @@ class DeckCard
         return $this;
     }
 
-    public function getZone(): ?string
+    public function getQttSide(): ?int
     {
-        return $this->zone;
+        return $this->qttSide;
     }
 
-    public function setZone(string $zone): static
+    public function setQttSide(?int $qttSide): static
     {
-        $this->zone = $zone;
+        $this->qttSide = $qttSide;
 
         return $this;
     }

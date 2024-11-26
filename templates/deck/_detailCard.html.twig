@@ -62,8 +62,11 @@
                 {% endif %}
                 <input type="hidden" name="refCard" value="{{ card.id }}">
                 <input type="hidden" name="picture" value="{{ asset ('images/' ~ card.id ~ '.jpg') }}">
-                <button type="submit">
-                    <i>add</i>
+                <button type="submit" name="zone" value="main">
+                    <i>add main</i>
+                </button>
+                <button type="submit" name="zone" value="side">
+                    <i>add side</i>
                 </button>
             </form>
         </div>
