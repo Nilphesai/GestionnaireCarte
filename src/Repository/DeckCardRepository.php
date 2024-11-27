@@ -6,6 +6,7 @@ use App\Entity\DeckCard;
 use App\Entity\Deck;
 use App\Entity\Card;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\GroupBy;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -94,13 +95,31 @@ class DeckCardRepository extends ServiceEntityRepository
         $sub = $em->createQueryBuilder();
 
         $qb = $sub;
-        // sélectionner tous les deckCards avec card_id entrée en paramètre
+        // sélectionner tous les deckCards avec card_id ET deck_id entrée en paramètre
         $qb->select('s')
             ->from('App\Entity\DeckCard', 's')
             ->where('s.card = :card ')
             ->andwhere('s.deck = :deck')
             ->setParameter('card', $card)
             ->setParameter('deck', $deck);
+
+        // renvoyer le résultat
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+    public function findTopDeckCardsbyQttInAllDeck(){
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+
+        $qb = $sub;
+        // sélectionner les 6 deckCard des 6 cartes est les plus utilisés 
+        $qb->select('c.id, COUNT(s.card) as cardCount')
+            ->from('App\Entity\DeckCard', 's')
+            ->join('s.card', 'c') 
+            ->groupBy('c.id') 
+            ->orderBy('cardCount', 'DESC')
+            ->setMaxResults(6);
 
         // renvoyer le résultat
         $query = $qb->getQuery();

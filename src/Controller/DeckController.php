@@ -174,22 +174,17 @@ class DeckController extends AbstractController
                 $deckCard[0]->setQttSide($qtt - 1);
             }
 
-                if ($deckCard[0]->getQttSide() === 0 && $deckCard[0]->getQtt() === 0){
-                    $card->removeDeckCard($deckCard[0]);
-                    $deck->removeDeckCard($deckCard[0]);
+            if ($deckCard[0]->getQttSide() === 0 && $deckCard[0]->getQtt() === 0){
+                $card->removeDeckCard($deckCard[0]);
+                $deck->removeDeckCard($deckCard[0]);
     
-                    $entityManager->persist($card);
-                    $entityManager->persist($deck);
-                }
-           
-
-                
-                    
-                $entityManager->persist($deckCard[0]);
-                $entityManager->flush();
-                return $this->redirectToRoute('update_deck', ['id' => $deckId]);
+                $entityManager->persist($card);
+                $entityManager->persist($deck);
             }
-            
+                    
+            $entityManager->persist($deckCard[0]);
+            $entityManager->flush();
+            return $this->redirectToRoute('update_deck', ['id' => $deckId]);      
         
     }
 
@@ -203,7 +198,7 @@ class DeckController extends AbstractController
         }
         //dd($deck);
         $formDeck = $this->createForm(DeckType::class,$deck);
-        //dd($deck);
+        dd($request);
         $card = new Card();
         $form = $this->createForm(SearchCardType::class,$card);
 

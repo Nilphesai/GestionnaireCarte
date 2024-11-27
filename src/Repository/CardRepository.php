@@ -77,4 +77,21 @@ class CardRepository extends ServiceEntityRepository
         $query = $qb->getQuery();
         return $query->getResult();
     }
+
+    public function findCardById(int $id)
+    {
+        $cd = $this->getEntityManager();
+        $sub = $cd->createQueryBuilder();
+
+        $qb = $sub;
+        // sélectionner la Carte dont la refCard est passé en paramètre
+        $qb->select('s')
+            ->from('App\Entity\Card', 's')
+            ->where('s.id = :id ')
+            ->setParameter('id', $id);
+
+        // renvoyer le résultat
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
 }

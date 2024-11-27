@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\CardRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\DeckCardRepository;
 use App\Repository\DeckRepository;
 use App\Repository\PostRepository;
 use App\Repository\TopicRepository;
@@ -15,13 +17,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     #[Route('/home', name: 'app_home')]
-    public function index(DeckRepository $deckRepository,TopicRepository $topicRepository,Request $request): Response
+    public function index(DeckRepository $deckRepository,TopicRepository $topicRepository, DeckCardRepository $deckCardReposirory, CardRepository $cardRepository,Request $request): Response
     {
         $decks = $deckRepository->findDecks();
         $topics = $topicRepository->findTopics();
+        $idCards = $deckCardReposirory->findTopDeckCardsbyQttInAllDeck();
+        $i = 0;
+        foreach($idCards as $idCard){
+            //dd($idCard['id']);
+            $cards[$i] = $cardRepository->findCardById($idCard['id']);
+            $i++;
+        }
+        //dd($cards);
         return $this->render('home/index.html.twig', [
             'decks' => $decks,
             'topics' => $topics,
+            'cards' => $cards,
         ]);
     }
 

@@ -32,7 +32,7 @@ class DeckType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $deck = $options['data'];
-        //$DeckCards = $deck->getDeckCards();
+        $DeckCards = $deck->getDeckCards();
         //dd($DeckCards);
         $builder
             ->add('title', TextType::class,[
@@ -52,7 +52,7 @@ class DeckType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            /*->add('picture', ChoiceType::class,[
+            ->add('picture', ChoiceType::class,[
                 'required' => false,
                 'choices' => $DeckCards,
                 'empty_data' => "null",
@@ -71,7 +71,7 @@ class DeckType extends AbstractType
                     'class' => 'form-control'
                 ],
                 
-            ])*/
+            ])
             ->add('deckCards', EntityType::class, [
                 'required' => false,
                 'class' => DeckCard::class,

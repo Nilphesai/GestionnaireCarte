@@ -34,34 +34,67 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    h1{
-        color: black;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    #presentation{
+        color: white;
         text-align: center;
-        opacity: 100%;
+        align-items: center;
+
+
+        a{
+            background-color: blue;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    }
+
+}
+
+#homeListCard{
+    display: flex;
+    align-items: center;
+    .homeCard{
+        margin: 10px;
+        .imagedeck img{
+            width: 200px;
+            height: 250px;
+            border: 1px solid black;
+        }
     }
 }
 
-.content {
-    height: 500px;
+.topic-section {
     background-color: #E3CD9B;
     text-align: center;
     padding: 50px;
 }
-.topic-section {
 
-    gap: 20px;
+.message{
+    border: 1px solid black;
+    height: 50px;
 }
+
+.author{
+    text-align: left;
+}
+
 .homeListTopic{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     border: 1px solid black;
 }
+
 .topic-post {
-    width: 300px;
-    border: 1px solid #ddd;
-    overflow: hidden;
+    margin: 10px;
+    border: 1px solid black;
     position: relative;
+    border-radius: 5px;
 }
 
 #scrollToTopBtn {
@@ -119,13 +152,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    .js-filter-content{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
-#block-recherche-listCard .js-filter-content{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 .details{
     border: 1px solid black;
     margin: 10px;
@@ -151,14 +184,14 @@ body {
     max-height: 60rem;
     width: 25rem;
     margin-right: 5rem;
+    .js-filter-content{
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 1600px;
+        overflow-y: scroll;
+    }
 }
 
-#block-recherche-deck .js-filter-content{
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 1600px;
-    overflow-y: scroll;
-}
 .image-carte-min img{
     background-color: #a64826;
     width: 150px;
@@ -221,6 +254,11 @@ body {
     background-color: rgb(134, 78, 78);
     display: flex;
     flex-wrap: wrap;
+}
+#side-deck .image-carte-min img{
+    width: 100px;
+    height: 150px;
+    margin: 0;
 }
 
 .hidden {
