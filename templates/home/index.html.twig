@@ -12,23 +12,24 @@
         </div>
     </div>
 <section class="deck-section">
-        <h4>List deck populaire</h4>
+        <h4>List des deck populaire</h4>
             <div id="homeListDeck">
                 {% for deck in decks %}
                 <div class="homeDeck">
-                    <div class="titredeck">
-                        <h5>   
-                            <a href="{{ path('show_deck', {'id': deck.id}) }}">{{deck.title}}</a>
-                        </h5>
-                    </div>
                     <div class="imagedeck">
-                        <img src="{{ asset ('imagesDeck/' ~ deck.picture ~ '.jpg') }}">
-                    </div>
-                    <div class="corpdeck">
-                        <p>
-                            crée par {{deck.user}}<br>
-                            à {{deck.createdAt|date('d-m-Y')}}
-                        </p>
+                        <div class="titredeck">
+                            <h5>   
+                                <a href="{{ path('show_deck', {'id': deck.id}) }}">{{deck.title}}</a>
+                            </h5>
+                        </div>
+                        <img src="{{ asset ('imagesSite/deckbox.jpg') }}" class="background-image">
+                        <img src="{{ asset ('imagesDeck/' ~ deck.picture ~ '.jpg') }}"class="foreground-image">
+                        <div class="corpdeck">
+                            <p>
+                                crée par {{deck.user}}<br>
+                                à {{deck.createdAt|date('d-m-Y')}}
+                            </p>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
@@ -36,11 +37,11 @@
 </section>
 <div class="parallax">
     <section class="card-section">
-        <h4>List cartes les plus jouée</h4>
+        <h4>Liste des cartes les plus jouée</h4>
         <div id="homeListCard">
             {% for card in cards %}
             <div class="homeCard">
-                <a class="imagedeck" href="{{ path('show_card', {'id': card[0].id}) }}"><img src="{{ asset (card[0].picture) }}"></a>
+                <a class="imagedeck" href="{{ path('show_card', {'id': card[0].refCard}) }}"><img src="{{ asset (card[0].picture) }}"></a>
             </div>
             {% endfor %}
         </div>
@@ -51,7 +52,7 @@
         <article class="homeListTopic">
             {% for topic in topics %}
                 <div class="topic-post">
-                    <h2>{{topic.title}}</h2>
+                    <h5>{{topic.title}}</h5>
                     <p class="message">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                     </p>

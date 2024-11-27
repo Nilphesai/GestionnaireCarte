@@ -7,7 +7,9 @@ use App\Form\CardType;
 use App\Entity\Picture;
 use App\Form\SearchCardType;
 use App\HttpClient\ApiHttpClient;
+use App\Repository\CardRepository;
 use App\Repository\DeckRepository;
+use App\Repository\DeckCardRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -201,13 +203,25 @@ class ApiController extends AbstractController
     }
 
     #[Route('/cards/{id}', name: 'show_card')]
-    public function show(string $id, ApiHttpClient $apiHttpClient): Response
+    public function show(string $id, ApiHttpClient $apiHttpClient, DeckCardRepository $deckCardRepository,CardRepository $cardRepository): Response
     {
-        
-        $card = $apiHttpClient->getCardsById($id);
+        $dataCard = $apiHttpClient->getCardsById($id);
+
+        if($cardRepository->findCardByRefCard($id)){
+            $card = $cardRepository->findCardByRefCard($id);
+
+            $deckCards = $deckCardRepository->findDeckCardsByCard($card[0]);
+
+            return $this->render('card/show.html.twig', [
+                'card' => $dataCard,
+                'deckCards' => $deckCards,
+            ]);
+
+        }
+
 
         return $this->render('card/show.html.twig', [
-            'card' => $card,
+            'card' => $dataCard,
         ]);
     }
 }

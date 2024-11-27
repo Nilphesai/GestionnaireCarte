@@ -7,8 +7,9 @@
 
             
             {% for card in card.data %}
-            {{dump(card)}}
-            <div id="image-carte-min"><img src="{{ asset ('images/' ~ card.id ~ '.jpg') }}"></div>
+            <div id="image-carte-min">
+                <img src="{{ asset ('images/' ~ card.id ~ '.jpg') }}">
+            </div>
             <div class="carac">
                 <h2>{{ card.name }}</h2>
                 <p>{{ card.type }}
@@ -48,6 +49,10 @@
             
                 </p>
             </div>
-            
+            {% if deckCards is defined %}
+                {% for deckCard in deckCards %}
+                    {{ deckCard.deck.title }}
+                {% endfor %}
+            {% endif %}
             {% endfor %}
 {% endblock %}
