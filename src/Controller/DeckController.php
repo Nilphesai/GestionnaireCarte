@@ -269,10 +269,13 @@ class DeckController extends AbstractController
         $post = new Post();
         $formPost = $this->createForm(PostType::class,$post);
 
+        $dataDeck = $this->dataDeck($deckCards);
+
         return $this->render('deck/show.html.twig', [
             'deck' => $deck,
             'deckCards' => $deckCards,
             'formPost' => $formPost,
+            'dataDeck' => $dataDeck,
         ]);
     }
 
@@ -306,6 +309,41 @@ class DeckController extends AbstractController
             $entityManager->persist($picture);
             $entityManager->flush();
         }
+    }
+
+    private function dataDeck(array $deckCards): Array{
+        $magicCount = 0;
+        $magicSideCount = 0;
+        $trapCount = 0;
+        $trapSideCount = 0;
+        $monsterCount = 0;
+        $monsterSideCount = 0;
+        foreach($deckCards as $deckCard){
+            if ($deckCard->getCard()->getTypecard() == "Spell Card"){
+                $magicCount = $magicCount + (1*$deckCard->getQtt());
+                $magicSideCount = $magicSideCount + (1*$deckCard->getQttSide());
+            }
+            elseif ($deckCard->getCard()->getTypecard() == "Trap Card"){
+                $trapCount = $trapCount + (1*$deckCard->getQtt());
+                $trapSideCount = $trapSideCount + (1*$deckCard->getQttSide());
+            }
+            else{
+                $monsterCount = $monsterCount + (1*$deckCard->getQtt());
+                $monsterSideCount = $monsterSideCount + (1*$deckCard->getQttSide());
+            }
+ 
+        }
+        $dataDeck = array(
+            'magicCount' => $magicCount,
+            'trapCount' => $trapCount,
+            'monsterCount' => $monsterCount,
+            'magicSideCount' => $magicSideCount,
+            'trapSideCount' => $trapSideCount,
+            'MonsterSideCount' => $monsterSideCount,
+            'total_main_deck' => $magicCount + $trapCount + $monsterCount,
+            'total_side_deck' => $magicSideCount + $trapSideCount + $monsterSideCount
+        ) ;
+        return $dataDeck;
     }
 
     

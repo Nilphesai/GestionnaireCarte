@@ -370,6 +370,11 @@ body {
         display : flex;
         flex-direction: column;
     }
+
+    .stat-deck{
+        display : flex;
+        flex-direction: column;
+    }
 }
 
 .imgdetail{
@@ -422,4 +427,15 @@ footer {
 .footer-bottom {
     margin-top: 20px;
     font-size: 12px;
+}
+
+#piechart {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-image: conic-gradient(
+        pink 70deg, 
+        lightblue 0 235deg, 
+        orange 0
+        );
 }

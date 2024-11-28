@@ -16,3 +16,19 @@ scrollToTopBtn.addEventListener('click', function() {
         behavior: 'smooth'
     });
 });
+
+/*
+        const piechart = document.getElementById('piechart');
+        const nbSpell = document.getElementsById('stat-spell');
+        const nbTrap = document.getElementsById('stat-trap');
+        const nbMonster = document.getElementsById('stat-monster');
+
+
+
+document.addEventListener("DOMContentLoaded", () =>{
+    console.log("DOM fully loaded and parsed");
+        if (nbSpell > 0){
+            piechart.style.backgroundImage = "conic-gradient(green 70deg, lightblue 0 235deg,orange 0)";
+        }
+    })
+*/

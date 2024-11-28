@@ -15,7 +15,9 @@
                             Fermer
                         </button>
                         <div class="detailCard">
-                            <img class="imagedetail" src="{{ asset ('images/' ~ card.id ~ '.jpg') }}" alt="{{ card.name }}" >
+                            <a href="{{ path('show_card', {'id': card.id}) }}">
+                                <img class="imagedetail" src="{{ asset ('images/' ~ card.id ~ '.jpg') }}" alt="{{ card.name }}" >
+                            </a>
                             <div class="tableauDetailCard">
                                 <div class="namecard"><h6>Nom de carte</h6>
                                     <b>{{ card.name }}</b>

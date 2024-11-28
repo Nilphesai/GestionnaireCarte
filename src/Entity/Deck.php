@@ -37,9 +37,6 @@ class Deck
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $format = null;
-
     /**
      * @var Collection<int, DeckCard>
      */
@@ -147,23 +144,6 @@ class Deck
                 return $this; 
     }
 
-    public function getFormat(): ?string
-    {
-        return $this->format;
-    }
-
-    public function setFormat(?string $format): static
-    {
-        $this->format = $format;
-
-        return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->title;
-    }
-
     /**
      * @return Collection<int, DeckCard>
      */
@@ -192,5 +172,10 @@ class Deck
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->title;
     }
 }
