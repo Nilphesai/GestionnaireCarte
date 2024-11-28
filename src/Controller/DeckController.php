@@ -158,7 +158,7 @@ class DeckController extends AbstractController
     #[Route('/deck/delete-card/{id}/{idDeck}', name: 'card_delete_to_deck')]
     #[Route('/deck/delete-card/{id}/{idDeck}/{qttSide}', name: 'card_delete_to_side')]
     public function deleteCard(EntityManagerInterface $entityManager,DeckCardRepository $deckCardRepository, Request $request){
-            dd($request->attributes->get('_route'));
+            //dd($request->attributes->get('_route'));
             $idCard = $request->attributes->get('id');
             $deckId = $request->attributes->get('idDeck');
 
@@ -190,7 +190,7 @@ class DeckController extends AbstractController
 
     #[Route('/deck/new', name: 'new_deck')]
     #[Route('/deck/edit/{id}', name: 'update_deck')]
-    public function new(EntityManagerInterface $entityManager, Request $request,DeckCard $deckCards, Card $card = null,Deck $deck = null, ApiHttpClient $apiHttpClient): Response
+    public function new(EntityManagerInterface $entityManager, Request $request,DeckCard $deckCards = null, Card $card = null,Deck $deck = null, ApiHttpClient $apiHttpClient): Response
     {
         //dd($deck);
         if($deck == null){
@@ -198,16 +198,16 @@ class DeckController extends AbstractController
         }
         //dd($deck);
         $formDeck = $this->createForm(DeckType::class,$deck);
-        dd($request);
+        
         $card = new Card();
         $form = $this->createForm(SearchCardType::class,$card);
-
         $cards = $apiHttpClient->getCards();
 
+        //dd($formDeck->getData());
         $formDeck->handleRequest($request);
-        
+        //dd($request);
         if($formDeck->isSubmitted() && $formDeck->isValid()){
-            
+            //dd($deck);
             if($request->request->all()){
 
                 $dec = $request->request->all() ;
@@ -232,13 +232,21 @@ class DeckController extends AbstractController
             return $this->redirectToRoute('app_deckUser');
 
         }elseif ($formDeck->isSubmitted()){
+            
             $deck = $formDeck->getData();
             $deck->setPicture('null');
             $entityManager->persist($deck);
             $entityManager->flush();
+            
         }
 
-        $deckCards = $entityManager->getRepository(DeckCard::class)->findDeckCardsByDeck($deck);
+        if ($deck->getId() == null){
+            $deckCards = new DeckCard();
+        }
+        else{
+            $deckCards = $entityManager->getRepository(DeckCard::class)->findDeckCardsByDeck($deck);
+        }
+        
         
         return $this->render('deck/new.html.twig', [
             'formSearchCard' => $form,

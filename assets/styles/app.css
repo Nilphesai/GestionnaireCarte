@@ -281,9 +281,15 @@ body {
     flex-direction: column;
 }
 #main-deck{
-    background-color: brown;
+    background-color: #a64826;
+    border : 1px solid black;
+    margin: 5px;
+    border-radius: 5px;
     display: flex;
     flex-wrap: wrap;
+    min-width: 100px;
+    min-height: 150px;
+    max-width: 1000px;
 }
 
 #main-deck .image-carte-min img{
@@ -292,9 +298,15 @@ body {
     margin: 0;
 }
 #extra-deck{
-    background-color: violet;
+    background-color: #8f3211;
+    border : 1px solid black;
+    margin: 5px;
+    border-radius: 5px;
     display: flex;
     flex-wrap: wrap;
+    min-width: 100px;
+    height: 150px;
+    
 }
 #extra-deck .image-carte-min img{
     width: 100px;
@@ -303,9 +315,15 @@ body {
 }
 
 #side-deck{
-    background-color: rgb(134, 78, 78);
+    background-color: #8b533e;
+    border : 1px solid black;
+    margin: 5px;
+    border-radius: 5px;
     display: flex;
     flex-wrap: wrap;
+    min-width: 100px;
+    height: 150px;
+    
 }
 #side-deck .image-carte-min img{
     width: 100px;

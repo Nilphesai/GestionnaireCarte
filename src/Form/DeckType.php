@@ -32,8 +32,13 @@ class DeckType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $deck = $options['data'];
-        $DeckCards = $deck->getDeckCards();
-        //dd($DeckCards);
+        $deckCards = $deck->getDeckCards();
+        foreach($deckCards as $deckCard){
+            $refCard[$deckCard->getCard()->getName()] = strval($deckCard->getCard()->getRefCard());
+        }
+        
+
+        //dd($refCard);
         $builder
             ->add('title', TextType::class,[
                 'attr'=> [
@@ -54,18 +59,18 @@ class DeckType extends AbstractType
             ])
             ->add('picture', ChoiceType::class,[
                 'required' => false,
-                'choices' => $DeckCards,
+                'choices' => $refCard,
                 'empty_data' => "null",
                 //$choice une instance de DeckCards pour chaque ittération,
                 //$key clé de l'élément actuelle de DeckCards
                 //$value valeurs de l'élément actuelle de DeckCards
                 'choice_label' => function($choice, $key, $value) {
                     
-                    return is_object($choice) ? $choice->getCard()->getName() : 'choice'; // ou toute autre logique pour afficher les éléments
+                    return $key;
                 },
                 'choice_value' => function($choice) {
-                    
-                    return is_object($choice) ? strval($choice->getCard()->getRefCard()) : '';
+                    $result = strval($choice);
+                    return $result;
                 },
                 'attr'=> [
                     'class' => 'form-control'
@@ -76,12 +81,6 @@ class DeckType extends AbstractType
                 'required' => false,
                 'class' => DeckCard::class,
                 'choice_label' => 'id',
-                //'query_builder' => function (EntityRepository $er): QueryBuilder {
-                //    return $er->createQueryBuilder('u')
-                    //->where('u.decks = :deck')
-                //    ->orderBy('u.name','ASC')
-                    //->setParameter('deck', $deck)
-                //;},
                 'multiple' => true,
             ])
             ->add('user', EntityType::class, [
@@ -95,7 +94,7 @@ class DeckType extends AbstractType
                 ]
             ])
         ;
-        //dd("ping");
+        //dd($deck);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
