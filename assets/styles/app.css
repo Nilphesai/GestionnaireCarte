@@ -366,6 +366,10 @@ body {
 #panneau-deck{
     display: flex;
     border: 1px solid black;
+    .info-deck{
+        display : flex;
+        flex-direction: column;
+    }
 }
 
 .imgdetail{

@@ -7,15 +7,17 @@
         <div id="bloc-deck">
             <div id="panneau-deck">
                 <div class="image-carte-cropped"><img src="{{ asset ('imagesDeck/' ~ deck.picture ~ '.jpg') }}"></div>
-                <div class="date-deck">Crée le : {{deck.createdAt|date('d-m-Y')}}</div>
-                <div class="prive-deck">
-                    {% if deck.closed %}
-                        privée
-                    {% else %}
-                        public
-                    {% endif %}
+                <div class="info-deck">
+                    <div class="date-deck">Crée le : {{deck.createdAt|date('d-m-Y')}}</div>
+                    <div class="prive-deck">
+                        {% if deck.closed %}
+                            deck privée
+                        {% else %}
+                            deck public
+                        {% endif %}
+                    </div>
+                    <div class="user-deck"> Par {{deck.user}}</div>
                 </div>
-                <div class="user-deck"> Par {{deck.user}}</div>
             </div>
             
             

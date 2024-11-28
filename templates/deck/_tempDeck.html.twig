@@ -6,7 +6,7 @@
                         {% for deckCard in deckCards %}
                         
                         
-                            {% if deckCard.card.typecard != "Fusion Monster" and deckCard.card.typecard != "Link Monster" and deckCard.card.typecard != "Pendulum Effect Fusion Monster" and deckCard.card.typecard != "Synchro Monster" and deckCard.card.typecard != "Synchro Pendulum Effect Monster" and deckCard.card.typecard != "Synchro Tuner Monster" and deckCard.card.typecard != "XYZ Monster" and deckCard.card.typecard != "XYZ Pendulum Effect Monster"%}
+                            {% if deckCard.qtt > 0 and deckCard.card.typecard != "Fusion Monster" and deckCard.card.typecard != "Link Monster" and deckCard.card.typecard != "Pendulum Effect Fusion Monster" and deckCard.card.typecard != "Synchro Monster" and deckCard.card.typecard != "Synchro Pendulum Effect Monster" and deckCard.card.typecard != "Synchro Tuner Monster" and deckCard.card.typecard != "XYZ Monster" and deckCard.card.typecard != "XYZ Pendulum Effect Monster"%}
                                 {% for i in 1.. deckCard.qtt %}
                                     <a href="{{ path('card_delete_to_deck', {'id': deckCard.card.id, 'idDeck': deck.id}) }}"> 
                                     <div class="image-carte-min"><img src="{{ asset ('images/' ~ deckCard.card.refcard ~ '.jpg') }}" alt="{{deckCard.card.name}}"></div>
@@ -17,7 +17,7 @@
                     </div>
                     <div id="extra-deck">
                         {% for deckCard in deckCards %}
-                            {% if deckCard.card.typecard == "Fusion Monster" or deckCard.card.typecard == "Link Monster" or deckCard.card.typecard == "Pendulum Effect Fusion Monster" or deckCard.card.typecard == "Synchro Monster" or deckCard.card.typecard == "Synchro Pendulum Effect Monster" or deckCard.card.typecard == "Synchro Tuner Monster" or deckCard.card.typecard == "XYZ Monster" or deckCard.card.typecard == "XYZ Pendulum Effect Monster"%}
+                            {% if deckCard.qtt > 0 and deckCard.card.typecard == "Fusion Monster" or deckCard.card.typecard == "Link Monster" or deckCard.card.typecard == "Pendulum Effect Fusion Monster" or deckCard.card.typecard == "Synchro Monster" or deckCard.card.typecard == "Synchro Pendulum Effect Monster" or deckCard.card.typecard == "Synchro Tuner Monster" or deckCard.card.typecard == "XYZ Monster" or deckCard.card.typecard == "XYZ Pendulum Effect Monster"%}
                                 {% for i in 1.. deckCard.qtt %}
                                     <a href="{{ path('card_delete_to_deck', {'id': deckCard.card.id, 'idDeck': deck.id}) }}"> 
                                     <div class="image-carte-min"><img src="{{ asset ('images/' ~ deckCard.card.refcard ~ '.jpg') }}" alt="{{deckCard.card.name}}"></div>
@@ -28,7 +28,7 @@
                     </div>
                     <div id="side-deck">
                         {% for deckCard in deckCards %}
-                            {% if deckCard.qttSide >= 1 %}
+                            {% if deckCard.qttSide > 0 %}
                                 {% for i in 1.. deckCard.qttSide %}
                                 <a href="{{ path('card_delete_to_side', {'id': deckCard.card.id, 'idDeck': deck.id, 'qttSide': deckCard.qttSide}) }}"> 
                                 <div class="image-carte-min"><img src="{{ asset ('images/' ~ deckCard.card.refcard ~ '.jpg') }}" alt="{{deckCard.card.name}}"></div>
