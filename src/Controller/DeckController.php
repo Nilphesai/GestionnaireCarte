@@ -284,7 +284,7 @@ class DeckController extends AbstractController
     {
         $deckId = $request->attributes->get('idDeck');
         $deck = $entityManager->getRepository(Deck::class)->find($deckId);
-        $cards = $deck->getDeckCard();
+        $cards = $deck->getDeckCards();
         foreach($cards as $card){
             $card->removeDeckCard($deck);
             //dd($card->getDecks());

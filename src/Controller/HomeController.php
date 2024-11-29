@@ -23,10 +23,15 @@ class HomeController extends AbstractController
         $topics = $topicRepository->findTopics();
         $idCards = $deckCardReposirory->findTopDeckCardsbyQttInAllDeck();
         $i = 0;
-        foreach($idCards as $idCard){
-            //dd($idCard['id']);
-            $cards[$i] = $cardRepository->findCardById($idCard['id']);
-            $i++;
+        if($idCards){
+            foreach($idCards as $idCard){
+                //dd($idCard['id']);
+                $cards[$i] = $cardRepository->findCardById($idCard['id']);
+                $i++;
+            }
+        }
+        else{
+            return $this->redirectToRoute('cards_list');
         }
         //dd($cards);
         return $this->render('home/index.html.twig', [

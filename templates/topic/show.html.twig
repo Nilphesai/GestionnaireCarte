@@ -4,18 +4,22 @@
 
 {% block body %}
 <div class="js-filter">
+    <article class="homeListTopic">
     {% for post in posts %}
     <div class="post">
-        <div class="post-header">
+        <div class="author">
+            <img src="https://picsum.photos/50"></br>
             écrit le {{post.createdAt|date("d-m-Y")}}</br>
             par {{post.user}}
         </div>
-        <div class="post-body">
+        <div class="message">
         <p>{{post.text|nl2br}}</p>
         </div>
     </div>
     {% endfor %}
-         
+    </article>
+
+    <div id="card-search-filter" style="display:none;">
         <div class="formPost">
             {{ form_start(formPost, {'action': path('new_post')} ) }}
             {{ form_row(formPost.text)}}
@@ -23,6 +27,9 @@
             {{ form_row(formPost.user)}}
             {{ form_end(formPost) }}
         </div>
+    </div>
+    <button type="button" id="openFormSearch">nouveau post</button>
+        
 </div>
 
 {% endblock %}

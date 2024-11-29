@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\DeckRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,6 +35,17 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/user/{id}', name: 'show_user')]
+    public function show(UserRepository $userRepository, Request $request): Response
+    {
+        $userId = $request->attributes->get('id');
+        $user = $userRepository->findUserById($userId);
+        
+        return $this->render('user/show.html.twig', [
+            'user' => $user[0],
+        ]);
+    }
+
     #[Route('/user/new', name: 'new_user')]
     #[Route('/user/edit/{id}', name: 'update_user')]
     public function new(EntityManagerInterface $entityManager, Request $request, User $user = null): Response
@@ -58,6 +70,9 @@ class UserController extends AbstractController
         ]); 
         
     }
+
+
+
 
     #[Route('/user/username', name: 'update_username', methods: 'POST')]
     public function changeUsername(EntityManagerInterface $entityManager){

@@ -33,6 +33,7 @@ class DeckType extends AbstractType
     {
         $deck = $options['data'];
         $deckCards = $deck->getDeckCards();
+        $refCard = [];
         foreach($deckCards as $deckCard){
             $refCard[$deckCard->getCard()->getName()] = strval($deckCard->getCard()->getRefCard());
         }

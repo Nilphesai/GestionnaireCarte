@@ -7,12 +7,12 @@
     <div id="{{card.id}}"  >
         <div class="image-carte-min">
             <dialog class="dialog">
-                <div class="precCard">précédent</div>
+                <div class="window-dialog">
+                <div class="precCard">back</div>
                 <div class="bloc-dialog">
                 
-                
                         <button autofocus class="closeDetailCard">
-                            Fermer
+                            close
                         </button>
                         <div class="detailCard">
                             <a href="{{ path('show_card', {'id': card.id}) }}">
@@ -56,12 +56,13 @@
                                     <b>Effect : </b>{{ card.desc }}
                                 </div>
                                 
-                        </div>
+                            </div>
                             
-                                
+                        </div>                
                 </div>
-            </div>
                 <div class="nextCard">next</div>
+            </div>
+                
             </dialog>
                     <img class="img" src="{{ asset ('images/' ~ card.id ~ '.jpg') }} " alt="{{ card.name }}">
         </div>

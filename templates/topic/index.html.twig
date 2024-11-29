@@ -5,12 +5,23 @@
 {% block body %}
 <div class="js-filter">
     <h2>Topic</h2>
-              
+              {{dump(topics)}}
+        <div class="topic-post">
         {% for topic in topics %}
-            <div class="topic">
-                <a href="{{ path('app_post', {'topicId': topic.id}) }}">{{topic.title}}</a>
+        <div class="topic">
+            <div class="author">
+                <img src="https://picsum.photos/50"></br>
+                Author : <a>{{topic.user}}</a> </br>
+                createBy : {{topic.createdAt|date("d-m-Y")}}
             </div>
+            <div class="message">
+                <a href="{{ path('show_topic', {'topicId': topic.id}) }}"><h5>{{topic.title}}</h5></a>
+            
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+        </div>
         {% endfor %}  
+    </div>
 </div>
 
 {% endblock %}

@@ -55,12 +55,15 @@ class PostController extends AbstractController
         
         $formPost = $this->createForm(PostType::class,$post);
         $formPost->handleRequest($request);
-        //dd($formPost);
+        
+        
         if($formPost->isSubmitted() && $formPost->isValid()){
             $post = $formPost->getData();
+            //dd($post);
+            $topicId = $post->getTopic()->getId();
             $entityManager->persist($post);
             $entityManager->flush();
-            return $this->redirectToRoute('app_category');
+            return $this->redirectToRoute('show_topic', ['topicId' => $topicId]);
         }
 
 
