@@ -17,6 +17,20 @@ scrollToTopBtn.addEventListener('click', function() {
     });
 });
 
+const panels = document.querySelectorAll('.openPanel');
+const opens = document.querySelectorAll('.open');
+  
+panels.forEach(function (panel, index){
+    panel.addEventListener("click", () => {
+        if (opens[index].style.display == "none"){
+            opens[index].style.display = "flex";
+        }
+        else{
+            opens[index].style.display == "none";
+        }
+    })
+});
+
 /*
         const piechart = document.getElementById('piechart');
         const nbSpell = document.getElementsById('stat-spell');

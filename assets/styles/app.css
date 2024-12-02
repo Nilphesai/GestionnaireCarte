@@ -39,6 +39,66 @@ body {
     justify-content: center;
 
 }
+.background{
+    background-image: url('/imagesSite/banniereAccueil3.jpg');
+    height: 800px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.login{
+    display :flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 5%;
+    height: 250px;
+    width: 400px;
+    background-color: #E3CD9B;
+    input{
+        margin: 10px;
+        width:250px;
+    }
+    button{
+        background-color: #A64826;
+        color: white;
+        border-radius: 5%;
+        height: 35px;
+        width: 80px;
+    }
+}
+
+.register{
+    display :flex;
+    flex-direction: column;
+    align-items:center ;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 10%;
+    height: 260px;
+    width: 400px;
+    background-color: #E3CD9B;
+    input{
+        margin: 5px;
+        width:250px;
+    }
+    button{
+        background-color: #A64826;
+        color: white;
+        border-radius: 5%;
+        height: 35px;
+        width: 80px;
+    }
+}
 
 #presentation{
 
@@ -68,7 +128,9 @@ body {
 
 #homeListCard{
     display: flex;
+    justify-content: center;
     align-items: center;
+
     .homeCard{
         margin: 10px;
         .imagedeck img{
@@ -92,6 +154,7 @@ body {
     background-color: #ffffff9f;
     margin: 10px;
     border: 1px solid black;
+    box-shadow: 5px 5px 5px black;
     position: relative;
     border-radius: 5px;
     height: 122px;
@@ -148,10 +211,10 @@ body {
     cursor: pointer;
 }
 
-
 #body-deck{
     display: flex;
 }
+
 .deck-section{
     background-color: #0B1F37;
     h4{
@@ -160,11 +223,13 @@ body {
         text-align: center;
     }
 }
+
 #homeListDeck{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
 }
+
 .homeDeck{
     width: 59mm;
     height: 86mm;
@@ -428,6 +493,7 @@ body {
     margin: 20px 0;
     border-radius: 5px;
     border: 1px solid black;
+    box-shadow: 5px 5px 5px black;
     width: 50rem;
     height: 5rem;
     text-align: center;
@@ -456,3 +522,39 @@ footer {
         orange 0
         );
 }
+
+h1{
+    text-align: center;
+}
+.panel{
+    align-content: right;
+    .panel-aside{
+
+    }
+}
+
+#page{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+#page-user{
+    display: flex;
+    text-align: center;
+    flex-direction:column;
+    justify-content: space-evenly;
+    border: 1px solid black;
+    border-radius: 5%;
+    box-shadow: 5px 5px 5px black;
+    padding: 10px;
+    margin: 10px;
+    width: 600px;
+    height: 800px;
+    #image-user{
+        img{
+            border: 1px solid black;
+        }
+    }
+
+}
+

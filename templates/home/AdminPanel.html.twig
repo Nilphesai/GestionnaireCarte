@@ -4,104 +4,44 @@
 
 {% block body %}
 {% if is_granted("ROLE_ADMIN") %}
-            
-<div class="container text-center">
-    <h1>panneau de configuration</h1>
-    <div class="row">
-        <div class="col">
-        
-        <table class="table table-sm">
+<div class="panel"></aside>
+<h1>panneau de configuration</h1>          
 
-            <h2><a href="{{ path('app_deck') }}">liste des deck</a></h2>
-            
-            <tr>
-                <th>Nom</th>
-                <th>option</th>
-            </tr>
-            
-            {% for deck in decks %}
-            <tr>
-                <td><a href="{{ path('show_deck', {'id': deck.id}) }}">{{deck.title}}</a></td>
-                <td><a href="{{ path('delete_deck', {'idDeck': deck.id}) }}"> Supprimer </a></td>
-            </tr>
-            {% endfor %}
-            <a href="{{ path('new_deck') }}">Nouveau deck</a></br>
-        </table>
-        </div>
-        <div class="col">
-            <table class="table table-sm">
+    <aside class="panel">
+        <section class="panel-user">
+            <h2>gestion des User</h2>
+            <a href="">list User</a></br>
+            <a href="{{ path('new_user') }}">Nouveau User</a>
+        </section>
 
-                <h2><a href="{{ path('app_category') }}">liste des Categories</a></h2>
-                
-                <tr>
-                    <th>Nom</th>
-                    <th>option</th>
-                </tr>
-                
-                {% for category in categories %}
-                <tr>
-                    <td><a href="{{ path('show_category', {'id': category.id}) }}">{{category.name}}</a></td>
-                    <td><a href="{{ path('delete_Category', {'categoryId': category.id}) }}"> Supprimer </a></td>
-                </tr>
-                {% endfor %}
-                <a href="{{ path('new_category') }}">Nouvelle category</a></br>
-    
-            </table>
-        </div>
-    
-        
-    </div>
-    <div class="row">
-        <div class="col">
-            <table class="table table-sm">
+        <section class="panel-deck">
+            <h2>gestion des decks</h2>
+            <a href="{{ path('app_deck') }}">Lists des decks</a></br>
+            <a href="{{ path('new_deck') }}">Nouveau deck</a>
+        </section>
 
-                <h2><a href="{{ path('app_topic') }}">liste des topics</a></h2>
-                
-                <tr>
-                    <th>Nom</th>
-                    <th>option</th>
-                </tr>
-                
-                {% for topic in topics %}
-                <tr>
-                    <td><a href="{{ path('show_topic', {'topicId': topic.id}) }}">{{topic.title}}</a></td>
-                    <td><a href="{{ path('delete_topic', {'topicId': topic.id}) }}"> Supprimer </a></td>
-                </tr>
-                {% endfor %}
-                <a href="{{ path('new_topic') }}">Nouveau topic</a></br>
+        <section class="panel-category">
+            <h2>gestion des Categories</h2>
+            <a href="{{ path('app_category') }}">List des catégories</a></br>
+            <a href="{{ path('new_category') }}">Nouvelle category</a>
+        </section>
     
-            </table>
-        </div>
-        
-        <div class="col">
-            <table class="table table-sm">
+        <section class="panel-topic">
+            <h2>gestion des topics</h2>
+            <a href="{{ path('app_topic') }}">list des topics</a></br>
+            <a href="{{ path('new_topic') }}">Nouveau topic</a>
+        </section>
 
-                <h2><a href="">gestions des posts</a></h2>
-                
-                <tr>
-                    <th>crée par</th>
-                    <th>option</th>
-                </tr>
-                
-                {% for post in posts %}
-                <tr>
-                    <td><a href="{{ path('show_post', {'postId': post.id}) }}">{{post.user}}</a></td>
-                    <td><a href="{{ path('delete_post', {'postId': post.id}) }}"> Supprimer </a></td>
-                </tr>
-                {% endfor %}
-                <a href="{{ path('new_post') }}">Nouveau post</a></br>
-    
-            </table>
-        </div>
+        <section class="panel-post">
+            <h2>gestion des posts</h2>
+            <a href="{{ path('new_post') }}">Nouveau post</a>
+        </section>
+    </aside>
         
-    </div>
+    
     
 </div>
 
-
 {% endif %}
-    
-        
-
     
 {% endblock %}

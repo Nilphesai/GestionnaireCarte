@@ -3,32 +3,44 @@
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
-    {{dump(app.user)}}
+<div id="page">
+    <div id="page-user">
 
-    <a href=""> Changer d'avatar</a>
-    {#<form action="{{ path('update_picture', {'id': app.user.id}) }}" method="post">
-    <input type="hidden" name="picture" value="{{ asset ('images/' ~ card.id ~ '.jpg') }}">
+        <div id="image-user">
+            <img src="https://picsum.photos/150"></br>
+            <a href=""> Changer d'avatar</a>
+            {#<form action="{{ path('update_picture', {'id': app.user.id}) }}" method="post">
+            <input type="hidden" name="picture" value="{{ asset ('images/' ~ card.id ~ '.jpg') }}">
+                        <button type="submit">
+                            <i>add</i>
+                        </button>
+            </form>#}
+        </div>
+
+        <div id="username-user">
+            <h1>{{app.user.username}}</h1>
+
+            <form action="{{ path('update_username') }}" method="post">
+                <input name="username" value="{{ app.user.username }}">
+                            <button type="submit">
+                                <i>modify</i>
+                            </button>
+            </form>
+        </div>
+
+        <div id="email-user">
+            <h6>{{app.user.email}}</h6>
+            <form action="{{ path('update_email') }}" method="post">
                 <button type="submit">
-                    <i>add</i>
+                    <i>modify</i>
                 </button>
-    </form>#}
-    <h1>{{app.user.username}}</h1>
+                <input name="email" value="{{ app.user.email }}">
 
-    <form action="{{ path('update_username') }}" method="post">
-        <input name="username" value="{{ app.user.username }}">
-                    <button type="submit">
-                        <i>modify</i>
-                    </button>
-    </form>
+            </form>
+        </div>
 
-    <h6>{{app.user.email}}</h6>
-    <form action="{{ path('update_email') }}" method="post">
-        <input name="email" value="{{ app.user.email }}">
-                    <button type="submit">
-                        <i>modify</i>
-                    </button>
-    </form>
-
-    <a href="{{ path('app_deckUser', {'id': app.user.id}) }}"> Mes Deck</a>
-    
+        <a href="{{ path('app_deckUser', {'id': app.user.id}) }}"> Mes Deck</a>
+        <a href="{{ path('app_topic', {'id': app.user.id}) }}"> Mes Topic</a>
+    </div>
+</div>
 {% endblock %}

@@ -23,26 +23,14 @@ class UserController extends AbstractController
     }
 
     
-    #[Route('/user/deck', name: 'app_deckUser')]
+    #[Route('/user/deck/{id}', name: 'app_deckUser')]
     public function deckUser(DeckRepository $deckRepository,Request $request): Response
     {
-        $user = $this->getUser();
-        $userId = $user->getId();
+        $userId = $request->attributes->get('id');
         $decks = $deckRepository->findDecksByUser($userId);
 
         return $this->render('user/deckUser.html.twig', [
             'decks' => $decks,
-        ]);
-    }
-
-    #[Route('/user/{id}', name: 'show_user')]
-    public function show(UserRepository $userRepository, Request $request): Response
-    {
-        $userId = $request->attributes->get('id');
-        $user = $userRepository->findUserById($userId);
-        
-        return $this->render('user/show.html.twig', [
-            'user' => $user[0],
         ]);
     }
 
@@ -71,7 +59,16 @@ class UserController extends AbstractController
         
     }
 
-
+    #[Route('/user/{id}', name: 'show_user')]
+    public function show(UserRepository $userRepository, Request $request): Response
+    {
+        $userId = $request->attributes->get('id');
+        $user = $userRepository->findUserById($userId);
+        
+        return $this->render('user/show.html.twig', [
+            'user' => $user[0],
+        ]);
+    }
 
 
     #[Route('/user/username', name: 'update_username', methods: 'POST')]
