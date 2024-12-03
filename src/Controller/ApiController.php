@@ -45,7 +45,8 @@ class ApiController extends AbstractController
     }
 
     #[Route('/cards/fetch-cards', name: 'card_fetch', methods: ['POST'])]
-    public function listCard(DeckRepository $deckRepository, EntityManagerInterface $entityManager,Card $card = null, ApiHttpClient $apiHttpClient, Request $request, SessionInterface $session){
+    public function listCard(DeckRepository $deckRepository, EntityManagerInterface $entityManager,Card $card = null, 
+    ApiHttpClient $apiHttpClient, Request $request, SessionInterface $session){
         
         if(!$card){
             $card = new Card();
@@ -58,37 +59,35 @@ class ApiController extends AbstractController
         $parent = $request->headers->get('referer');
         if ($parent && strpos($parent,'deck') !== false){
             $isDeck = true;
-            //$pattern = '/deck\/(.*?)\/edit/';
             $pattern = '/deck\/edit\/(\d+)/';
             $matches = [];
-            //dd($pattern);
+
             if ($parent && preg_match($pattern, $parent, $matches)) {
                 // Si une correspondance est trouvée, $matches[1] contiendra la partie capturée
                 $idDeck = $matches[1];
-                //dd($idDeck);
             }
         }
         else{
             $isDeck = false;
         }
-        //dd($isDeck);
+
         if($test['cardName']){
             
-            //dd($test['cardName']);
+
             $cards = $apiHttpClient->getCardsByFilter($test['cardName']);
-            //dd($test['cardName'][1]);
+
             if(str_contains($test['cardName'][1],"Effect Monster")){
                 
                 foreach($cards['data'] as $key => $card){
-                    //dd($card);
+
                     if($card['type'] === 'Spell Card' || $card['type'] === 'Trap Card'){
                         
                         unset($cards['data'][$key]);
-                        //dd($card);
+
                     }
                 }
             }
-            //dd($cards);
+
             //traitement de l'image
             foreach ($cards['data'] as $detail){
                 $this->addImage($detail, $entityManager);
@@ -113,6 +112,7 @@ class ApiController extends AbstractController
                     'isDeck' => $isDeck,])
             ]);
         }
+
         else{
             
             $cards = $apiHttpClient->getCards();
@@ -132,7 +132,6 @@ class ApiController extends AbstractController
         $parent = $request->headers->get('referer');
         if ($parent && strpos($parent,'deck') !== false){
             $isDeck = true;
-            //$pattern = '/deck\/(.*?)\/edit/';
             $pattern = '/deck\/edit\/(\d+)/';
             $matches = [];
             if ($parent && preg_match($pattern, $parent, $matches)) {

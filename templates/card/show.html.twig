@@ -3,51 +3,54 @@
 {% block title %}Hello ApiController!{% endblock %}
 
 {% block body %}
-    <h1> Detail Carte</h1>
-
-            
             {% for card in card.data %}
-            <div id="image-carte-min">
-                <img src="{{ asset ('images/' ~ card.id ~ '.jpg') }}">
-            </div>
-            <div class="carac">
-                <h2>{{ card.name }}</h2>
-                <p>{{ card.type }}
+            <h1>{{ card.name }}</h1>
+            <div class="page-detailCard">
+                <div id="image-carte-min">
+                    <img src="{{ asset ('images/' ~ card.id ~ '.jpg') }}">
+                </div>
+                <article class="carac">
+                    <div class="type">{{ card.type }}</div>
+                    <div class="race">Type : {{ card.race }}</div>
+                        
+                            {% if card.frameType == "normal" or card.frameType == "effect" or card.frameType == "ritual" or card.frameType == "fusion" or card.frameType == "synchro" or card.frameType == "xyz" %}
+                            <div class="level">Niveau/Rang : {{ card.level }}</div>
+                            <div class="attribute">Attribut : {{ card.attribute }}</div>
+                            <div class="att">attaque : {{ card.atk }}</div>
+                            <div class="def">Défense : {{ card.def }}</div>
+                            <div class="effect">{{ card.desc|nl2br }}</div>
+                            {% elseif card.frameType == "link" %}
+                            <div class="link">Lien : {{ card.linkval }}</div>
+                            <div class="linkMarker">Pointe vers :
+                                {% for linkmarker in card.linkmarkers %}
+                                {{ linkmarker }}
+                                {% endfor %}
+                            </div>
+                            <div class="effect">{{ card.desc|nl2br }}</div>
+                            {% elseif card.frameType == "spell" or card.frameType == "trap" %}
+                            <div class="effect">{{ card.desc|nl2br }}</div>
+                            {% endif %}
+                            
+                    {% if card.typeline is defined %}
+                        {% for typeline in card.typeline %}
+                            {% if typeline == "Pendulum" %}
+                            <div class="attribute">Attribut : {{ card.attribute }}</div>
+                            <div class="level">Niveau/Rang : {{ card.level }}</div>
+                            <div class="att">attaque : {{ card.atk }}</div>
+                            <div class="def">Défense : {{ card.def }}</div>
+                            <div class="scale">Echelle : {{ card.scale }}</div>
+                                {% if card.pend_desc is defined and card.monster_desc is defined %}
+                                    <div class="effect">effet pendule : {{ card.pend_desc|nl2br }}</div>
+                                    <div class="effect">effet monstre : {{ card.monster_desc|nl2br }}</div>
+                                {% else %}
+                                    <div class="effect">{{ card.desc|nl2br }}</div>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                
                     
-                        {% if card.frameType == "normal" or card.frameType == "effect" or card.frameType == "ritual" or card.frameType == "fusion" or card.frameType == "synchro" or card.frameType == "xyz" %}
-                        Niveau/Rang : {{ card.level }}<br>
-                        attaque : {{ card.atk }}<br>
-                        Défense : {{ card.def }}<br>
-                        {% elseif card.frameType == "link" %}
-                        Lien : {{ card.linkval }}<br>
-                        Pointe vers :
-                            {% for linkmarker in card.linkmarkers %}
-                            {{ linkmarker }}<br>
-                            {% endfor %}
-                        {% endif %}
-                        Type : {{ card.race }}<br>
-                        effect : {{ card.desc }}</p>
-                {% if card.typeline is defined %}
-                    {% for typeline in card.typeline %}
-                        {% if typeline == "Pendulum" %}
-                            <P>Attribut : {{ card.attribute }}<br>
-                            Niveau/Rang : {{ card.level }}<br>
-                            attaque : {{ card.atk }}<br>
-                            Défense : {{ card.def }}<br>
-                            Echelle : {{ card.scale }}<br>
-                            {% if card.pend_desc is defined %}
-                                effet pendule : {{ card.pend_desc }}</br>
-                            {% endif %}
-                            {% if card.monster_desc is defined %}
-                                effet monstre : {{ card.monster_desc }}</br>
-                            {% else %}
-                                {{ card.desc }}
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-            
-                </p>
+                </article>
             </div>
             <div class="homeDeck">
             {% if deckCards is defined %}

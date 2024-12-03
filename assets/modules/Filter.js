@@ -88,10 +88,15 @@ export default class Filter {
                 });
                 const listLinkMarkString = listLinkMark.join();
                 console.log(listLinkMarkString)
-                const searchedCard = [e.target.search_card_name.value,e.target.search_card_typecard.value,e.target.search_card_attribute.value,
-                    e.target.search_card_level.value,e.target.search_card_race.value,
-                    e.target.search_card_att.value,e.target.search_card_def.value,
-                    e.target.search_card_link.value,e.target.search_card_scale.value,
+                const searchedCard = [e.target.search_card_name.value,
+                    e.target.search_card_typecard.value,
+                    e.target.search_card_attribute.value,
+                    e.target.search_card_level.value,
+                    e.target.search_card_race.value,
+                    e.target.search_card_att.value,
+                    e.target.search_card_def.value,
+                    e.target.search_card_link.value,
+                    e.target.search_card_scale.value,
                     listLinkMarkString]
                 this.loadUrl(e.target.getAttribute('action'),searchedCard)
                 
@@ -151,6 +156,7 @@ export default class Filter {
             
             this.loadUrl(e.target.getAttribute('action'),url)
         })
+
 
     };
     

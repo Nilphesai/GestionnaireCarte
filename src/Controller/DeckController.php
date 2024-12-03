@@ -77,8 +77,13 @@ class DeckController extends AbstractController
 
                 $entityManager->persist($deckCard[0]);
                 $entityManager->flush();
-        
+                $deckCards = $deckCardRepository->findDeckCardsByDeck($deck);
                 return $this->redirectToRoute('update_deck', ['id' => $deckId]);
+                /*return new JsonResponse([
+                    'content' => $this->renderView('deck/_tempDeck.html.twig', [
+                    'deckCards' => $deckCards,
+                ])
+                    ]);*/
             }
             else{
                 
@@ -94,15 +99,19 @@ class DeckController extends AbstractController
             //dd($card);
             $entityManager->persist($deckCard);
             $entityManager->flush();
-    
+
+            $deckCards = $deckCardRepository->findDeckCardsByDeck($deck);
+            
             return $this->redirectToRoute('update_deck', ['id' => $deckId]);
+            /*return new JsonResponse([
+                'content' => $this->renderView('deck/_tempDeck.html.twig', [
+                'deckCards' => $deckCards,
+            ])
+            ]);*/
+
             }
             
-            /*
-            return $this->renderView('deck/_tempDeck.html.twig', [
-                    'deck' => $deck
-                ]);
-            */
+            
         }
         else{
             
@@ -147,11 +156,17 @@ class DeckController extends AbstractController
                 $deckCard->setQtt(1);
             }
 
-            //dd($card);
+            
             $entityManager->persist($deckCard);
             $entityManager->flush();
-    
+            $deckCards = $deckCardRepository->findDeckCardsByDeck($deck);
+            //dd($deckCards);
             return $this->redirectToRoute('update_deck', ['id' => $deckId]);
+            /*return new JsonResponse([
+                'content' => $this->renderView('deck/_tempDeck.html.twig', [
+                'deckCards' => $deckCards,])
+            ])
+            ;*/
         }
     }
 
