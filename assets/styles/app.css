@@ -133,6 +133,7 @@ body {
 
     .homeCard{
         margin: 10px;
+        box-shadow: 10px 5px 5px black;
         .imagedeck img{
             width: 200px;
             height: 250px;
@@ -198,6 +199,70 @@ body {
 
 }
 
+.user-section{
+    text-align: center;
+    h4{
+        margin-top: 0;
+        color: white;
+        text-align: center;
+        
+    }
+}
+
+#homeListUser{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+}
+
+.homeUser{
+    text-align: center;
+    margin: 10px;
+}
+
+.imageUser { 
+    position: relative; 
+    width: 208px;  
+    height: 288px;
+    box-shadow: 10px 5px 5px black;
+
+    .background-image { 
+        position: absolute; 
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        z-index: 1; /* Image de fond au z-index plus bas */ 
+    } 
+    .titreUser{
+        position: absolute; 
+        top: 0px;
+        left: 40px; 
+        width: 130px;
+        z-index: 2; /* Image de premier plan au z-index plus élevé */
+        a{
+            color: white;
+        }
+    }
+    .foreground-image { 
+        position: absolute; 
+        top: 64px;
+        left: 32px; 
+
+        z-index: 2; /* Image de premier plan au z-index plus élevé */
+    }
+    .corpUser{
+        position: absolute; 
+        color: white;
+            top: 210px;
+            left: 20px;
+            width: 165px; 
+            z-index: 2; /* Image de premier plan au z-index plus élevé */
+    }
+}
+
 #scrollToTopBtn {
     position: fixed;
     bottom: 20px;
@@ -227,7 +292,7 @@ body {
 #homeListDeck{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content:space-evenly;
 }
 
 .homeDeck{
@@ -301,11 +366,13 @@ body {
     margin: 10px;
     padding : 5px;
 }
+
 #listCards{
     display: flex;
     flex-wrap: wrap;
     max-width: 1600px;
     .image-carte-min img{
+        box-shadow: 5px 5px 5px black;
         width: 150px;
         height: 200px;
         margin: 10px;
@@ -352,7 +419,8 @@ body {
     .js-filter-content{
         display: flex;
         flex-wrap: wrap;
-        max-width: 1600px;
+        min-height: 600px;
+        max-height: 700px;
         overflow-y: scroll;
     }
 }
@@ -500,6 +568,7 @@ body {
 #panneau-deck{
     display: flex;
     border: 1px solid black;
+    justify-content: space-between;
     .info-deck{
         display : flex;
         flex-direction: column;

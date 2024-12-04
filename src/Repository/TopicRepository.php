@@ -48,7 +48,8 @@ class TopicRepository extends ServiceEntityRepository
         $qb = $sub;
         // sélectionner tous les topics
         $qb->select('s')
-            ->from('App\Entity\Topic', 's');
+            ->from('App\Entity\Topic', 's')
+            ->setMaxResults(6);
 
         // renvoyer le résultat
         $query = $qb->getQuery();

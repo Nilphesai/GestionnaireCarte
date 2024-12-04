@@ -47,7 +47,8 @@ class DeckRepository extends ServiceEntityRepository
         $qb = $sub;
         // sélectionner tous les deck
         $qb->select('s')
-            ->from('App\Entity\Deck', 's');
+            ->from('App\Entity\Deck', 's')
+            ->setMaxResults(6);
 
         // renvoyer le résultat
         $query = $qb->getQuery();
@@ -86,20 +87,23 @@ class DeckRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findRefCard(int $id) {
+    public function findTopDeckbyQtt() {
         $em = $this->getEntityManager();
         $sub = $em->createQueryBuilder();
 
         $qb = $sub;
-        // sélectionner tous les cartes du deck
-        $qb->select('s')
+        // sélectionner les 6 deck avec le plus de cartes différentes
+        $qb->select('c.id, COUNT(s.deck) as deckCount')
             ->from('App\Entity\DeckCard', 's')
-            ->where('s.id = :id ')
-            ->setParameter('id', $id);
+            ->join('s.deck', 'c') 
+            ->groupBy('c.id') 
+            ->orderBy('deckCount', 'DESC')
+            ->setMaxResults(6);
 
         // renvoyer le résultat
         $query = $qb->getQuery();
         return $query->getResult();
 
     }
+
 }

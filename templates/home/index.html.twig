@@ -5,11 +5,11 @@
 {% block body %}
 <div class="js">
     <div class="parallax">
-        <div id="presentation">
+        <section id="presentation">
             <h1>YugiDeck</h1>
             <h2>L'application pour gérer et partager tes deck !</h2>
             <a href="{{ path('app_register') }}">S'enregistrer</a>
-        </div>
+        </section>
     </div>
 <section class="deck-section">
         <h4>List des deck populaire</h4>
@@ -70,14 +70,35 @@
         </article>
  </section>
  <div class="parallax">
-    ping
+    <section class="user-section">
+        <h4>Liste des utilisateurs les plus actifs</h4>
+        <div id="homeListUser">
+            {% for user in users %}
+            <div class="homeUser">
+                <div class="imageUser">
+                    
+                        <div class="titreUser">
+                            <h5>   
+                                <a href="{{ path('show_user', {'id': user.id}) }}">{{user.username}}</a>
+                            </h5>
+                        </div>
+                        
+                            <img src="{{ asset ('imagesSite/cartevierge.png') }}" class="background-image">
+                            <img src="https://picsum.photos/145" class="foreground-image">
+                             <div class="corpUser">
+                                <p>
+                                    écriture aléatoire pour le test
+                                </p>
+                             </div>   
+                    
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
 </div>
 
-
  <button type="button" id="scrollToTopBtn" class="hidden">Haut de page</button>  
-
-    
-        
 
 </div>
 {% endblock %}

@@ -70,15 +70,6 @@ export default class Filter {
         this.form.addEventListener('submit', e => {    
 
                 e.preventDefault()
-                console.log(e.target.search_card_name.value)
-                console.log(e.target.search_card_typecard.value)
-                console.log(e.target.search_card_attribute.value)
-                console.log(e.target.search_card_level.value)
-                console.log(e.target.search_card_race.value)
-                console.log(e.target.search_card_att.value)
-                console.log(e.target.search_card_def.value)
-                console.log(e.target.search_card_link.value)
-                console.log(e.target.search_card_scale.value)
                 const linkMark = e.target.querySelectorAll('.searchLinkMarkers')
                 const listLinkMark = []
                 linkMark.forEach(element => {
@@ -87,7 +78,6 @@ export default class Filter {
                     }
                 });
                 const listLinkMarkString = listLinkMark.join();
-                console.log(listLinkMarkString)
                 const searchedCard = [e.target.search_card_name.value,
                     e.target.search_card_typecard.value,
                     e.target.search_card_attribute.value,

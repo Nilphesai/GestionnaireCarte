@@ -7,8 +7,8 @@
     <div id="{{card.id}}"  >
         <div class="image-carte-min">
             <dialog class="dialog">
-                <div class="window-dialog">
-                <div class="precCard">back</div>
+                
+                
                 <div class="bloc-dialog">
                 
                         <button autofocus class="closeDetailCard">
@@ -59,8 +59,8 @@
                             </div>
                             
                         </div>                
-                </div>
-                <div class="nextCard">next</div>
+                
+                
             </div>
                 
             </dialog>
@@ -69,7 +69,6 @@
         {#disparait à la recherche de card dans deck...#}
         {% if isDeck is defined and isDeck %}
         {% include "deck/_detailCard.html.twig" ignore missing %}
-
         {% endif %}
     </div>               
 {% endfor %}

@@ -17,15 +17,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     #[Route('/home', name: 'app_home')]
-    public function index(DeckRepository $deckRepository,TopicRepository $topicRepository, DeckCardRepository $deckCardReposirory, CardRepository $cardRepository,Request $request): Response
+    public function index(DeckRepository $deckRepository,TopicRepository $topicRepository, DeckCardRepository $deckCardReposirory, CardRepository $cardRepository, UserRepository $userRepository,Request $request): Response
     {
         $decks = $deckRepository->findDecks();
+        
         $topics = $topicRepository->findTopics();
         $idCards = $deckCardReposirory->findTopDeckCardsbyQttInAllDeck();
+        $users = $userRepository->findUsers();
         $i = 0;
         if($idCards){
             foreach($idCards as $idCard){
-                //dd($idCard['id']);
                 $cards[$i] = $cardRepository->findCardById($idCard['id']);
                 $i++;
             }
@@ -38,6 +39,7 @@ class HomeController extends AbstractController
             'decks' => $decks,
             'topics' => $topics,
             'cards' => $cards,
+            'users' => $users,
         ]);
     }
 

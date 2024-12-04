@@ -52,29 +52,29 @@
                     
                 </article>
             </div>
-            <div class="homeDeck">
-            {% if deckCards is defined %}
-                {% for deckCard in deckCards %}
-
-                
-                    <div class="imagedeck">
-                        <div class="titredeck">
-                            <h5>   
-                                <a href="{{ path('show_deck', {'id': deckCard.deck.id}) }}">{{deckCard.deck.title}}</a>
-                            </h5>
+            <div id="homeListDeck">
+                {% if deckCards is defined %}
+                    {% for deckCard in deckCards %}
+                    <div class="homeDeck">
+                        <div class="imagedeck">
+                            <div class="titredeck">
+                                <h5>   
+                                    <a href="{{ path('show_deck', {'id': deckCard.deck.id}) }}">{{deckCard.deck.title}}</a>
+                                </h5>
+                            </div>
+                            <img src="{{ asset ('imagesSite/deckbox.jpg') }}" class="background-image">
+                            <img src="{{ asset ('imagesDeck/' ~ deckCard.deck.picture ~ '.jpg') }}"class="foreground-image">
+                            <div class="corpdeck">
+                                <p>
+                                    crée par {{deckCard.deck.user}}<br>
+                                    à {{deckCard.deck.createdAt|date('d-m-Y')}}
+                                </p>
+                            </div>
+                        
                         </div>
-                        <img src="{{ asset ('imagesSite/deckbox.jpg') }}" class="background-image">
-                        <img src="{{ asset ('imagesDeck/' ~ deckCard.deck.picture ~ '.jpg') }}"class="foreground-image">
-                        <div class="corpdeck">
-                            <p>
-                                crée par {{deckCard.deck.user}}<br>
-                                à {{deckCard.deck.createdAt|date('d-m-Y')}}
-                            </p>
-                        </div>
-                    
                     </div>
-                {% endfor %}
-            {% endif %}
+                    {% endfor %}
+                {% endif %}
             </div>
             {% endfor %}
 {% endblock %}

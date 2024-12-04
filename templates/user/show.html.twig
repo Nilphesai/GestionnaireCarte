@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+<div id="page">
+    <div id="page-user">
+
+        <div id="image-user">
+            <img src="https://picsum.photos/150"></br>
+        </div>
+
+        <div id="username-user">
+            <h1>{{app.user.username}}</h1>
+
+        </div>
+
+        <div id="email-user">
+            <h6>{{app.user.email}}</h6>
+        </div>
+
+        <a href="{{ path('app_deckUser', {'id': user.id}) }}"> Ses Deck</a>
+        <a href="{{ path('app_topic', {'id': user.id}) }}"> Ses Topic</a>
+    </div>
+</div>
+{% endblock %}

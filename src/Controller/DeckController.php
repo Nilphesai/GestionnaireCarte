@@ -36,7 +36,7 @@ class DeckController extends AbstractController
 
     #[Route('/deck/add-card/{idDeck}', name: 'card_add_to_deck', methods: 'POST')]
     public function addCard(CardRepository $cardRepository, DeckCardRepository $deckCardRepository, EntityManagerInterface $entityManager, Request $request, DeckCard $deckCard = null, Card $card = null){
-        //dd($_POST);
+
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $attribute = filter_input(INPUT_POST, 'attribute', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $level = filter_input(INPUT_POST, 'level', FILTER_SANITIZE_NUMBER_INT);
@@ -54,11 +54,11 @@ class DeckController extends AbstractController
         
         $deckCard = new DeckCard();
         $card = new Card();
+
         //est ce que la carte est déjà en base de donnée
         $cardcheck = $cardRepository->findCardByRefCard($refCard);
         //si oui
         if ($cardcheck){
-
 
             $deckId = $request->attributes->get('idDeck');
             $deck = $entityManager->getRepository(Deck::class)->find($deckId);
@@ -96,7 +96,7 @@ class DeckController extends AbstractController
             }else{
                 $deckCard->setQtt(1);
             }
-            //dd($card);
+
             $entityManager->persist($deckCard);
             $entityManager->flush();
 
@@ -299,11 +299,12 @@ class DeckController extends AbstractController
     {
         $deckId = $request->attributes->get('idDeck');
         $deck = $entityManager->getRepository(Deck::class)->find($deckId);
-        $cards = $deck->getDeckCards();
-        foreach($cards as $card){
+        $deckCards = $deck->getDeckCards();
+        foreach($deckCards as $deckCard){
+            $card = $deckCard->getCard();
             $card->removeDeckCard($deck);
-            //dd($card->getDecks());
-            if ($card->getDecks()->isEmpty()){
+
+            if ($card->getDeckCards()->isEmpty()){
                 $entityManager->remove($card);
             }
         }

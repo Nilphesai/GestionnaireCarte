@@ -72,7 +72,6 @@ class ApiController extends AbstractController
         }
 
         if($test['cardName']){
-            
 
             $cards = $apiHttpClient->getCardsByFilter($test['cardName']);
 
@@ -97,7 +96,6 @@ class ApiController extends AbstractController
             if($isDeck){
                 
                 $decks = $deckRepository->findDecksById($idDeck);
-                //dd($decks);
                 return new JsonResponse([
                     'content' => $this->renderView('card/_content.html.twig', [
                         'cards' => $cards,
