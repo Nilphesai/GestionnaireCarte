@@ -16,17 +16,24 @@
     </head>
     <body>
         <header id="navbar">
-            <a href="{{ path('app_home') }}">Acceuil</a>
-            <a id="loadedlistcard" href="{{ path('cards_list') }}">liste de carte</a>
-            <a href="{{ path('app_deck')}}">Deck</a>
-            <a href="{{ path('app_category') }}">Forum</a>
-            {% if app.user %}
+            <div id="nav-logo">
+                <a href="{{ path('app_home') }}"><img src="{{ asset ('imagesSite/logo.png') }}"></a>
+            </div>
+            <div id="nav-menu">
+                <a href="{{ path('app_home') }}">Acceuil</a>
+                <a id="loadedlistcard" href="{{ path('cards_list') }}">liste de carte</a>
+                <a href="{{ path('app_deck')}}">Deck</a>
+                <a href="{{ path('app_category') }}">Forum</a>
+            </div>
             
-            <a href="{{ path('app_user') }}">Mon profil</a>
-            <a href="{{ path('app_logout') }}">Se déconnecter</a>
-            {% else %}
-            <a href="{{ path('app_login') }}">Se connecter</a>
-            <a href="{{ path('app_register') }}">S'enregister</a>
+            <div id="nav-register">
+                {% if app.user %}
+                <a href="{{ path('app_user') }}">Mon profil</a>
+                <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                {% else %}
+                <a href="{{ path('app_login') }}">Se connecter</a>
+                <a id="btnRegister" href="{{ path('app_register') }}">S'enregister</a>
+            </div>
         {% endif %}
         {% if is_granted("ROLE_ADMIN") %}
             <a href="{{ path('app_AdminPanel') }}">Panneau d'administration</a>

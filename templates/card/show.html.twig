@@ -4,13 +4,16 @@
 
 {% block body %}
             {% for card in card.data %}
-            <h1>{{ card.name }}</h1>
+            <div class="titre-detail-card">
+                <h2>Détail de {{ card.name }}</h2>
+            </div>
             <div class="page-detailCard">
                 <div id="image-carte-min">
                     <img src="{{ asset ('images/' ~ card.id ~ '.jpg') }}">
                 </div>
                 <article class="carac">
-                    <div class="type">{{ card.type }}</div>
+                    
+                    <div class="type">type card : {{ card.type }}</div>
                     <div class="race">Type : {{ card.race }}</div>
                         
                             {% if card.frameType == "normal" or card.frameType == "effect" or card.frameType == "ritual" or card.frameType == "fusion" or card.frameType == "synchro" or card.frameType == "xyz" %}
@@ -18,17 +21,17 @@
                             <div class="attribute">Attribut : {{ card.attribute }}</div>
                             <div class="att">attaque : {{ card.atk }}</div>
                             <div class="def">Défense : {{ card.def }}</div>
-                            <div class="effect">{{ card.desc|nl2br }}</div>
+                            <div class="effect">effect monster : {{ card.desc|nl2br }}</div>
                             {% elseif card.frameType == "link" %}
                             <div class="link">Lien : {{ card.linkval }}</div>
-                            <div class="linkMarker">Pointe vers :
+                            <div class="linkMarker">arrows to :
                                 {% for linkmarker in card.linkmarkers %}
                                 {{ linkmarker }}
                                 {% endfor %}
                             </div>
-                            <div class="effect">{{ card.desc|nl2br }}</div>
+                            effet monstre :<div class="effect">{{ card.desc|nl2br }}</div>
                             {% elseif card.frameType == "spell" or card.frameType == "trap" %}
-                            <div class="effect">{{ card.desc|nl2br }}</div>
+                            <div class="effect">effet : {{ card.desc|nl2br }}</div>
                             {% endif %}
                             
                     {% if card.typeline is defined %}
@@ -38,43 +41,50 @@
                             <div class="level">Niveau/Rang : {{ card.level }}</div>
                             <div class="att">attaque : {{ card.atk }}</div>
                             <div class="def">Défense : {{ card.def }}</div>
-                            <div class="scale">Echelle : {{ card.scale }}</div>
+                            <div class="scale">Echelle pendule : {{ card.scale }}</div>
                                 {% if card.pend_desc is defined and card.monster_desc is defined %}
-                                    <div class="effect">effet pendule : {{ card.pend_desc|nl2br }}</div>
-                                    <div class="effect">effet monstre : {{ card.monster_desc|nl2br }}</div>
+                                    <div class="effect"><b>effect pendulum</b> : {{ card.pend_desc|nl2br }}</div>
+                                    <div class="effect"><b>effect monster</b> : {{ card.monster_desc|nl2br }}</div>
                                 {% else %}
-                                    <div class="effect">{{ card.desc|nl2br }}</div>
+                                    <div class="effect">effect : {{ card.desc|nl2br }}</div>
                                 {% endif %}
                             {% endif %}
                         {% endfor %}
                     {% endif %}
-                
+
                     
                 </article>
             </div>
-            <div id="homeListDeck">
+            <section class="detailCard-Deck">
                 {% if deckCards is defined %}
-                    {% for deckCard in deckCards %}
-                    <div class="homeDeck">
-                        <div class="imagedeck">
-                            <div class="titredeck">
-                                <h5>   
-                                    <a href="{{ path('show_deck', {'id': deckCard.deck.id}) }}">{{deckCard.deck.title}}</a>
-                                </h5>
+                <h4>Liste deck utilisant la carte</h4>
+                    <div id="homeListDeck">
+                        {% for deckCard in deckCards %}
+                        <div class="homeDeck">
+                            <div class="imagedeck">
+                                <div class="titredeck">
+                                    <h4>   
+                                        <a href="{{ path('show_deck', {'id': deckCard.deck.id}) }}">{{deckCard.deck.title}}</a>
+                                    </h4>
+                                </div>
+                                <img src="{{ asset ('imagesSite/deckbox.jpg') }}" class="background-image">
+                                <img src="{{ asset ('imagesDeck/' ~ deckCard.deck.picture ~ '.jpg') }}"class="foreground-image">
+                                <div class="corpdeck">
+                                    <p>
+                                        crée par {{deckCard.deck.user}}<br>
+                                        à {{deckCard.deck.createdAt|date('d-m-Y')}}
+                                    </p>
+                                </div>
+                            
                             </div>
-                            <img src="{{ asset ('imagesSite/deckbox.jpg') }}" class="background-image">
-                            <img src="{{ asset ('imagesDeck/' ~ deckCard.deck.picture ~ '.jpg') }}"class="foreground-image">
-                            <div class="corpdeck">
-                                <p>
-                                    crée par {{deckCard.deck.user}}<br>
-                                    à {{deckCard.deck.createdAt|date('d-m-Y')}}
-                                </p>
-                            </div>
-                        
                         </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
+                {% else %}
+                <h4>aucun deck n'utilise cette carte</h4>
                 {% endif %}
-            </div>
+            </section>
+            
+
             {% endfor %}
 {% endblock %}

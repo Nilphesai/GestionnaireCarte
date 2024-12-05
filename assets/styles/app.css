@@ -3,8 +3,14 @@ body {
     background-color: #E3CD9B;
 }
 #navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     background-color: #A64826;
     overflow: hidden;
+    #btnRegister{
+        background-color: rgb(255, 187, 0);
+    }
 }
 
   /* Style the links inside the navigation bar */
@@ -27,9 +33,49 @@ body {
     background-color: #04AA6D;
     color: white;
 }
+
+#nav-logo {
+    a{
+        padding: 0;
+    }
+    img{
+    height: 42px;
+    width: 45px;
+    }
+}
+
+h1{
+    text-align: center;
+    font-size: 90px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+H2{
+    text-align: center;
+    font-size: 70px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+h4{
+    text-align: center;
+    font-size: 40px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+h5{
+    text-align: center;
+}
+p{
+    font-size: 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+a{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+small{
+    opacity: 50%;
+}
+
 .parallax {
     background-image: url('/imagesSite/banniereAccueil3.jpg');
-    height: 500px;
+    height: 700px;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -39,6 +85,7 @@ body {
     justify-content: center;
 
 }
+
 .background{
     background-image: url('/imagesSite/banniereAccueil3.jpg');
     height: 800px;
@@ -100,30 +147,43 @@ body {
     }
 }
 
+#presentation a:hover {
+    color: black;
+}
+
 #presentation{
 
     opacity: 1;
     color: white;
     text-align: center;
     align-items: center;
-
+    p{
+        font-size: 32px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
     a{
-
-        background-color: #0B1F37;
-        color: #fff;
-        border: none;
-        padding: 10px;
-        border-radius: 5px;
+        text-decoration: none;
+        background-color: rgb(255, 187, 0);
+        color: black;
+        padding: 20px;
+        border-radius: 5%;
     }
 }
 
 .card-section{
+    text-align: center;
     h4{
-        margin-top: 0;
         color: white;
         text-align: center;
-        
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     }
+    p{
+        color: white;
+    }
+}
+
+.imageCard img:hover{
+    transform: translateY(-15px);
 }
 
 #homeListCard{
@@ -133,11 +193,13 @@ body {
 
     .homeCard{
         margin: 10px;
-        box-shadow: 10px 5px 5px black;
-        .imagedeck img{
+        
+        .imageCard img{
             width: 200px;
             height: 250px;
             border: 1px solid black;
+            box-shadow: 10px 5px 5px black;
+            transition: 0.5s;
         }
     }
 }
@@ -150,6 +212,14 @@ body {
     padding-bottom: 50px;
 }
 
+.topic-post:hover{
+    background-color: #9e9e9e9f;
+}
+
+.homeListTopic a{
+    text-decoration: none;
+}
+
 .topic-post, .post {
     display: flex;
     background-color: #ffffff9f;
@@ -158,11 +228,17 @@ body {
     box-shadow: 5px 5px 5px black;
     position: relative;
     border-radius: 5px;
-    height: 122px;
+    height: 135px;
     width: 700px;
-    
+    transition: 0.5s;
     h5{
+        color: black;
         margin: 0;
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+    p{
+        font-size: 14px;
+        color: black;
     }
 
 }
@@ -179,16 +255,19 @@ body {
         margin: 0;
     }
     h5{
-        padding-top: 10px;
+        padding-top: 5px;
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     }
 }
 
 .author{
     text-align: center;
     border: 1px solid black;
+    overflow: hidden;  
+    text-overflow: ellipsis '...';
     min-width: 120px;
     padding-top: 5px;
-
+    font-size: 14px;
 }
 
 .homeListTopic{
@@ -205,6 +284,7 @@ body {
         margin-top: 0;
         color: white;
         text-align: center;
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         
     }
 }
@@ -222,11 +302,16 @@ body {
     margin: 10px;
 }
 
+.imageUser:hover{
+    transform: translateY(-15px);
+}
+
 .imageUser { 
     position: relative; 
     width: 208px;  
     height: 288px;
     box-shadow: 10px 5px 5px black;
+    transition: 0.5s;
 
     .background-image { 
         position: absolute; 
@@ -260,6 +345,9 @@ body {
             left: 20px;
             width: 165px; 
             z-index: 2; /* Image de premier plan au z-index plus élevé */
+            p{
+                font-size: 14px;
+            }
     }
 }
 
@@ -281,18 +369,35 @@ body {
 }
 
 .deck-section{
-    background-color: #0B1F37;
+    background-color: #081525;
+    text-align: center;
     h4{
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 40px;
         margin-top: 0;
+        margin-bottom: 0;
+        padding-top: 50px;
         color: white;
         text-align: center;
     }
+    p{
+        margin-top: 50px;
+        color: white;
+    }
+}
+
+.imagedeck:hover{
+    transform: translateY(-15px);
 }
 
 #homeListDeck{
     display: flex;
     flex-direction: row;
     justify-content:space-evenly;
+    margin-left: 150px;
+    margin-right: 150px;
+    padding-top: 15px;
+    overflow: hidden;
 }
 
 .homeDeck{
@@ -305,7 +410,8 @@ body {
 .imagedeck { 
     position: relative; 
     width: 230px;  
-    height: 280px; 
+    height: 280px;
+    transition: 0.5s;
 
     .background-image { 
         position: absolute; 
@@ -321,7 +427,8 @@ body {
         left: 55px; 
         width: 148px;
         z-index: 2; /* Image de premier plan au z-index plus élevé */
-        a{
+        h5{
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             color: white;
         }
     }
@@ -340,6 +447,11 @@ body {
             left: 55px;
             width: 148px; 
             z-index: 2; /* Image de premier plan au z-index plus élevé */
+            p{
+                margin: 0;
+                padding: 10px;
+                font-size: 14px;
+            }
     }
 }
 
@@ -379,32 +491,61 @@ body {
     }
 
 }
+
+#image-carte-min img:active{
+    height:1000px;
+    width:500px;
+}
+
 .page-detailCard{
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    #image-carte-min {
+        margin: 10px;
+        padding: 10px;
+        img{
+            box-shadow: 5px 5px 5px black;
+        }
+    }
+    
 }
 
 .carac{
+    font-size: 16px;
     display: flex;
     margin-left: 10px;
     margin-right: 10px;
-    flex-direction: column;
-    border: 1px solid black;
-    border-radius: 5px;
+    max-width: 800px;
+    flex-wrap: wrap;
     padding: 10px;
-    justify-content: space-around;
-    div{
-        margin:10px;
-        background-color: #E3CD9B;
 
-    }
-    .effect{
+    div{
+        flex-grow: 1;
+        min-width: 250px;
+        min-height: 35px;
+        height: fit-content;
+        width: fit-content;
         border: 1px solid black;
         border-radius: 5px;
+        margin: 10px;
         padding: 10px;
-        
+        background-color: #be7b2d;
+        box-shadow: 5px 5px 5px black;
+    }
+    .effect{
+        border: none;
+        background-color: #E3CD9B;
+        margin-top: 20px;
+        border-bottom: 1px solid grey;
+        box-shadow: 5px 5px 5px black;
     }
 }
+
+.detailCard-Deck{
+    border-top: 1px solid grey;
+}
+
 #form-search{
     border : 1px solid black;
     padding : 5px;
@@ -597,6 +738,9 @@ body {
     width: 50rem;
     height: 5rem;
     text-align: center;
+    p{
+        font-size: 14px;
+    }
 
 }
 
@@ -610,6 +754,9 @@ footer {
 .footer-bottom {
     margin-top: 20px;
     font-size: 12px;
+    p{
+        font-size: 12px;
+    }
 }
 
 #piechart {
@@ -623,9 +770,6 @@ footer {
         );
 }
 
-h1{
-    text-align: center;
-}
 .panel{
     align-content: right;
     .panel-aside{
