@@ -28,7 +28,7 @@ class Post
     private ?User $user = null;
 
 
-    #[ORM\ManyToOne(targetEntity: "App\Entity\Topic",cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: "App\Entity\Topic",inversedBy: 'posts')]
     #[ORM\JoinColumn(name: "topic_id", referencedColumnName: "id")]
     private ?Topic $Topic = null;
 

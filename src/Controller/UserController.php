@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Deck;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\DeckRepository;
@@ -11,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
@@ -51,7 +53,6 @@ class UserController extends AbstractController
     
             return $this->redirectToRoute('app_user');
         }
-        dd($formUser);
 
         return $this->render('user/new.html.twig', [
             'formUser' => $formUser,
@@ -109,12 +110,64 @@ class UserController extends AbstractController
         return $this->redirectToRoute('app_user');
     }
 
+    #[Route('/user/password', name: 'update_password', methods: 'POST')]
+    public function changePassword(EntityManagerInterface $entityManager,UserPasswordHasherInterface $userPasswordHasher){
+        
+        $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        
+        if ($password){
+            $user = $this->getUser();
+            $userId = $user->getId();
+            $user = $entityManager->getRepository(User::class)->find($userId);
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $password
+                )
+            );
+                
+            $entityManager->persist($user);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_user');
+        }
+    
+        return $this->redirectToRoute('app_user');
+    }
+
     #[Route('/user/delete/{userId}', name: 'delete_user')]
     public function deleteUser(EntityManagerInterface $entityManager, Request $request,User $user = null): Response
     {
+        
         $userId = $request->attributes->get('userId');
         $user = $entityManager->getRepository(User::class)->find($userId);
         
+        $decks = $user->getDecks();
+        $posts = $user->getPosts();
+        $topics = $user->getTopics();
+
+        if ($posts) {
+            foreach($posts as $post){
+                $entityManager->remove($post);
+            }
+        }
+
+
+        if ($topics) {
+            foreach($topics as $topic){
+                $entityManager->remove($topic);
+                
+            }
+        }
+
+
+        if ($decks) {
+            foreach($decks as $deck){
+                $entityManager->remove($deck);
+            }
+        }
+
+        
+
         $entityManager->remove($user);
         $entityManager->flush();
         return $this->redirectToRoute('app_home');

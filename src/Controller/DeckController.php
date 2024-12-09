@@ -299,6 +299,10 @@ class DeckController extends AbstractController
     {
         $deckId = $request->attributes->get('idDeck');
         $deck = $entityManager->getRepository(Deck::class)->find($deckId);
+        
+        $user = $deck->getUser();
+        $userId = $user->getId();
+
         $deckCards = $deck->getDeckCards();
         foreach($deckCards as $deckCard){
             $card = $deckCard->getCard();
@@ -310,7 +314,7 @@ class DeckController extends AbstractController
         }
         $entityManager->remove($deck);
         $entityManager->flush();
-        return $this->redirectToRoute('app_deckUser');
+        return $this->redirectToRoute('app_deckUser', ['id' => $userId]);
     }
 
     private function addImage(array $detail, EntityManagerInterface $entityManager) {

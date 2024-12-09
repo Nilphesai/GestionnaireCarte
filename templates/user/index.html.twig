@@ -39,6 +39,18 @@
             </form>
         </div>
 
+        <div id="password-user">
+
+            <form action="{{ path('update_password') }}" method="post">
+                <button type="submit">
+                    <i>modify</i>
+                </button>
+                <input name="password" value=""pattern="(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}" 
+                title="Le mot de passe doit contenir au moins une majuscule, un chiffre, un caractère spécial et être d'au moins 12 caractères.">
+
+            </form>
+        </div>
+
         <a href="{{ path('app_deckUser', {'id': app.user.id}) }}"> Mes Deck</a>
         <a href="{{ path('app_topic', {'id': app.user.id}) }}"> Mes Topic</a>
         <a href="{{ path('delete_user', {'userId': app.user.id}) }}">Supprimer le compte</a>

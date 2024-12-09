@@ -44,19 +44,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Deck>
      */
-    #[ORM\OneToMany(targetEntity: Deck::class, mappedBy: 'User', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Deck::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $decks;
 
     /**
      * @var Collection<int, Post>
      */
-    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $posts;
 
     /**
      * @var Collection<int, Topic>
      */
-    #[ORM\OneToMany(targetEntity: Topic::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: Topic::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $topics;
 
     #[ORM\Column(length: 255, nullable: true)]
