@@ -55,8 +55,8 @@ class PostController extends AbstractController
         
         $formPost = $this->createForm(PostType::class,$post);
         $formPost->handleRequest($request);
-        
-        
+
+ 
         if($formPost->isSubmitted() && $formPost->isValid()){
             $post = $formPost->getData();
             //dd($post);

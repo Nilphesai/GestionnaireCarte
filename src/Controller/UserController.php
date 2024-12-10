@@ -66,18 +66,15 @@ class UserController extends AbstractController
 
     #[Route('/user/username', name: 'update_username', methods: 'POST')]
     public function changeUsername(EntityManagerInterface $entityManager, Request $request,CsrfTokenManagerInterface $csrfTokenManager){
-        
+
         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if (!$request->getSession()->isStarted()) {
-    $request->getSession()->start();
-}
 
         $token = new CsrfToken('unique_identifier', $request->request->get('_token'));
 
             if (!$csrfTokenManager->isTokenValid($token)) {
                 throw new InvalidCsrfTokenException('Invalid CSRF token.');
             }
-        
+
         if ($username){
             $user = $this->getUser();
             $userId = $user->getId();
@@ -122,7 +119,7 @@ class UserController extends AbstractController
         
         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $token = new CsrfToken('unique_identifier', $request->request->get('_token'));
-        
+
         if (!$csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException('Invalid CSRF token.');
         }
