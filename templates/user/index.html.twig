@@ -21,6 +21,7 @@
             <h1>{{app.user.username}}</h1>
 
             <form action="{{ path('update_username') }}" method="post">
+                <input type="hidden" name="_token" value="{{ csrf_token('unique_identifier') }}">
                 <input name="username" value="{{ app.user.username }}">
                             <button type="submit">
                                 <i>modify</i>
@@ -35,7 +36,7 @@
                     <i>modify</i>
                 </button>
                 <input name="email" value="{{ app.user.email }}">
-
+                <input type="hidden" name="_token" value="{{ csrf_token('unique_identifier') }}">
             </form>
         </div>
 
@@ -47,7 +48,7 @@
                 </button>
                 <input name="password" value=""pattern="(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}" 
                 title="Le mot de passe doit contenir au moins une majuscule, un chiffre, un caractère spécial et être d'au moins 12 caractères.">
-
+                <input type="hidden" name="_token" value="{{ csrf_token('unique_identifier') }}">
             </form>
         </div>
 

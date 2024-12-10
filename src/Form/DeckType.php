@@ -38,8 +38,6 @@ class DeckType extends AbstractType
             $refCard[$deckCard->getCard()->getName()] = strval($deckCard->getCard()->getRefCard());
         }
         
-
-        //dd($refCard);
         $builder
             ->add('title', TextType::class,[
                 'attr'=> [
@@ -95,7 +93,6 @@ class DeckType extends AbstractType
                 ]
             ])
         ;
-        //dd($deck);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

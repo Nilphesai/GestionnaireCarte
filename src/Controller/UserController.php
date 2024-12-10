@@ -11,8 +11,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 class UserController extends AbstractController
 {
@@ -60,22 +63,20 @@ class UserController extends AbstractController
         
     }
 
-    #[Route('/user/{id}', name: 'show_user')]
-    public function show(UserRepository $userRepository, Request $request): Response
-    {
-        $userId = $request->attributes->get('id');
-        $user = $userRepository->findUserById($userId);
-        
-        return $this->render('user/show.html.twig', [
-            'user' => $user[0],
-        ]);
-    }
-
 
     #[Route('/user/username', name: 'update_username', methods: 'POST')]
-    public function changeUsername(EntityManagerInterface $entityManager){
+    public function changeUsername(EntityManagerInterface $entityManager, Request $request,CsrfTokenManagerInterface $csrfTokenManager){
         
         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if (!$request->getSession()->isStarted()) {
+    $request->getSession()->start();
+}
+
+        $token = new CsrfToken('unique_identifier', $request->request->get('_token'));
+
+            if (!$csrfTokenManager->isTokenValid($token)) {
+                throw new InvalidCsrfTokenException('Invalid CSRF token.');
+            }
         
         if ($username){
             $user = $this->getUser();
@@ -92,10 +93,16 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/email', name: 'update_email', methods: 'POST')]
-    public function changeEmail(EntityManagerInterface $entityManager){
+    public function changeEmail(EntityManagerInterface $entityManager, Request $request,CsrfTokenManagerInterface $csrfTokenManager){
         
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         
+
+        $token = new CsrfToken('unique_identifier', $request->request->get('_token'));
+
+        if (!$csrfTokenManager->isTokenValid($token)) {
+            throw new InvalidCsrfTokenException('Invalid CSRF token.');
+        }
         if ($email){
             $user = $this->getUser();
             $userId = $user->getId();
@@ -111,10 +118,14 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/password', name: 'update_password', methods: 'POST')]
-    public function changePassword(EntityManagerInterface $entityManager,UserPasswordHasherInterface $userPasswordHasher){
+    public function changePassword(EntityManagerInterface $entityManager,UserPasswordHasherInterface $userPasswordHasher, Request $request,CsrfTokenManagerInterface $csrfTokenManager){
         
         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $token = new CsrfToken('unique_identifier', $request->request->get('_token'));
         
+        if (!$csrfTokenManager->isTokenValid($token)) {
+            throw new InvalidCsrfTokenException('Invalid CSRF token.');
+        }
         if ($password){
             $user = $this->getUser();
             $userId = $user->getId();
@@ -171,5 +182,16 @@ class UserController extends AbstractController
         $entityManager->remove($user);
         $entityManager->flush();
         return $this->redirectToRoute('app_home');
+    }
+
+    #[Route('/user/{id}', name: 'show_user')]
+    public function show(UserRepository $userRepository, Request $request): Response
+    {
+        $userId = $request->attributes->get('id');
+        $user = $userRepository->findUserById($userId);
+        
+        return $this->render('user/show.html.twig', [
+            'user' => $user[0],
+        ]);
     }
 }
