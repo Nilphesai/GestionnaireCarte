@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
@@ -63,6 +64,63 @@ class UserController extends AbstractController
         
     }
 
+    #[Route('/user/avatar', name: 'update_avatar', methods: 'POST')]
+    public function changeAvater(EntityManagerInterface $entityManager, Request $request,CsrfTokenManagerInterface $csrfTokenManager){
+        
+            // Vérifier si un fichier a été téléchargé
+            if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+                $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+                $fileName = $_FILES['image']['name'];
+                $fileTmpName = $_FILES['image']['tmp_name'];
+                $fileSize = $_FILES['image']['size'];
+                $fileError = $_FILES['image']['error'];
+                $fileType = $_FILES['image']['type'];
+        
+                $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+        
+                if (in_array($fileExt, $allowed)) {
+                    if ($fileError === 0) {
+                        if ($fileSize < 5000000) { // Limite de taille de fichier de 5MB
+                            $fileNewName = uniqid('', true) . "." . $fileExt;
+                            $fileDestination = 'public/assets' . $fileNewName;
+        
+                            if (move_uploaded_file($fileTmpName, $fileDestination)) {
+                                echo "L'image a été téléchargée avec succès!";
+                            } else {
+                                echo "Erreur lors du téléchargement de l'image.";
+                            }
+                        } else {
+                            echo "Le fichier est trop volumineux.";
+                        }
+                    } else {
+                        echo "Erreur lors du téléchargement du fichier.";
+                    }
+                } else {
+                    echo "Type de fichier non autorisé.";
+                }
+            } else {
+                echo "Aucun fichier téléchargé.";
+            }
+        
+        $token = new CsrfToken('unique_identifier', $request->request->get('_token'));
+
+            if (!$csrfTokenManager->isTokenValid($token)) {
+                throw new InvalidCsrfTokenException('Invalid CSRF token.');
+            }
+
+        if ($fileDestination){
+            $user = $this->getUser();
+            $userId = $user->getId();
+            $user = $entityManager->getRepository(User::class)->find($userId);
+            $user->setUsername($fileDestination);
+                
+            $entityManager->persist($user);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_user');
+        }
+    
+        return $this->redirectToRoute('app_user');
+    }
 
     #[Route('/user/username', name: 'update_username', methods: 'POST')]
     public function changeUsername(EntityManagerInterface $entityManager, Request $request,CsrfTokenManagerInterface $csrfTokenManager){
@@ -191,4 +249,12 @@ class UserController extends AbstractController
             'user' => $user[0],
         ]);
     }
+
+    public function square(UploadedFile $picture, string $folder = '', int $width = 250):string{
+        //nouveaux nom à l'image
+        $file = md5(uniqid(rand(), true)) . '.webp';
+
+        return $file;
+    }
+
 }

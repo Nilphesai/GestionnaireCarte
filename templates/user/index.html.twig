@@ -9,12 +9,12 @@
         <div id="image-user">
             <img src="https://picsum.photos/150"></br>
             <a href=""> Changer d'avatar</a>
-            {#<form action="{{ path('update_picture', {'id': app.user.id}) }}" method="post">
-            <input type="hidden" name="picture" value="{{ asset ('images/' ~ card.id ~ '.jpg') }}">
+            <form action="{{ path('update_avatar', {'id': app.user.id}) }}" method="post">
+            <input type="hidden" name="avatar" value="{{ asset ('images/null.jpg') }}">
                         <button type="submit">
                             <i>add</i>
                         </button>
-            </form>#}
+            </form>
         </div>
 
         <div id="username-user">

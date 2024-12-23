@@ -63,7 +63,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $sub = $em->createQueryBuilder();
 
         $qb = $sub;
-        // sélectionner tous les topics
+        // sélectionner tous les Users
         $qb->select('s')
             ->from('App\Entity\User', 's')
             ->setMaxResults(6);
