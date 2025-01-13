@@ -151,25 +151,25 @@ export default class Filter {
     };
     
     async loadUrl (url,searchedCard){
-        console.log(url)
-        console.log(searchedCard)
+        // requete HTTP asynchrone
         const response = await fetch(url, {
             method: "POST",
+            //en-tête, c'est une requête ajax
             headers : {
                 'X-Requested-With': 'XMLHttpRequest'
             },
+            //JSON
             body: JSON.stringify({ cardName: searchedCard })
         })
-
+        //si ça marche
         if (response.status >= 200 && response.status < 300){
-            
+            //convertie la réponse en JSON, insère dans data, puis mise à jour de this.content avec data
             const data = await response.json()
-            console.log(data)
             const cards = Object.values(data)
-            console.log(cards)
             this.content.innerHTML = cards
 
         }
+        //si problème, afficher
         else{
             console.log('erreur')
             console.error(response)
