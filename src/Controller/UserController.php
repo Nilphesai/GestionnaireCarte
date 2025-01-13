@@ -21,10 +21,11 @@ use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 class UserController extends AbstractController
 {
     #[Route('/user', name: 'app_user')]
-    public function index(): Response
+    public function index(UserRepository $userRepository): Response
     {
+        $users = $userRepository->findusers();
         return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
+            'userss' => $users,
         ]);
     }
 
@@ -65,25 +66,29 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/avatar', name: 'update_avatar', methods: 'POST')]
-    public function changeAvater(EntityManagerInterface $entityManager, Request $request,CsrfTokenManagerInterface $csrfTokenManager){
+    public function changeAvatar(EntityManagerInterface $entityManager, Request $request,CsrfTokenManagerInterface $csrfTokenManager){
+        
+        $token = new CsrfToken('unique_identifier', $request->request->get('_token'));
+
+        if (!$csrfTokenManager->isTokenValid($token)) {
+            throw new InvalidCsrfTokenException('Invalid CSRF token.');
+        }
         
             // Vérifier si un fichier a été téléchargé
-            if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-                $allowed = ['jpg', 'jpeg', 'png', 'gif'];
-                $fileName = $_FILES['image']['name'];
-                $fileTmpName = $_FILES['image']['tmp_name'];
-                $fileSize = $_FILES['image']['size'];
-                $fileError = $_FILES['image']['error'];
-                $fileType = $_FILES['image']['type'];
+            if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === 0) {
+                $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                $fileName = $_FILES['avatar']['name'];
+                $fileTmpName = $_FILES['avatar']['tmp_name'];
+                $fileSize = $_FILES['avatar']['size'];
+                $fileError = $_FILES['avatar']['error'];
         
                 $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-        
                 if (in_array($fileExt, $allowed)) {
                     if ($fileError === 0) {
                         if ($fileSize < 5000000) { // Limite de taille de fichier de 5MB
                             $fileNewName = uniqid('', true) . "." . $fileExt;
-                            $fileDestination = 'public/assets' . $fileNewName;
-        
+                            $fileDestination = $this->getParameter('upload_directory') . '/' . $fileNewName;
+                            
                             if (move_uploaded_file($fileTmpName, $fileDestination)) {
                                 echo "L'image a été téléchargée avec succès!";
                             } else {
@@ -101,18 +106,12 @@ class UserController extends AbstractController
             } else {
                 echo "Aucun fichier téléchargé.";
             }
-        
-        $token = new CsrfToken('unique_identifier', $request->request->get('_token'));
-
-            if (!$csrfTokenManager->isTokenValid($token)) {
-                throw new InvalidCsrfTokenException('Invalid CSRF token.');
-            }
 
         if ($fileDestination){
             $user = $this->getUser();
             $userId = $user->getId();
             $user = $entityManager->getRepository(User::class)->find($userId);
-            $user->setUsername($fileDestination);
+            $user->setPicture($fileNewName);
                 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -248,13 +247,6 @@ class UserController extends AbstractController
         return $this->render('user/show.html.twig', [
             'user' => $user[0],
         ]);
-    }
-
-    public function square(UploadedFile $picture, string $folder = '', int $width = 250):string{
-        //nouveaux nom à l'image
-        $file = md5(uniqid(rand(), true)) . '.webp';
-
-        return $file;
     }
 
 }

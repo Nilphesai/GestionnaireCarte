@@ -38,6 +38,10 @@ class UserType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('picture', TextType::class, [
+                'data' => 'null.jpg', // Valeur par défaut pour le nom de l'image
+                'required' => false,
+            ])
             ->add('valider', SubmitType::class, [
                 'attr' => [
                         'class' => 'btn btn-success'

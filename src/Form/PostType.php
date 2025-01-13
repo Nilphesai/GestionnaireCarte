@@ -32,15 +32,15 @@ class PostType extends AbstractType
                 'data' => new \DateTime(),
                 'attr' => array ('readonly' => true)
             ])
-            ->add('Topic', EntityType::class, [
+            ->add('topic', EntityType::class, [
                 'class' => Topic::class,
-                'choice_label' => 'id',
-                'attr' => array ('readonly' => true)
+                'choice_label' => 'title',
+                'attr' => ['readonly' => true],
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id',
-                'attr' => array ('readonly' => true)
+                'choice_label' => 'username',
+                'attr' => ['readonly' => true],
             ])
             ->add('valider', SubmitType::class, [
                 'attr' => [
@@ -54,6 +54,10 @@ class PostType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Post::class,
+            
+            'csrf_protection' => true,
+            'csrf_field_name' => '_token',
+            'csrf_token_id'   => 'example_item',
         ]);
     }
 }

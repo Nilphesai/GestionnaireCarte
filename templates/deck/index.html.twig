@@ -8,7 +8,9 @@
 
         <div id="bloc-deck">
             <h2>Deck</h2>
-            
+                {% if app.user %}
+                    <a href="{{ path('new_deck') }}">new deck</a>
+                {% endif %}
                 <table>
                 <tr class="table-primary">
                     <th>titre</th>

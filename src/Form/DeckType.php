@@ -85,7 +85,7 @@ class DeckType extends AbstractType
             ->add('user', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'username',
-                'attr' => array ('readonly' => true)
+                'disabled' => true,
             ])
             ->add('valider', SubmitType::class, [
                 'attr' => [

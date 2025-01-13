@@ -19,7 +19,11 @@ class TopicType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class)
+            ->add('title', TextType::class,[
+                'attr'=> [
+                    'class' => 'form-control'
+                ]
+            ])
             ->add('createdAt', DateType::class, [
                 'widget' => 'single_text',
                 'data' => new \DateTime(),
@@ -27,18 +31,20 @@ class TopicType extends AbstractType
             ])
             ->add('closed', CheckboxType::class, [
                 'required' => false,
-                'value' => 1,
+                'value' => 0,
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id',
+                'choice_label' => 'username',
+                'attr' => ['readonly' => true],
             ])
-            ->add('Category', EntityType::class, [
+            ->add('category', EntityType::class, [
                 'class' => Category::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
+                'attr' => ['readonly' => true],
             ])
             ->add('valider', SubmitType::class, [
                 'attr' => [

@@ -13,7 +13,7 @@
         </section>
     </div>
 <section class="deck-section">
-        <h4>Les deck les plus populaires</h4>
+        <h4>Les deck les plus récents</h4>
         <p>ils ont été fait par nos meilleurs utilisateurs !</p>
         <p><small>et sont là pour vous donner quelques idées...</small></p>
             <div id="homeListDeck">
@@ -54,13 +54,14 @@
     </section>
 </div>
  <section class="topic-section">
-        <h4>List Topic populaire</h4>
+        <h4>List Topic les plus récents</h4>
         <article class="homeListTopic">
             {% for topic in topics %}
                 <a href="{{ path('show_topic', {'topicId': topic.id}) }}">
                     <div class="topic-post">
                         <div class="author">
-                            <img src="https://picsum.photos/50"></br>
+                            
+                            <img src="{{ asset('assets/' ~ topic.user.picture) }}" alt="Avatar de {{ topic.user }}" class="foreground-image" height="50p"></br>
                             <p>Author : {{topic.user}} </br>
                             createBy : {{topic.createdAt|date("d-m-Y")}}</p>
                         </div>
@@ -79,7 +80,7 @@
  </section>
  <div class="parallax">
     <section class="user-section">
-        <h4>Liste des utilisateurs les plus actifs</h4>
+        <h4>Listes de nos utilisateurs nos plus récents</h4>
         <div id="homeListUser">
             {% for user in users %}
             <div class="homeUser">
@@ -92,11 +93,9 @@
                         </div>
                         
                             <img src="{{ asset ('imagesSite/cartevierge.png') }}" class="background-image">
-                            <img src="https://picsum.photos/145" class="foreground-image">
+                            <img src="{{ asset ('assets/' ~ user.picture) }}" alt="Avatar de {{ user.username }}" class="foreground-image" height="145p">
                              <div class="corpUser">
-                                <p>
-                                    écriture aléatoire pour le test
-                                </p>
+
                              </div>   
                     
                 </div>

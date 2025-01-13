@@ -7,12 +7,12 @@
     <div id="page-user">
 
         <div id="image-user">
-            <img src="https://picsum.photos/150"></br>
-            <a href=""> Changer d'avatar</a>
-            <form action="{{ path('update_avatar', {'id': app.user.id}) }}" method="post">
-            <input type="hidden" name="avatar" value="{{ asset ('images/null.jpg') }}">
+            <img src="{{ asset('assets/' ~ app.user.picture) }}" alt="Avatar de {{ app.user.username }}">
+            <form action="{{ path('update_avatar', {'id': app.user.id}) }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="avatar">
+                <input type="hidden" name="_token" value="{{ csrf_token('unique_identifier') }}">
                         <button type="submit">
-                            <i>add</i>
+                            <i>modify</i>
                         </button>
             </form>
         </div>
@@ -54,7 +54,7 @@
 
         <a href="{{ path('app_deckUser', {'id': app.user.id}) }}"> Mes Deck</a>
         <a href="{{ path('app_topic', {'id': app.user.id}) }}"> Mes Topic</a>
-        <a href="{{ path('delete_user', {'userId': app.user.id}) }}">Supprimer le compte</a>
+        <div class="supprimer"><a href="{{ path('delete_user', {'userId': app.user.id}) }}">Supprimer le compte</a></div>
     </div>
 </div>
 {% endblock %}

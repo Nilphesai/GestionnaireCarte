@@ -48,7 +48,23 @@ class TopicRepository extends ServiceEntityRepository
         $qb = $sub;
         // sélectionner tous les topics
         $qb->select('s')
-            ->from('App\Entity\Topic', 's')
+            ->from('App\Entity\Topic', 's');
+
+        // renvoyer le résultat
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+    public function findTopicsHome(){
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+
+        $qb = $sub;
+        // sélectionner tous les topics
+        $qb->select('t')
+            ->from('App\Entity\Topic', 't')
+            ->where('t.closed = 0')
+            ->orderBy('t.createdAt', 'desc')
             ->setMaxResults(6);
 
         // renvoyer le résultat

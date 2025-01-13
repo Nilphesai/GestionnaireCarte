@@ -19,9 +19,9 @@ class HomeController extends AbstractController
     #[Route('/home', name: 'app_home')]
     public function index(DeckRepository $deckRepository,TopicRepository $topicRepository, DeckCardRepository $deckCardReposirory, CardRepository $cardRepository, UserRepository $userRepository,Request $request): Response
     {
-        $decks = $deckRepository->findDecks();
+        $decks = $deckRepository->findDecksHome();
         
-        $topics = $topicRepository->findTopics();
+        $topics = $topicRepository->findTopicsHome();
         $idCards = $deckCardReposirory->findTopDeckCardsbyQttInAllDeck();
         $users = $userRepository->findUsers();
         $i = 0;
@@ -57,5 +57,12 @@ class HomeController extends AbstractController
             'posts' => $posts
             
         ]);
+    }
+
+    #[Route('/home/CGU', name: 'app_CGU')]
+    public function CGU(): Response
+    {
+
+        return $this->render('home/CGU.html.twig');
     }
 }

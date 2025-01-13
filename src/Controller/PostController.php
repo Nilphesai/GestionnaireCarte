@@ -52,14 +52,13 @@ class PostController extends AbstractController
         if($post == null){
             $post = new post();
         }
-        
+
         $formPost = $this->createForm(PostType::class,$post);
         $formPost->handleRequest($request);
-
  
         if($formPost->isSubmitted() && $formPost->isValid()){
             $post = $formPost->getData();
-            //dd($post);
+
             $topicId = $post->getTopic()->getId();
             $entityManager->persist($post);
             $entityManager->flush();

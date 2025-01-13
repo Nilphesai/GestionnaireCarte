@@ -5,16 +5,17 @@ namespace App\Controller;
 use App\Entity\Card;
 use App\Entity\Deck;
 use App\Entity\Post;
-use App\Entity\DeckCard;
 use App\Form\DeckType;
 use App\Form\PostType;
+use DateTimeImmutable;
 use App\Entity\Picture;
+use App\Entity\DeckCard;
 use App\Form\SearchCardType;
 use App\HttpClient\ApiHttpClient;
 use Doctrine\ORM\Query\Parameter;
 use App\Repository\CardRepository;
-use App\Repository\DeckCardRepository;
 use App\Repository\DeckRepository;
+use App\Repository\DeckCardRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -77,7 +78,7 @@ class DeckController extends AbstractController
 
                 $entityManager->persist($deckCard[0]);
                 $entityManager->flush();
-                $deckCards = $deckCardRepository->findDeckCardsByDeck($deck);
+                //$deckCards = $deckCardRepository->findDeckCardsByDeck($deck);
                 return $this->redirectToRoute('update_deck', ['id' => $deckId]);
                 /*return new JsonResponse([
                     'content' => $this->renderView('deck/_tempDeck.html.twig', [
@@ -100,7 +101,7 @@ class DeckController extends AbstractController
             $entityManager->persist($deckCard);
             $entityManager->flush();
 
-            $deckCards = $deckCardRepository->findDeckCardsByDeck($deck);
+            //$deckCards = $deckCardRepository->findDeckCardsByDeck($deck);
             
             return $this->redirectToRoute('update_deck', ['id' => $deckId]);
             /*return new JsonResponse([
@@ -173,13 +174,13 @@ class DeckController extends AbstractController
     #[Route('/deck/delete-card/{id}/{idDeck}', name: 'card_delete_to_deck')]
     #[Route('/deck/delete-card/{id}/{idDeck}/{qttSide}', name: 'card_delete_to_side')]
     public function deleteCard(EntityManagerInterface $entityManager,DeckCardRepository $deckCardRepository, Request $request){
-            //dd($request->attributes->get('_route'));
+            
             $idCard = $request->attributes->get('id');
             $deckId = $request->attributes->get('idDeck');
 
             $deck = $entityManager->getRepository(Deck::class)->find($deckId);
             $card = $entityManager->getRepository(Card::class)->find($idCard);
-            //dd($cardcheck);
+            
             $deckCard = $deckCardRepository->findDeckCardsByCardAndDeck($card,$deck);
             if($request->attributes->get('_route') === 'card_delete_to_deck'){
                 if($deckCard[0]->getQtt() > 0){
@@ -200,7 +201,7 @@ class DeckController extends AbstractController
                 $entityManager->persist($card);
                 $entityManager->persist($deck);
             }
-                    
+
             $entityManager->persist($deckCard[0]);
             $entityManager->flush();
             return $this->redirectToRoute('update_deck', ['id' => $deckId]);      
@@ -214,8 +215,11 @@ class DeckController extends AbstractController
         //dd($deck);
         if($deck == null){
             $deck = new deck();
+        } else{
+            $deckId = $request->attributes->get('id');
+            $deck = $entityManager->getRepository(Deck::class)->find($deckId);
         }
-        //dd($deck);
+
         $formDeck = $this->createForm(DeckType::class,$deck);
         
         $card = new Card();
@@ -228,10 +232,10 @@ class DeckController extends AbstractController
         else{
             $deckCards = $entityManager->getRepository(DeckCard::class)->findDeckCardsByDeck($deck);
         }
-
-        //dd($formDeck->getData());
+        
+        //dd($formDeck, $request,$request->attributes->get('_route'));
         $formDeck->handleRequest($request);
-        //dd($request);
+        //dd($formDeck->getErrors());
         if($formDeck->isSubmitted() && $formDeck->isValid()){
             //dd($deck);
             if($request->request->all()){
@@ -255,15 +259,23 @@ class DeckController extends AbstractController
             $entityManager->persist($deck);
             $entityManager->flush();
 
-        }elseif ($formDeck->isSubmitted()){
-            
-            $deck = $formDeck->getData();
-            $deck->setPicture('null');
-            $entityManager->persist($deck);
-            $entityManager->flush();
+            return $this->redirectToRoute('app_deck');
+
+        }elseif ($request->attributes->get('_route') == "update_deck" ){
             
         }
-        
+        else{
+            $time = new DateTimeImmutable("now");
+            $deck = $formDeck->getData();
+            $deck->setTitle('null');
+            $deck->setCreatedAt($time);
+            $deck->setClosed(1);
+            $deck->setPicture('null');
+            $deck->setUser($this->getUser());
+            $entityManager->persist($deck);
+            $entityManager->flush();
+        }
+        //dd($deck);
         return $this->render('deck/new.html.twig', [
             'formSearchCard' => $form,
             'cards' => $cards,

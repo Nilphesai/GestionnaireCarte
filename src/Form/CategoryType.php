@@ -18,7 +18,7 @@ class CategoryType extends AbstractType
             ->add('name',TextType::class)
             ->add('topics', EntityType::class, [
                 'class' => Topic::class,
-                'choice_label' => 'id'
+                'choice_label' => 'title'
             ])
             ->add('valider', SubmitType::class, [
                 'attr' => [

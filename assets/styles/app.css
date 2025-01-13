@@ -108,8 +108,8 @@ small{
     justify-content: center;
     border: 1px solid black;
     border-radius: 5%;
-    height: 250px;
-    width: 400px;
+    height: 460px;
+    width: 500px;
     background-color: #E3CD9B;
     input{
         margin: 10px;
@@ -189,7 +189,7 @@ small{
 #homeListCard{
     display: flex;
     justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
 
     .homeCard{
         margin: 10px;
@@ -229,8 +229,9 @@ small{
     position: relative;
     border-radius: 5px;
     height: 135px;
-    width: 700px;
     transition: 0.5s;
+    flex: 1 1 300px; /* Ajuste la taille des éléments */
+    max-width: 700px; /* Limite la taille maximale des éléments */
     h5{
         color: black;
         margin: 0;
@@ -274,7 +275,7 @@ small{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 
 }
 
@@ -289,17 +290,18 @@ small{
     }
 }
 
-#homeListUser{
+#homeListUser {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
 }
 
-.homeUser{
+.homeUser {
     text-align: center;
     margin: 10px;
+    flex: 1 1 200px; /* Ajuste la taille des éléments */
+    max-width: 300px; /* Limite la taille maximale des éléments */
 }
 
 .imageUser:hover{
@@ -392,12 +394,11 @@ small{
 
 #homeListDeck{
     display: flex;
-    flex-direction: row;
-    justify-content:space-evenly;
+    flex-wrap: wrap;
+    justify-content: center;
     margin-left: 150px;
     margin-right: 150px;
     padding-top: 15px;
-    overflow: hidden;
 }
 
 .homeDeck{
@@ -803,16 +804,98 @@ footer {
 }
 
 .supprimer {
-    justify-content: end;
-    a{
-        display: flex;
-        text-align: center;
-        margin: 5px;
-        padding: 10px;
-        border: 1px solid black;
-        background-color: red;
-        border-radius: 10%;
+    text-align: center;
+    margin: 20px 0;
+    a {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #ff4c4c; /* Couleur de fond rouge pour indiquer une action dangereuse */
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-family: 'Arial', sans-serif;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
     }
 }
 
-    
+.supprimer a:hover {
+    background-color: #e60000; /* Couleur de fond plus foncée au survol */
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 50px;
+    }
+    h2 {
+        font-size: 40px;
+    }
+    h4 {
+        font-size: 30px;
+    }
+    p {
+        font-size: 16px;
+    }
+    .parallax, .background {
+        min-height: 2200px;
+        padding: 20px;
+    }
+    .login, .register {
+        width: 90%;
+        height: auto;
+    }
+    .homeDeck, .homeCard, .homeUser {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    #homeListDeck, #homeListCard, #homeListUser {
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    #navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #nav-menu {
+        flex-direction: column;
+        width: 100%;
+        display: none; /* Masqué par défaut */
+    }
+
+    #nav-menu a {
+        margin: 10px 0;
+    }
+
+    #nav-register {
+        flex-direction: column;
+        width: 100%;
+        display: none; /* Masqué par défaut */
+    }
+
+    #nav-register a {
+        margin: 10px 0;
+    }
+
+    /* Bouton pour afficher le menu */
+    #nav-toggle {
+        display: block;
+        cursor: pointer;
+        margin-left: auto;
+    }
+
+    #nav-toggle span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: white;
+        margin: 5px 0;
+    }
+
+    /* Afficher le menu lorsque le bouton est cliqué */
+    #navbar.active #nav-menu, #navbar.active #nav-register {
+        display: flex;
+    }
+}

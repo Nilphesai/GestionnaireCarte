@@ -51,10 +51,13 @@ class TopicController extends AbstractController
         if($topic == null){
             $topic = new topic();
         }
-        
+        //dd($request);
         $formTopic = $this->createForm(TopicType::class,$topic);
+
         $formTopic->handleRequest($request);
+        //dd($formTopic);
         if($formTopic->isSubmitted() && $formTopic->isValid()){
+            
             $topic = $formTopic->getData();
             $entityManager->persist($topic);
             $entityManager->flush();

@@ -17,6 +17,9 @@
                         {% endif %}
                     </div>
                     <div class="user-deck"> Par {{deck.user}}</div>
+                    {% if app.user == deck.user %}
+                    <div class="modifier"><a href="{{ path('update_deck', {'id': deck.id}) }}">modify</a></div>
+                    {% endif %}
                 </div>
                 <div class="stat-deck">
 
@@ -30,33 +33,11 @@
                     
                 </div>
 
-                <div id="piechart"></div>
             </div>
             
             
             <div id="deck-content">
                 {% include "deck/_tempDeck.html.twig" %}
-            </div>
-            <div class="Postdeck">
-                {% if deck.posts is defined %}
-                    {% for post in deck.posts %}
-                        <div class="message">
-                            <div class="head_message">
-                                écrit le {{post.createdAt|date("d-m-Y")}}</br>
-                                par {{post.user}}
-                            </div>
-                            <p>{{post.text|nl2br}}</p>
-                        </div>
-                    {% endfor %}
-                {% endif %}
-                {#
-                {{ form_start(formPost, {'action': path('new_post') }) }}
-                {{ form_row(formPost.text)}}
-                {{ form_row(formPost.createdAt)}}
-                {{ form_row(formPost.deck, {'class' : deck.id} )}}
-                {{ form_row(formPost.user)}}
-                {{ form_end(formPost) }}
-                 #}
             </div>
         </div>
 </div>

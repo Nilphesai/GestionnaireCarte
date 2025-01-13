@@ -20,10 +20,6 @@ class Post
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\ManyToOne(targetEntity: "App\Entity\Deck",inversedBy: 'posts')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?deck $deck = null;
-
     #[ORM\ManyToOne(inversedBy: 'posts')]
     private ?User $user = null;
 
@@ -57,18 +53,6 @@ class Post
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getDeck(): ?Deck
-    {
-        return $this->deck;
-    }
-
-    public function setDeck(?Deck $deck): static
-    {
-        $this->deck = $deck;
 
         return $this;
     }

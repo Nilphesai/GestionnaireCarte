@@ -19,8 +19,8 @@
             <h6>{{app.user.email}}</h6>
         </div>
 
-        <a href="{{ path('app_deckUser', {'id': user.id}) }}"> Ses Deck</a>
-        <a href="{{ path('app_topic', {'id': user.id}) }}"> Ses Topic</a>
+        <a href="{{ path('app_deckUser', {'id': user.id}) }}">Decks de {{app.user.username}}</a>
+        <a href="{{ path('app_topic', {'id': user.id}) }}">Topic</a>
     </div>
 </div>
 {% endblock %}

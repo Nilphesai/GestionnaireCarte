@@ -10,8 +10,11 @@
         <div class="topic-post">
             <div class="author">
                 <img src="https://picsum.photos/50"></br>
-                Author : <a>{{topic.user}}</a> </br>
-                createBy : {{topic.createdAt|date("d-m-Y")}}
+                <p>Author : <a>{{topic.user}}</a> </br>
+                createBy : {{topic.createdAt|date("d-m-Y")}}</p>
+                {% if is_granted("ROLE_ADMIN") %}
+                <p class="deleteButton"><a href="{{ path('delete_topic', {'topicId': topic.id}) }}">Delete</a></p>
+                {% endif %}
             </div>
             <div class="message">
                 <a href="{{ path('show_topic', {'topicId': topic.id}) }}"><h5>{{topic.title}}</h5></a>
@@ -22,7 +25,9 @@
         </div>
         {% endfor %}  
     </article>
+    {% if app.user %}
     <a href="{{ path('new_topic') }}">nouveaux topic</a>
+    {% endif %}
 </div>
 
 {% endblock %}

@@ -13,6 +13,7 @@
                 <img src="https://picsum.photos/50"></br>
                 Author : <a>{{topic.user}}</a> </br>
                 createBy : {{topic.createdAt|date("d-m-Y")}}
+                <p class="deleteButton"><a href="{{ path('delete_post', {'postId': post.id}) }}">Delete</a></p>
             </div>
             <div class="message">
                 <a href="{{ path('show_topic', {'topicId': topic.id}) }}"><h5>{{topic.title}}</h5></a>

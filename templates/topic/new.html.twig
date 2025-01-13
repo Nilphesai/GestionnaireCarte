@@ -3,12 +3,17 @@
 {% block title %}Hello TopicController!{% endblock %}
 
 {% block body %}
-
+    
     <h1> Ajouter un Topic</h1>
     
 
     {{ form_start(formTopic) }}
-
-        {{ form_row(formTopic.valider)}}
+    {{ form_row(formTopic.title) }}
+    {{ form_row(formTopic.closed) }}
+                <div class="hidden">
+                    {{ form_row(formTopic.createdAt) }}
+                    {{ form_row(formTopic.category) }}
+                    {{ form_row(formTopic.user) }}
+                </div>
     {{ form_end(formTopic) }}
 {% endblock %}
